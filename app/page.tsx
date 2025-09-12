@@ -98,16 +98,6 @@ const Window: React.FC<WindowProps> = ({ window, onClose, onFocus, onMove }) => 
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef<{ startX: number; startY: number; elX: number; elY: number } | null>(null);
 
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.button !== 0 || !(e.target as HTMLElement).closest('.window-header')) return;
-    e.preventDefault();
-    onFocus(window.id);
-    setIsDragging(true);
-    dragStartRef.current = { startX: e.clientX, startY: e.clientY, elX: window.position.x, elY: window.position.y };
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-  };
-
   const handleMouseMove = useCallback((e: globalThis.MouseEvent) => {
     if (!dragStartRef.current) return;
     const dx = e.clientX - dragStartRef.current.startX;
@@ -121,7 +111,16 @@ const Window: React.FC<WindowProps> = ({ window, onClose, onFocus, onMove }) => 
     setIsDragging(false);
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
-  }, []);
+  }, [handleMouseMove]);
+
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    onFocus(window.id);
+    setIsDragging(true);
+    dragStartRef.current = { startX: e.clientX, startY: e.clientY, elX: window.position.x, elY: window.position.y };
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
 
   return (
     <motion.div
@@ -140,15 +139,19 @@ const Window: React.FC<WindowProps> = ({ window, onClose, onFocus, onMove }) => 
       onMouseDown={() => onFocus(window.id)}
     >
       <div
-        className="window-header flex items-center justify-between h-10 px-3 bg-background-secondary/70 rounded-t-lg border-b border-border-primary"
+        className="window-header flex items-center justify-between h-10 px-3 bg-background-secondary/70 rounded-t-lg border-b border-border-primary cursor-grab active:cursor-grabbing"
         onMouseDown={handleMouseDown}
-        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
       >
         <div className="flex items-center gap-2">
           {window.icon}
           <span className="text-sm font-medium text-text-primary">{window.title}</span>
         </div>
-        <button onClick={() => onClose(window.id)} className="p-1 rounded-full hover:bg-red-500/80 text-text-secondary hover:text-white transition-colors" aria-label="Fenster schließen">
+        <button
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={() => onClose(window.id)}
+          className="p-1 rounded-full hover:bg-red-500/80 text-text-secondary hover:text-white transition-colors"
+          aria-label="Fenster schließen"
+        >
           <X size={16} />
         </button>
       </div>
@@ -299,5 +302,4 @@ export default function Desktop() {
     </main>
   );
 }
-
 
