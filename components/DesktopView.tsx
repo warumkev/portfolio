@@ -27,11 +27,9 @@ interface WindowProps {
 }
 
 const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onMove, onResize }) => {
+
     const headerRef = React.useRef<HTMLDivElement>(null);
     const resizeRef = React.useRef<HTMLDivElement>(null);
-
-    const config = APP_CONFIG[winState.id];
-    if (!config) return null;
 
     const handleDrag = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         if (!(headerRef.current && headerRef.current.contains(event.target as Node))) return;
@@ -66,6 +64,9 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onMove, onR
         document.addEventListener('pointermove', onPointerMove);
         document.addEventListener('pointerup', onPointerUp);
     }, [winState.id, winState.size, onFocus, onResize]);
+
+    const config = APP_CONFIG[winState.id];
+    if (!config) return null;
 
     return (
         <motion.div
