@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, useCallback, ReactNode, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
 import { APP_CONFIG } from '@/config/apps';
@@ -33,44 +33,36 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onMove, onR
     const config = APP_CONFIG[winState.id];
     if (!config) return null;
 
-    const handleDrag = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-        // Nur ziehen, wenn auf die Kopfleiste geklickt wird
-        if (headerRef.current && headerRef.current.contains(event.target as Node)) {
-            onFocus(winState.id);
-
-            const dragStart = { x: event.clientX, y: event.clientY, elX: winState.position.x, elY: winState.position.y };
-
-            const onPointerMove = (moveEvent: PointerEvent) => {
-                const dx = moveEvent.clientX - dragStart.x;
-                const dy = moveEvent.clientY - dragStart.y;
-                onMove(winState.id, { x: dragStart.elX + dx, y: dragStart.elY + dy });
-            };
-            const onPointerUp = () => {
-                document.removeEventListener('pointermove', onPointerMove);
-                document.removeEventListener('pointerup', onPointerUp);
-            };
-            document.addEventListener('pointermove', onPointerMove);
-            document.addEventListener('pointerup', onPointerUp);
-        }
+    const handleDrag = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+        if (!(headerRef.current && headerRef.current.contains(event.target as Node))) return;
+        onFocus(winState.id);
+        const dragStart = { x: event.clientX, y: event.clientY, elX: winState.position.x, elY: winState.position.y };
+        const onPointerMove = (moveEvent: PointerEvent) => {
+            const dx = moveEvent.clientX - dragStart.x;
+            const dy = moveEvent.clientY - dragStart.y;
+            onMove(winState.id, { x: dragStart.elX + dx, y: dragStart.elY + dy });
+        };
+        const onPointerUp = () => {
+            document.removeEventListener('pointermove', onPointerMove);
+            document.removeEventListener('pointerup', onPointerUp);
+        };
+        document.addEventListener('pointermove', onPointerMove);
+        document.addEventListener('pointerup', onPointerUp);
     }, [winState.id, winState.position, onFocus, onMove]);
 
-    const handleResize = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+    const handleResize = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         event.stopPropagation();
         onFocus(winState.id);
-
         const resizeStart = { x: event.clientX, y: event.clientY, w: winState.size.width, h: winState.size.height };
-
         const onPointerMove = (moveEvent: PointerEvent) => {
             const dw = moveEvent.clientX - resizeStart.x;
             const dh = moveEvent.clientY - resizeStart.y;
             onResize(winState.id, { width: Math.max(300, resizeStart.w + dw), height: Math.max(200, resizeStart.h + dh) });
         };
-
         const onPointerUp = () => {
             document.removeEventListener('pointermove', onPointerMove);
             document.removeEventListener('pointerup', onPointerUp);
         };
-
         document.addEventListener('pointermove', onPointerMove);
         document.addEventListener('pointerup', onPointerUp);
     }, [winState.id, winState.size, onFocus, onResize]);
