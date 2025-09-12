@@ -1,18 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import DesktopView from '@/components/DesktopView';
-import MobileView from '@/components/MobileView';
+import DesktopView from '../components/DesktopView';
+import MobileView from '../components/MobileView';
 
 // --- Media Query Hook ---
 const useMediaQuery = (query: string): boolean | null => {
   const [matches, setMatches] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // This ensures the code only runs on the client
     const media = window.matchMedia(query);
     const listener = () => setMatches(media.matches);
-    listener(); // Set initial state
+    listener();
     media.addEventListener('change', listener);
     return () => media.removeEventListener('change', listener);
   }, [query]);
@@ -20,14 +19,23 @@ const useMediaQuery = (query: string): boolean | null => {
   return matches;
 };
 
-
-// --- Main Page Component ---
+// --- Hauptseite ---
 export default function Home() {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  // Prevents a flash of the wrong view during server-side rendering and initial client-side hydration.
+  useEffect(() => {
+    if (isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMobile]);
+
   if (isMobile === null) {
-    return <div className="h-screen w-screen bg-neutral-950" />;
+    return <div className="h-screen w-screen bg-white dark:bg-neutral-950" />;
   }
 
   return isMobile ? <MobileView /> : <DesktopView />;
