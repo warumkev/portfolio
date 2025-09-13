@@ -61,55 +61,94 @@
     </ul>
     <hr class="notion-divider" />
     <h2>Projekte</h2>
-    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 0.5rem;">
-      <div style="border: 1px solid #ececec; border-radius: 8px; background: #fafbfc; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <span style="font-weight: 600; font-size: 1.08rem; color: #222;">PortfoliOS (Diese Seite)</span>
-          <a href="https://github.com/warumkev/portfolio" target="_blank" title="GitHub Repo" style="margin-left: 0.5em; display: inline-flex; align-items: center; text-decoration: none;">
-            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-              <path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/>
-            </svg>
-          </a>
+    <div id="projects-list-js" style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 0.5rem;"></div>
+    <noscript>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 0.5rem;">
+        <!-- ...bestehende statische Projektkarten als Fallback... -->
+        <div style="border: 1px solid #ececec; border-radius: 8px; background: #fafbfc; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-weight: 600; font-size: 1.08rem; color: #222;">PortfoliOS (Diese Seite)</span>
+            <a href="https://github.com/warumkev/portfolio" target="_blank" title="GitHub Repo" style="margin-left: 0.5em; display: inline-flex; align-items: center; text-decoration: none;">
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/></svg>
+            </a>
+          </div>
+          <div style="color: #555; font-size: 0.98rem; margin-bottom: 0.6rem;">Interaktives Portfolio im OS-Stil mit Next.js, TypeScript, Tailwind CSS.</div>
+          <div style="margin-top: 0.2rem;"><a href="https://kevintamme.com" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a></div>
         </div>
-        <div style="color: #555; font-size: 0.98rem; margin-bottom: 0.6rem;">Interaktives Portfolio im OS-Stil mit Next.js, TypeScript, Tailwind CSS.</div>
-        <div style="margin-top: 0.2rem;">
-          <a href="https://kevintamme.com" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a>
-        </div>
-      </div>
-      <div style="border: 1px solid #ececec; border-radius: 8px; background: #fafbfc; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <span style="font-weight: 600; font-size: 1.08rem; color: #222;">Katalyst</span>
-          <a href="https://github.com/warumkev/katalyst" target="_blank" title="GitHub Repo" style="margin-left: 0.5em; display: inline-flex; align-items: center; text-decoration: none;">
-            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-              <path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/>
-            </svg>
-          </a>
-        </div>
-        <div style="color: #555; font-size: 0.98rem; margin-bottom: 0.6rem;">Showcase einer App zur KI-Generierung von Biografien, READMEs und "Über mich"-Texten.</div>
-        <div style="margin-top: 0.2rem;">
-          <a href="https://ketam-katalyst.vercel.app" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a>
+        <div style="border: 1px solid #ececec; border-radius: 8px; background: #fafbfc; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-weight: 600; font-size: 1.08rem; color: #222;">Katalyst</span>
+            <a href="https://github.com/warumkev/katalyst" target="_blank" title="GitHub Repo" style="margin-left: 0.5em; display: inline-flex; align-items: center; text-decoration: none;">
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/></svg>
+            </a>
+          </div>
+          <div style="color: #555; font-size: 0.98rem; margin-bottom: 0.6rem;">Showcase einer App zur KI-Generierung von Biografien, READMEs und "Über mich"-Texten.</div>
+          <div style="margin-top: 0.2rem;"><a href="https://ketam-katalyst.vercel.app" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a></div>
         </div>
       </div>
-    </div>
+    </noscript>
     <hr class="notion-divider" />
     <h2>Blog &amp; Learnings</h2>
-    <ul>
-      <li>
-        <b>State Management in React 2024</b> <br>
-        <i>15. Juli 2024</i><br>
-        Die Landschaft des State Managements in React ist vielfältiger denn je. Von Redux über Zustand bis hin zu Jotai und den eingebauten Hooks wie <code>useContext</code> und <code>useReducer</code> – die Wahl des richtigen Tools hängt stark vom Projektumfang ab. Für kleine bis mittlere Projekte hat sich <code>Zustand</code> als leichtgewichtige und dennoch leistungsstarke Alternative etabliert...
-      </li>
-      <li>
-        <b>Learnings aus Projekt 'Phoenix'</b> <br>
-        <i>02. Juni 2024</i><br>
-        Die größte Herausforderung bei 'Phoenix' war die Skalierung der Datenbank-Abfragen unter hoher Last. Durch die Implementierung eines Caching-Layers mit Redis und die Optimierung von Indizes konnten wir die Latenz um 70% reduzieren. Ein wichtiges Learning: Performance-Tests sollten so früh wie möglich in den Entwicklungszyklus integriert werden.
-      </li>
-      <li>
-        <b>Warum TypeScript ein Game-Changer ist</b> <br>
-        <i>10. Mai 2024</i><br>
-        Die Einführung von TypeScript in unserem Team war anfangs mit Lernaufwand verbunden, hat sich aber schnell bezahlt gemacht. Die statische Typisierung fängt Fehler bereits während der Entwicklung ab, verbessert die Code-Qualität und macht die Zusammenarbeit durch selbstdokumentierenden Code deutlich effizienter. Es ist ein Investment, das sich langfristig auszahlt.
-      </li>
-    </ul>
+    <ul id="blog-list-js"></ul>
+    <noscript>
+      <ul>
+        <li>
+          <b>State Management in React 2024</b> <br>
+          <i>15. Juli 2024</i><br>
+          Die Landschaft des State Managements in React ist vielfältiger denn je. Von Redux über Zustand bis hin zu Jotai und den eingebauten Hooks wie <code>useContext</code> und <code>useReducer</code> – die Wahl des richtigen Tools hängt stark vom Projektumfang ab. Für kleine bis mittlere Projekte hat sich <code>Zustand</code> als leichtgewichtige und dennoch leistungsstarke Alternative etabliert...
+        </li>
+        <li>
+          <b>Learnings aus Projekt 'Phoenix'</b> <br>
+          <i>02. Juni 2024</i><br>
+          Die größte Herausforderung bei 'Phoenix' war die Skalierung der Datenbank-Abfragen unter hoher Last. Durch die Implementierung eines Caching-Layers mit Redis und die Optimierung von Indizes konnten wir die Latenz um 70% reduzieren. Ein wichtiges Learning: Performance-Tests sollten so früh wie möglich in den Entwicklungszyklus integriert werden.
+        </li>
+        <li>
+          <b>Warum TypeScript ein Game-Changer ist</b> <br>
+          <i>10. Mai 2024</i><br>
+          Die Einführung von TypeScript in unserem Team war anfangs mit Lernaufwand verbunden, hat sich aber schnell bezahlt gemacht. Die statische Typisierung fängt Fehler bereits während der Entwicklung ab, verbessert die Code-Qualität und macht die Zusammenarbeit durch selbstdokumentierenden Code deutlich effizienter. Es ist ein Investment, das sich langfristig auszahlt.
+        </li>
+      </ul>
+    </noscript>
+</div>
+<script>
+// Dynamisches Laden der Projekte
+fetch('/data/projects.json').then(r => r.json()).then(projects => {
+  const list = document.getElementById('projects-list-js');
+  if (!list) return;
+  list.innerHTML = '';
+  projects.forEach(p => {
+    const card = document.createElement('div');
+    card.style.cssText = 'border:1px solid #ececec;border-radius:8px;background:#fafbfc;box-shadow:0 1px 4px #0001;padding:1.2rem 1.2rem 1rem 1.2rem;display:flex;flex-direction:column;gap:0.3rem;';
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-weight:600;font-size:1.08rem;color:#222;">${p.title}</span>
+        <a href="${p.githubUrl}" target="_blank" title="GitHub Repo" style="margin-left:0.5em;display:inline-flex;align-items:center;text-decoration:none;">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/></svg>
+        </a>
+      </div>
+      <div style="color:#555;font-size:0.98rem;margin-bottom:0.6rem;">${p.description}</div>
+      <div style="margin-top:0.2rem;"><a href="${p.liveUrl}" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a></div>
+    `;
+    list.appendChild(card);
+  });
+});
+
+// Dynamisches Laden der Blogposts
+fetch('/data/blog.json').then(r => r.json()).then(posts => {
+  const list = document.getElementById('blog-list-js');
+  if (!list) return;
+  list.innerHTML = '';
+  posts.forEach(post => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <b>${post.title}</b> <br>
+      <i>${post.date}</i><br>
+      ${post.content.replace(/`([^`]+)`/g, '<code>$1</code>')}
+    `;
+    list.appendChild(li);
+  });
+});
+</script>
     <hr class="notion-divider" />
     <h2>Systeminfo</h2>
     <ul>

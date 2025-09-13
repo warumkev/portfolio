@@ -62,18 +62,10 @@ const AboutContent = () => (
 );
 
 // --- 2. Portfolio App ---
-const projectData: Project[] = [
-    { icon: <User size={24} />, title: "PortfoliOS (Diese Seite)", description: "Ein interaktives Portfolio im Stil eines Betriebssystems mit Next.js, TypeScript und Tailwind CSS.", url: "kevintamme.com" },
-    { icon: <Bot size={24} />, title: "Katalyst", description: "Showcase einer App zur KI-Generierung von Biografien, READMEs und 'Über mich'-Texten.", url: "https://ketam-katalyst.vercel.app" },
-];
-
-
-
-
-const ProjectScreenshotCard: React.FC<{ project: Project }> = ({ project }) => {
+type ProjectJson = { title: string; description: string; liveUrl: string; githubUrl: string };
+const ProjectScreenshotCard: React.FC<{ project: ProjectJson }> = ({ project }) => {
     const [imgError, setImgError] = useState(false);
-    const url = project.url.startsWith('http') ? project.url : `https://${project.url}`;
-    // Microlink screenshot API
+    const url = project.liveUrl;
     const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&screenshot.waitForTimeout=2000`;
     return (
         <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/50 shadow hover:shadow-lg transition overflow-hidden h-full flex flex-col w-[300px] min-w-[260px] max-w-[300px] min-h-[320px] max-h-[360px]">
@@ -94,35 +86,50 @@ const ProjectScreenshotCard: React.FC<{ project: Project }> = ({ project }) => {
             </div>
             <div className="p-4 flex flex-col flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                    <span className="text-cyan-500">{project.icon}</span>
                     <h3 className="font-bold text-lg text-neutral-900 dark:text-white flex-1">{project.title}</h3>
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" title="GitHub Repo" className="ml-2">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222" /></svg>
+                    </a>
                 </div>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2 flex-1">{project.description}</p>
                 <div className="flex gap-3 mt-2">
-                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:underline font-medium">Zur Website</a>
-                    {project.url.includes('github.com') && (
-                        <a href={project.url} target="_blank" rel="noopener noreferrer" className="block text-xs text-neutral-400 mt-1">GitHub</a>
-                    )}
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-1.5 bg-cyan-500 text-white font-medium rounded hover:bg-cyan-600 transition">Zum Projekt</a>
                 </div>
             </div>
         </div>
     );
 };
 
-const PortfolioContent = () => (
-    <div className="p-1 h-full flex flex-col min-w-[220px] min-h-[400px]">
-        <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-3">Projekte</h2>
-        <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch flex-1 min-h-0 grid-auto-rows-auto justify-center">
-            {projectData.map(p => (
-                <div key={p.title} className="flex justify-center h-full">
-                    <div className="w-[260px] min-w-[220px] max-w-[260px] h-full min-h-[320px] max-h-[360px] flex flex-col">
-                        <ProjectScreenshotCard project={p} />
-                    </div>
+const PortfolioContent = () => {
+    const [projects, setProjects] = useState<ProjectJson[] | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    useEffect(() => {
+        fetch('/data/projects.json')
+            .then(r => r.json())
+            .then(setProjects)
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
+    }, []);
+    return (
+        <div className="p-1 h-full flex flex-col min-w-[220px] min-h-[400px]">
+            <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-3">Projekte</h2>
+            {loading && <div className="text-center text-neutral-400">Lade Projekte…</div>}
+            {error && <div className="text-center text-red-500">Fehler beim Laden der Projekte.</div>}
+            {projects && (
+                <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch flex-1 min-h-0 grid-auto-rows-auto justify-center">
+                    {projects.map(p => (
+                        <div key={p.title} className="flex justify-center h-full">
+                            <div className="w-[260px] min-w-[220px] max-w-[260px] h-full min-h-[320px] max-h-[360px] flex flex-col">
+                                <ProjectScreenshotCard project={p} />
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            ))}
+            )}
         </div>
-    </div>
-);
+    );
+};
 
 
 // --- 3. Contact App ---
@@ -254,38 +261,37 @@ const ContactContent = () => {
 
 
 // --- 4. Blog App ---
-const blogPosts: BlogPost[] = [
-    {
-        title: "State Management in React 2024",
-        date: "15. Juli 2024",
-        content: "Die Landschaft des State Managements in React ist vielfältiger denn je. Von Redux über Zustand bis hin zu Jotai und den eingebauten Hooks wie `useContext` und `useReducer` – die Wahl des richtigen Tools hängt stark vom Projektumfang ab. Für kleine bis mittlere Projekte hat sich `Zustand` als leichtgewichtige und dennoch leistungsstarke Alternative etabliert..."
-    },
-    {
-        title: "Learnings aus Projekt 'Phoenix'",
-        date: "02. Juni 2024",
-        content: "Die größte Herausforderung bei 'Phoenix' war die Skalierung der Datenbank-Abfragen unter hoher Last. Durch die Implementierung eines Caching-Layers mit Redis und die Optimierung von Indizes konnten wir die Latenz um 70% reduzieren. Ein wichtiges Learning: Performance-Tests sollten so früh wie möglich in den Entwicklungszyklus integriert werden."
-    },
-    {
-        title: "Warum TypeScript ein Game-Changer ist",
-        date: "10. Mai 2024",
-        content: "Die Einführung von TypeScript in unserem Team war anfangs mit Lernaufwand verbunden, hat sich aber schnell bezahlt gemacht. Die statische Typisierung fängt Fehler bereits während der Entwicklung ab, verbessert die Code-Qualität und macht die Zusammenarbeit durch selbstdokumentierenden Code deutlich effizienter. Es ist ein Investment, das sich langfristig auszahlt."
-    }
-];
-
-const BlogContent = () => (
-    <div className="p-4 font-sans">
-        <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-2">Notizen & Learnings</h2>
-        <div className="space-y-4">
-            {blogPosts.map((post, index) => (
-                <div key={index} className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg">
-                    <h3 className="font-semibold text-neutral-800 dark:text-neutral-100">{post.title}</h3>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{post.date}</p>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-300">{post.content}</p>
+type BlogJson = { title: string; date: string; content: string };
+const BlogContent = () => {
+    const [posts, setPosts] = useState<BlogJson[] | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    useEffect(() => {
+        fetch('/data/blog.json')
+            .then(r => r.json())
+            .then(setPosts)
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
+    }, []);
+    return (
+        <div className="p-4 font-sans">
+            <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-2">Notizen & Learnings</h2>
+            {loading && <div className="text-center text-neutral-400">Lade Blogposts…</div>}
+            {error && <div className="text-center text-red-500">Fehler beim Laden der Blogposts.</div>}
+            {posts && (
+                <div className="space-y-4">
+                    {posts.map((post, index) => (
+                        <div key={index} className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+                            <h3 className="font-semibold text-neutral-800 dark:text-neutral-100">{post.title}</h3>
+                            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{post.date}</p>
+                            <p className="text-sm text-neutral-600 dark:text-neutral-300" dangerouslySetInnerHTML={{ __html: post.content.replace(/`([^`]+)`/g, '<code>$1</code>') }} />
+                        </div>
+                    ))}
                 </div>
-            ))}
+            )}
         </div>
-    </div>
-);
+    );
+};
 
 // --- 5. System Info App ---
 const SysteminfoContent = () => (

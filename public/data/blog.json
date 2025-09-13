@@ -1,0 +1,17 @@
+[
+  {
+    "title": "State Management in React 2024",
+    "date": "15. Juli 2024",
+    "content": "Die Landschaft des State Managements in React ist vielfältiger denn je. Von Redux über Zustand bis hin zu Jotai und den eingebauten Hooks wie `useContext` und `useReducer` – die Wahl des richtigen Tools hängt stark vom Projektumfang ab. Für kleine bis mittlere Projekte hat sich `Zustand` als leichtgewichtige und dennoch leistungsstarke Alternative etabliert..."
+  },
+  {
+    "title": "Learnings aus Projekt 'Phoenix'",
+    "date": "02. Juni 2024",
+    "content": "Die größte Herausforderung bei 'Phoenix' war die Skalierung der Datenbank-Abfragen unter hoher Last. Durch die Implementierung eines Caching-Layers mit Redis und die Optimierung von Indizes konnten wir die Latenz um 70% reduzieren. Ein wichtiges Learning: Performance-Tests sollten so früh wie möglich in den Entwicklungszyklus integriert werden."
+  },
+  {
+    "title": "Warum TypeScript ein Game-Changer ist",
+    "date": "10. Mai 2024",
+    "content": "Die Einführung von TypeScript in unserem Team war anfangs mit Lernaufwand verbunden, hat sich aber schnell bezahlt gemacht. Die statische Typisierung fängt Fehler bereits während der Entwicklung ab, verbessert die Code-Qualität und macht die Zusammenarbeit durch selbstdokumentierenden Code deutlich effizienter. Es ist ein Investment, das sich langfristig auszahlt."
+  }
+]
