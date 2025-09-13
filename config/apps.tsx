@@ -1,6 +1,7 @@
-import { ReactNode, useState, useRef, FormEvent, ChangeEvent } from 'react';
+import { ReactNode, useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
 import { User, Briefcase, Mail, NotebookText, CircuitBoard, Music, Play, Pause, Bot, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
+// import { fetchLinkPreview, LinkPreview } from '../lib/linkPreview';
 
 
 // --- Type Definitions ---
@@ -65,22 +66,52 @@ const projectData: Project[] = [
     { icon: <Bot size={24} />, title: "Katalyst", description: "Showcase einer App zur KI-Generierung von Biografien, READMEs und 'Über mich'-Texten.", url: "https://ketam-katalyst.vercel.app" },
 ];
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
-    <a href={project.url} target="_blank" rel="noopener noreferrer" className="block p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-all mb-4">
-        <div className="flex items-center gap-4">
-            <div className="text-cyan-500">{project.icon}</div>
-            <div>
-                <h3 className="font-bold text-neutral-900 dark:text-white">{project.title}</h3>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">{project.description}</p>
+
+
+
+const ProjectScreenshotCard: React.FC<{ project: Project }> = ({ project }) => {
+    const [imgError, setImgError] = useState(false);
+    const url = project.url.startsWith('http') ? project.url : `https://${project.url}`;
+    // Microlink screenshot API
+    const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&screenshot.waitForTimeout=2000`;
+    return (
+        <div className="mb-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/50 shadow hover:shadow-lg transition overflow-hidden">
+            <div className="aspect-video bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center relative">
+                {!imgError ? (
+                    <img
+                        src={screenshotUrl}
+                        alt={project.title + ' Screenshot'}
+                        className="object-contain w-full h-full max-w-full max-h-80"
+                        onError={() => setImgError(true)}
+                        loading="lazy"
+                    />
+                ) : (
+                    <div className="flex flex-col items-center justify-center w-full h-full p-4">
+                        <span className="text-neutral-400 text-sm">Screenshot nicht verfügbar</span>
+                    </div>
+                )}
+            </div>
+            <div className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="text-cyan-500">{project.icon}</span>
+                    <h3 className="font-bold text-lg text-neutral-900 dark:text-white flex-1">{project.title}</h3>
+                </div>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{project.description}</p>
+                <div className="flex gap-3 mt-2">
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:underline font-medium">Zur Website</a>
+                    {project.url.includes('github.com') && (
+                        <a href={project.url} target="_blank" rel="noopener noreferrer" className="block text-xs text-neutral-400 mt-1">GitHub</a>
+                    )}
+                </div>
             </div>
         </div>
-    </a>
-);
+    );
+};
 
 const PortfolioContent = () => (
     <div className="p-1">
         <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-3">Projekte</h2>
-        {projectData.map(p => <ProjectCard key={p.title} project={p} />)}
+        {projectData.map(p => <ProjectScreenshotCard key={p.title} project={p} />)}
     </div>
 );
 
@@ -250,7 +281,7 @@ const MusicPlayerContent = () => {
             >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
             </button>
-            <div className="w-full max-w-xs mt-6 flex items-center gap-3">
+            <div className="w-full max-w-xs mt-6 flex items-center gap-3 hidden md:flex">
                 <VolumeX size={20} className="text-neutral-500 dark:text-neutral-400" aria-hidden="true" />
                 <input
                     type="range"
@@ -261,6 +292,7 @@ const MusicPlayerContent = () => {
                     onChange={handleVolumeChange}
                     className="w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full"
                     aria-label="Lautstärkeregler"
+                    style={{ touchAction: 'pan-y' }}
                 />
                 <Volume2 size={20} className="text-neutral-500 dark:text-neutral-400" aria-hidden="true" />
             </div>
