@@ -1,4 +1,5 @@
 import { ReactNode, useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { User, Briefcase, Mail, NotebookText, CircuitBoard, Music, Play, Pause, Bot, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
 // import { fetchLinkPreview, LinkPreview } from '../lib/linkPreview';
@@ -284,7 +285,9 @@ const BlogContent = () => {
                         <div key={index} className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg">
                             <h3 className="font-semibold text-neutral-800 dark:text-neutral-100">{post.title}</h3>
                             <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{post.date}</p>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-300" dangerouslySetInnerHTML={{ __html: post.content.replace(/`([^`]+)`/g, '<code>$1</code>') }} />
+                            <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-neutral-600 dark:text-neutral-300">
+                                <ReactMarkdown>{post.content}</ReactMarkdown>
+                            </div>
                         </div>
                     ))}
                 </div>
