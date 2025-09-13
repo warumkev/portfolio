@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { APP_CONFIG, AppConfig } from '../config/apps';
 import { Wifi, Signal } from 'lucide-react';

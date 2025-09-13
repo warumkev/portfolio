@@ -1,5 +1,5 @@
 import { ReactNode, useState, useRef, FormEvent, ChangeEvent } from 'react';
-import { User, Briefcase, Mail, Rocket, Palette, NotebookText, CircuitBoard, Music, Play, Pause, Bot, Volume2, VolumeX } from 'lucide-react';
+import { User, Briefcase, Mail, NotebookText, CircuitBoard, Music, Play, Pause, Bot, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
 
 

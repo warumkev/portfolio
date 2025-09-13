@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { motion, PanInfo, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
-import { APP_CONFIG, AppConfig } from '../config/apps';
+import { APP_CONFIG, AppConfig } from '@/config/apps';
 
 // --- Type Definitions ---
 interface WindowPosition { x: number; y: number; }
@@ -22,13 +22,16 @@ interface WindowProps {
     winState: WindowState;
     onClose: (id: string) => void;
     onFocus: (id: string) => void;
-    onDragEnd: (id: string, info: PanInfo) => void;
+    onDrag: (id: string, newPosition: WindowPosition) => void;
     onResize: (id: string, newSize: WindowSize) => void;
+    constraintsRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDragEnd, onResize }) => {
+const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onResize, constraintsRef }) => {
     const resizeRef = React.useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
+    const windowRef = useRef<HTMLDivElement>(null);
+
 
     const handleResize = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         event.stopPropagation();
@@ -53,22 +56,33 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDragEnd, 
 
     return (
         <motion.div
+            ref={windowRef}
             key={winState.id}
             drag
             dragListener={false}
             dragControls={dragControls}
             dragMomentum={false}
+            dragConstraints={constraintsRef}
             onDragStart={() => onFocus(winState.id)}
-            onDragEnd={(e, info) => onDragEnd(winState.id, info)}
+            onDrag={(e, info) => {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const width = winState.size.width;
+                const height = winState.size.height;
+                let x = winState.position.x + info.delta.x;
+                let y = winState.position.y + info.delta.y;
+                x = Math.max(0, Math.min(x, viewportWidth - width));
+                y = Math.max(0, Math.min(y, viewportHeight - height));
+                onDrag(winState.id, { x, y });
+            }}
             className="absolute bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-2xl flex flex-col overflow-hidden"
-            style={{ zIndex: winState.zIndex }}
-            animate={{
+            style={{
                 x: winState.position.x,
                 y: winState.position.y,
                 width: winState.size.width,
                 height: winState.size.height,
+                zIndex: winState.zIndex
             }}
-            transition={{ duration: 0 }}
             onPointerDown={() => onFocus(winState.id)}
             aria-labelledby={`window-title-${winState.id}`}
         >
@@ -164,6 +178,7 @@ const generateInitialWindows = (): Record<string, WindowState> => {
 export default function DesktopView() {
     const [windows, setWindows] = useState<Record<string, WindowState>>(generateInitialWindows);
     const [highestZIndex, setHighestZIndex] = useState(11);
+    const constraintsRef = useRef<HTMLDivElement>(null);
 
     const openWindow = (id: string) => {
         const newZIndex = highestZIndex + 1;
@@ -181,19 +196,41 @@ export default function DesktopView() {
         }
     };
 
-    const handleDragEnd = (id: string, info: PanInfo) => {
-        const currentWindow = windows[id];
-        const newPos = {
-            x: currentWindow.position.x + info.offset.x,
-            y: currentWindow.position.y + info.offset.y
-        };
-        setWindows(prev => ({ ...prev, [id]: { ...prev[id], position: newPos } }));
-    }
 
-    const resizeWindow = (id: string, newSize: WindowSize) => setWindows(prev => ({ ...prev, [id]: { ...prev[id], size: newSize } }));
+    const handleDrag = (id: string, newPosition: WindowPosition) => {
+        setWindows(prev => {
+            const win = prev[id];
+            if (!win) return prev;
+            // Clamp position to viewport
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const clampedX = Math.max(0, Math.min(newPosition.x, viewportWidth - win.size.width));
+            const clampedY = Math.max(0, Math.min(newPosition.y, viewportHeight - win.size.height));
+            return {
+                ...prev,
+                [id]: { ...win, position: { x: clampedX, y: clampedY } }
+            };
+        });
+    };
+
+    const resizeWindow = (id: string, newSize: WindowSize) => setWindows(prev => {
+        const win = prev[id];
+        if (!win) return prev;
+        // Clamp size so window stays in viewport
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const maxWidth = Math.max(300, viewportWidth - win.position.x);
+        const maxHeight = Math.max(200, viewportHeight - win.position.y);
+        const clampedWidth = Math.min(newSize.width, maxWidth);
+        const clampedHeight = Math.min(newSize.height, maxHeight);
+        return {
+            ...prev,
+            [id]: { ...win, size: { width: clampedWidth, height: clampedHeight } }
+        };
+    });
 
     return (
-        <main className="h-[100dvh] w-screen overflow-hidden bg-neutral-100 dark:bg-neutral-950 text-black dark:text-white font-sans relative select-none">
+        <main ref={constraintsRef} className="h-[100dvh] w-screen overflow-hidden bg-neutral-100 dark:bg-neutral-950 text-black dark:text-white font-sans relative select-none">
             <div className="absolute inset-0 bg-transparent dark:bg-[radial-gradient(circle_at_center,_rgba(40,40,80,0.3)_0,_rgba(10,10,20,0)_50%)]"></div>
 
             {Object.values(windows).map(winState => {
@@ -204,8 +241,9 @@ export default function DesktopView() {
                             winState={winState}
                             onClose={closeWindow}
                             onFocus={focusWindow}
-                            onDragEnd={handleDragEnd}
+                            onDrag={handleDrag}
                             onResize={resizeWindow}
+                            constraintsRef={constraintsRef}
                         />
                     )
                 }
