@@ -1,9 +1,66 @@
-'use client';
 
+'use client';
 import React, { useCallback, useRef, useState, useEffect } from 'react';
-import { motion, PanInfo, AnimatePresence, useDragControls } from 'framer-motion';
+import { AnimatePresence, motion, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
 import { APP_CONFIG, AppConfig } from '@/config/apps';
+
+// Splash/Login Screen
+import { ChevronUp } from 'lucide-react';
+
+const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+    return (
+        <motion.div
+            initial={{ y: 0, opacity: 1 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -800, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-white text-black"
+        >
+            <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 120, damping: 12, delay: 0.2 }}
+                className="flex flex-col items-center gap-6"
+            >
+                <div className="flex flex-col items-center gap-2 text-center">
+                    <span className="text-4xl md:text-5xl font-extrabold tracking-tight select-none">portfoliOS</span>
+                    <span className="text-base md:text-lg text-neutral-500 font-mono tracking-wide select-none">Welcome.<br />Click below to explore my work.</span>
+                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="w-full flex flex-col items-center"
+                >
+                    <button
+                        onClick={onLogin}
+                        className="px-8 py-3 rounded-lg bg-neutral-900 hover:bg-neutral-700 text-white font-semibold text-lg shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-neutral-400 flex items-center gap-2"
+                    >
+                        <motion.span
+                            animate={{ y: [0, -8, 0] }}
+                            transition={{ repeat: Infinity, duration: 1.2 }}
+                            className="inline-flex"
+                        >
+                            <ChevronUp size={22} />
+                        </motion.span>
+                        <span>Unlock</span>
+                    </button>
+                    <span className="text-sm text-neutral-500 font-medium mt-2 text-center">Click to begin</span>
+                    <span className="text-xs text-neutral-400 mt-1 text-center">A creative portfolio by Kevin Tamme</span>
+                </motion.div>
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                transition={{ delay: 1.2 }}
+                className="absolute bottom-6 left-0 w-full text-center text-xs text-neutral-400 font-mono"
+            >
+                © {new Date().getFullYear()} Kevin Tamme – portfoliOS
+            </motion.div>
+        </motion.div>
+    );
+};
 
 // --- Type Definitions ---
 interface WindowPosition { x: number; y: number; }
@@ -176,6 +233,7 @@ const generateInitialWindows = (): Record<string, WindowState> => {
 
 // --- Main Desktop Component ---
 export default function DesktopView() {
+    const [loggedIn, setLoggedIn] = useState(false);
     const [windows, setWindows] = useState<Record<string, WindowState>>(generateInitialWindows);
     const [highestZIndex, setHighestZIndex] = useState(11);
     const constraintsRef = useRef<HTMLDivElement>(null);
@@ -248,42 +306,48 @@ export default function DesktopView() {
     });
 
     return (
-        <main
-            ref={constraintsRef}
-            className="h-[100dvh] w-screen overflow-hidden text-black dark:text-white font-sans relative select-none bg-cover bg-center"
-            style={{ backgroundImage: "url('/background.jpeg')" }}
-        >
-
-            {Object.values(windows).map(winState => {
-                if (winState.isOpen) {
-                    return (
-                        <Window
-                            key={winState.id}
-                            winState={winState}
-                            onClose={closeWindow}
-                            onFocus={focusWindow}
-                            onDrag={handleDrag}
-                            onResize={resizeWindow}
-                            constraintsRef={constraintsRef}
-                        />
-                    )
-                }
-                return null;
-            })}
-
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
-                <motion.div
-                    initial={{ y: 100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.5 }}
-                    className="flex items-end gap-3 p-3 bg-neutral-200/50 dark:bg-black/20 backdrop-blur-lg border border-neutral-300 dark:border-neutral-700 rounded-2xl"
+        <>
+            <AnimatePresence>
+                {!loggedIn && (
+                    <SplashScreen key="splash" onLogin={() => setLoggedIn(true)} />
+                )}
+            </AnimatePresence>
+            {loggedIn && (
+                <main
+                    ref={constraintsRef}
+                    className="h-[100dvh] w-screen overflow-hidden text-black dark:text-white font-sans relative select-none"
                 >
-                    {Object.entries(APP_CONFIG).map(([id, config]) => (
-                        <DockIcon key={id} id={id} config={config} onClick={openWindow} isActive={windows[id]?.isOpen ?? false} />
-                    ))}
-                </motion.div>
-            </div>
-        </main>
+                    {Object.values(windows).map(winState => {
+                        if (winState.isOpen) {
+                            return (
+                                <Window
+                                    key={winState.id}
+                                    winState={winState}
+                                    onClose={closeWindow}
+                                    onFocus={focusWindow}
+                                    onDrag={handleDrag}
+                                    onResize={resizeWindow}
+                                    constraintsRef={constraintsRef}
+                                />
+                            )
+                        }
+                        return null;
+                    })}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
+                        <motion.div
+                            initial={{ y: 100, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.5 }}
+                            className="flex items-end gap-3 p-3 bg-neutral-200/50 dark:bg-black/20 backdrop-blur-lg border border-neutral-300 dark:border-neutral-700 rounded-2xl"
+                        >
+                            {Object.entries(APP_CONFIG).map(([id, config]) => (
+                                <DockIcon key={id} id={id} config={config} onClick={openWindow} isActive={windows[id]?.isOpen ?? false} />
+                            ))}
+                        </motion.div>
+                    </div>
+                </main>
+            )}
+        </>
     );
 }
 
