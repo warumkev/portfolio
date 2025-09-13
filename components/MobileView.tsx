@@ -11,11 +11,15 @@ const AppIcon: React.FC<{ id: string; config: AppConfig; onClick: (id: string) =
         layoutId={`app-icon-${id}`}
         onClick={() => onClick(id)}
         className="flex flex-col items-center gap-2 cursor-pointer"
+        role="button"
+        aria-label={`Öffne ${config.title}`}
+        tabIndex={0}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick(id)}
     >
         <div className="w-16 h-16 bg-neutral-200/60 dark:bg-neutral-800/60 backdrop-blur-md rounded-2xl flex items-center justify-center text-black dark:text-white">
             {config.icon}
         </div>
-        <span className="text-xs text-black dark:text-white font-medium">{config.title}</span>
+        <span className="text-xs text-black dark:text-white font-medium" aria-hidden="true">{config.title}</span>
     </motion.div>
 );
 
@@ -76,7 +80,11 @@ export default function MobileView() {
                             </div>
                             {/* Home Button */}
                             <div className="h-10 flex items-center justify-center">
-                                <button onClick={() => setOpenApp(null)} className="w-32 h-1.5 bg-neutral-400 dark:bg-neutral-500 rounded-full"></button>
+                                <button
+                                    onClick={() => setOpenApp(null)}
+                                    className="w-32 h-1.5 bg-neutral-400 dark:bg-neutral-500 rounded-full"
+                                    aria-label="Zum Home-Bildschirm zurückkehren"
+                                ></button>
                             </div>
                         </motion.div>
                     )}
@@ -85,4 +93,3 @@ export default function MobileView() {
         </div>
     );
 }
-

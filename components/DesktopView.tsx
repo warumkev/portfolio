@@ -3,7 +3,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { motion, PanInfo, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
-import { APP_CONFIG, AppConfig } from '@/config/apps';
+import { APP_CONFIG, AppConfig } from '../config/apps';
 
 // --- Type Definitions ---
 interface WindowPosition { x: number; y: number; }
@@ -70,6 +70,7 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDragEnd, 
             }}
             transition={{ duration: 0 }}
             onPointerDown={() => onFocus(winState.id)}
+            aria-labelledby={`window-title-${winState.id}`}
         >
             <div
                 onPointerDown={(e) => dragControls.start(e)}
@@ -77,12 +78,13 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDragEnd, 
             >
                 <div className="flex items-center gap-2 text-neutral-800 dark:text-neutral-200">
                     <span className="text-neutral-500 dark:text-neutral-400">{config.icon}</span>
-                    <span className="text-sm font-medium">{config.title}</span>
+                    <span id={`window-title-${winState.id}`} className="text-sm font-medium">{config.title}</span>
                 </div>
                 <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={(e) => { e.stopPropagation(); onClose(winState.id); }}
                     className="p-1 rounded-full hover:bg-red-500/80 text-neutral-500 dark:text-neutral-400 hover:text-white transition-colors duration-150"
+                    aria-label={`Fenster "${config.title}" schließen`}
                 >
                     <X size={16} />
                 </motion.button>
@@ -94,6 +96,8 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDragEnd, 
                 ref={resizeRef}
                 className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-neutral-400 dark:text-neutral-600 z-10"
                 onPointerDown={handleResize}
+                role="separator"
+                aria-label="Fenstergröße ändern"
             >
                 <CornerDownRight size={16} />
             </div>
@@ -128,12 +132,14 @@ const DockIcon: React.FC<{ id: string; config: AppConfig; onClick: (id: string) 
                 whileTap={{ scale: 0.9 }}
                 onClick={() => onClick(id)}
                 className="bg-neutral-200/50 dark:bg-black/20 backdrop-blur-lg p-3 rounded-xl border border-neutral-300 dark:border-neutral-700 transition-colors"
+                aria-label={`Öffne ${config.title}`}
             >
                 <span className="text-neutral-800 dark:text-neutral-200">{config.icon}</span>
             </motion.button>
             <motion.div
                 animate={{ scale: isActive ? 1 : 0 }}
                 className="w-1.5 h-1.5 rounded-full bg-cyan-400"
+                aria-hidden="true"
             />
         </div>
     )

@@ -246,11 +246,12 @@ const MusicPlayerContent = () => {
             <button
                 onClick={togglePlayPause}
                 className="w-16 h-16 bg-white dark:bg-neutral-800 rounded-full shadow-lg flex items-center justify-center text-cyan-500 hover:scale-105 transition-transform"
+                aria-label={isPlaying ? "Musik anhalten" : "Musik abspielen"}
             >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
             </button>
             <div className="w-full max-w-xs mt-6 flex items-center gap-3">
-                <VolumeX size={20} className="text-neutral-500 dark:text-neutral-400" />
+                <VolumeX size={20} className="text-neutral-500 dark:text-neutral-400" aria-hidden="true" />
                 <input
                     type="range"
                     min="0"
@@ -259,8 +260,9 @@ const MusicPlayerContent = () => {
                     value={volume}
                     onChange={handleVolumeChange}
                     className="w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full"
+                    aria-label="Lautstärkeregler"
                 />
-                <Volume2 size={20} className="text-neutral-500 dark:text-neutral-400" />
+                <Volume2 size={20} className="text-neutral-500 dark:text-neutral-400" aria-hidden="true" />
             </div>
             <audio ref={audioRef} src="https://play.ilovemusic.de/ilm_ilovechillhop" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}></audio>
         </div>
