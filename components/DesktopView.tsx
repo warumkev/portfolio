@@ -180,6 +180,15 @@ export default function DesktopView() {
     const [highestZIndex, setHighestZIndex] = useState(11);
     const constraintsRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        // Prevent scrolling on desktop view
+        const originalOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = originalOverflow;
+        };
+    }, []);
+
     const openWindow = (id: string) => {
         const newZIndex = highestZIndex + 1;
         setHighestZIndex(newZIndex);
@@ -195,7 +204,6 @@ export default function DesktopView() {
             setWindows(prev => ({ ...prev, [id]: { ...prev[id], zIndex: newZIndex } }));
         }
     };
-
 
     const handleDrag = (id: string, newPosition: WindowPosition) => {
         setWindows(prev => {
