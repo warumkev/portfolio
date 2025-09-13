@@ -126,8 +126,65 @@ const PortfolioContent = () => (
 
 
 // --- 3. Contact App ---
+// Toast component for success/error messages
+const Toast = ({ show, type, message, onClose }: { show: boolean; type: 'success' | 'error'; message: string; onClose: () => void }) => {
+    // Animate in from bottom right on desktop, from top on mobile
+    return (
+        <div
+            className={`
+                fixed z-50
+                transition-transform duration-500 ease-out
+                ${show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}
+                right-4 bottom-4
+                sm:right-4 sm:bottom-4
+                sm:translate-y-0
+                w-[90vw] max-w-xs
+                sm:w-auto
+                sm:max-w-sm
+                rounded-xl shadow-lg
+                px-5 py-4
+                font-medium
+                text-base
+                ${type === 'success' ? 'bg-green-600 text-white dark:bg-green-500' : 'bg-red-600 text-white dark:bg-red-500'}
+                dark:shadow-black/40
+                // Mobile: from top
+                sm:bottom-4 sm:right-4
+                bottom-auto top-4 left-1/2 -translate-x-1/2 sm:left-auto sm:top-auto sm:translate-x-0
+                ${show ? '' : 'sm:opacity-0 sm:pointer-events-none'}
+            `}
+            role="status"
+            aria-live="polite"
+        >
+            <span>{message}</span>
+            <button
+                onClick={onClose}
+                className="ml-4 text-white/80 hover:text-white focus:outline-none"
+                aria-label="Schließen"
+            >
+                ×
+            </button>
+        </div>
+    );
+};
+
 const ContactContent = () => {
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+    const [showToast, setShowToast] = useState(false);
+    const toastTimeout = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        if (status === 'success' || status === 'error') {
+            setShowToast(true);
+            if (toastTimeout.current) clearTimeout(toastTimeout.current);
+            toastTimeout.current = setTimeout(() => {
+                setShowToast(false);
+                setStatus('idle');
+            }, 3500);
+        }
+        return () => {
+            if (toastTimeout.current) clearTimeout(toastTimeout.current);
+        };
+    }, [status]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -148,7 +205,6 @@ const ContactContent = () => {
             if (res.ok) {
                 setStatus('success');
                 form.reset();
-                setTimeout(() => setStatus('idle'), 3000);
             } else {
                 setStatus('error');
             }
@@ -186,8 +242,12 @@ const ContactContent = () => {
                     </button>
                 </div>
             </form>
-            {status === 'success' && <p className="mt-4 text-green-600 dark:text-green-400 text-center">Vielen Dank! Ihre Nachricht wurde gesendet.</p>}
-            {status === 'error' && <p className="mt-4 text-red-600 dark:text-red-400 text-center">Fehler. Bitte versuchen Sie es später erneut.</p>}
+            <Toast
+                show={showToast}
+                type={status === 'success' ? 'success' : 'error'}
+                message={status === 'success' ? 'Vielen Dank! Ihre Nachricht wurde gesendet.' : 'Fehler. Bitte versuchen Sie es später erneut.'}
+                onClose={() => setShowToast(false)}
+            />
         </div>
     );
 };
