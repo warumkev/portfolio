@@ -41,7 +41,7 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
         const onPointerMove = (moveEvent: PointerEvent) => {
             const dw = moveEvent.clientX - resizeStart.x;
             const dh = moveEvent.clientY - resizeStart.y;
-            onResize(winState.id, { width: Math.max(300, resizeStart.w + dw), height: Math.max(200, resizeStart.h + dh) });
+            onResize(winState.id, { width: Math.max(220, resizeStart.w + dw), height: Math.max(200, resizeStart.h + dh) });
         };
         const onPointerUp = () => {
             document.removeEventListener('pointermove', onPointerMove);

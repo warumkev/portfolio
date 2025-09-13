@@ -17,6 +17,7 @@ export interface AppConfig {
     icon: ReactNode;
     content: ReactNode;
     defaultSize: { width: number; height: number };
+    minSize?: { width: number; height: number };
 }
 
 export interface BlogPost {
@@ -75,7 +76,7 @@ const ProjectScreenshotCard: React.FC<{ project: Project }> = ({ project }) => {
     // Microlink screenshot API
     const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&screenshot.waitForTimeout=2000`;
     return (
-        <div className="mb-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/50 shadow hover:shadow-lg transition overflow-hidden">
+        <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800/50 shadow hover:shadow-lg transition overflow-hidden h-full flex flex-col w-[300px] min-w-[260px] max-w-[300px] min-h-[320px] max-h-[360px]">
             <div className="aspect-video bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center relative">
                 {!imgError ? (
                     <img
@@ -91,12 +92,12 @@ const ProjectScreenshotCard: React.FC<{ project: Project }> = ({ project }) => {
                     </div>
                 )}
             </div>
-            <div className="p-4">
+            <div className="p-4 flex flex-col flex-1">
                 <div className="flex items-center gap-2 mb-2">
                     <span className="text-cyan-500">{project.icon}</span>
                     <h3 className="font-bold text-lg text-neutral-900 dark:text-white flex-1">{project.title}</h3>
                 </div>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{project.description}</p>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2 flex-1">{project.description}</p>
                 <div className="flex gap-3 mt-2">
                     <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:underline font-medium">Zur Website</a>
                     {project.url.includes('github.com') && (
@@ -109,9 +110,17 @@ const ProjectScreenshotCard: React.FC<{ project: Project }> = ({ project }) => {
 };
 
 const PortfolioContent = () => (
-    <div className="p-1">
+    <div className="p-1 h-full flex flex-col min-w-[220px] min-h-[400px]">
         <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-3">Projekte</h2>
-        {projectData.map(p => <ProjectScreenshotCard key={p.title} project={p} />)}
+        <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch flex-1 min-h-0 grid-auto-rows-auto justify-center">
+            {projectData.map(p => (
+                <div key={p.title} className="flex justify-center h-full">
+                    <div className="w-[260px] min-w-[220px] max-w-[260px] h-full min-h-[320px] max-h-[360px] flex flex-col">
+                        <ProjectScreenshotCard project={p} />
+                    </div>
+                </div>
+            ))}
+        </div>
     </div>
 );
 
@@ -123,12 +132,29 @@ const ContactContent = () => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setStatus('sending');
-        // TODO: Implement form submission logic (e.g., using an API route or a third-party service)
-        // For demonstration, we'll just simulate a delay and success.
-        setTimeout(() => {
-            setStatus('success');
-            setTimeout(() => setStatus('idle'), 3000); // Reset after 3 seconds
-        }, 1500);
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message'),
+        };
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            if (res.ok) {
+                setStatus('success');
+                form.reset();
+                setTimeout(() => setStatus('idle'), 3000);
+            } else {
+                setStatus('error');
+            }
+        } catch {
+            setStatus('error');
+        }
     };
 
     return (
@@ -314,7 +340,8 @@ export const APP_CONFIG: Record<string, AppConfig> = {
         title: 'Portfolio',
         icon: <Briefcase />,
         content: <PortfolioContent />,
-        defaultSize: { width: 500, height: 400 }
+        defaultSize: { width: 700, height: 500 }, // larger default for better grid
+        minSize: { width: 260, height: 400 }, // enforce min size for list view usability
     },
     'blog': {
         title: 'Notizen',
