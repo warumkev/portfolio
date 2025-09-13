@@ -54,9 +54,18 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.7 }}
                 transition={{ delay: 1.2 }}
-                className="absolute bottom-6 left-0 w-full text-center text-xs text-neutral-400 font-mono"
+                className="absolute bottom-6 left-0 w-full flex flex-col items-center gap-2 text-center"
             >
-                © {new Date().getFullYear()} Kevin Tamme – portfoliOS
+                <a
+                    href="/safe-mode.html"
+                    className="text-xs text-neutral-500 underline hover:text-neutral-800 transition-colors"
+                    tabIndex={0}
+                >
+                    Safe Mode: Simple HTML version
+                </a>
+                <span className="text-xs text-neutral-400 font-mono block mt-1">
+                    © {new Date().getFullYear()} Kevin Tamme – portfoliOS
+                </span>
             </motion.div>
         </motion.div>
     );

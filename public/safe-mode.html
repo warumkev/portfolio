@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kevin Tamme – Safe Mode Portfolio</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f7f7f8; color: #222; margin: 0; padding: 2rem; }
+    .container { max-width: 700px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px 0 #0001; padding: 2.5rem 2rem 2rem 2rem; }
+    .profile-block { display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem; }
+    .profile-img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 2px solid #eee; box-shadow: 0 2px 8px #0001; }
+    h1 { font-size: 2rem; margin-bottom: 0.2rem; text-align: center; }
+    .subtitle { color: #666; font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center; }
+    .safe-mode-desc { color: #888; font-size: 1rem; margin-bottom: 0.5rem; text-align: center; }
+    h2 { font-size: 1.2rem; margin-top: 2.2rem; margin-bottom: 0.7rem; }
+    a { color: #0070f3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { padding-left: 1.2em; }
+    .note { color: #888; font-size: 0.95em; margin-top: 2.5rem; text-align: center; }
+    .notion-card { border: 1px solid #ececec; }
+    .notion-divider { border: none; border-top: 1px solid #ececec; margin: 2.2rem 0 1.2rem 0; }
+    .projects-list { display: flex; flex-direction: column; gap: 2.2rem; margin-bottom: 1.5rem; }
+    .project-card { background: #fafbfc; border: 1px solid #ececec; border-radius: 8px; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1.5rem 1.2rem; display: flex; flex-direction: column; align-items: stretch; }
+    .project-preview { width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+    .project-iframe { width: 100%; max-width: 480px; height: 240px; border: 1px solid #ececec; border-radius: 6px; box-shadow: 0 1px 6px #0001; background: #fff; }
+    .project-img { width: 100%; max-width: 480px; border-radius: 6px; box-shadow: 0 1px 6px #0001; }
+    .project-content { display: flex; flex-direction: column; align-items: center; }
+    .project-title { font-size: 1.1rem; font-weight: 600; color: #222; margin-bottom: 0.2rem; text-decoration: none; text-align: center; }
+    .project-title:hover { color: #0070f3; text-decoration: underline; }
+    .project-desc { color: #555; font-size: 1rem; margin-bottom: 0.7rem; text-align: center; }
+    .project-links { display: flex; gap: 0.7em; align-items: center; font-size: 0.98em; margin-bottom: 0.2em; }
+    .project-links a { color: #0070f3; text-decoration: none; font-weight: 500; }
+    .project-links a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container notion-card">
+    <div class="profile-block">
+      <img src="/profile-image.PNG" alt="Kevin Tamme profile" class="profile-img" />
+      <h1>Kevin Tamme</h1>
+      <div class="subtitle">22-jähriger Frontend-Entwickler aus Frankfurt am Main</div>
+      <div class="safe-mode-desc">Dies ist der Safe-Mode: Alle Infos als schnelle, minimalistische Übersicht.</div>
+    </div>
+    <hr class="notion-divider" />
+    <h2>Über Mich</h2>
+    <ul>
+      <li>Frontend-Entwickler &amp; UI/UX-Designer</li>
+      <li>Informatik-Student (B.Sc.), Abschluss 2025</li>
+      <li>Leidenschaft für Design, Animation &amp; moderne Webtechnologien</li>
+      <li>Standort: Frankfurt am Main, Deutschland</li>
+    </ul>
+    <hr class="notion-divider" />
+    <h2>Kernkompetenzen</h2>
+    <ul>
+      <li>TypeScript &amp; React</li>
+      <li>Next.js</li>
+      <li>UI/UX Design (Figma, Adobe CC)</li>
+      <li>Animationen (MagicUI)</li>
+      <li>Tailwind CSS</li>
+      <li>Git &amp; APIs</li>
+    </ul>
+    <hr class="notion-divider" />
+    <h2>Projekte</h2>
+    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 0.5rem;">
+      <div style="border: 1px solid #ececec; border-radius: 8px; background: #fafbfc; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-weight: 600; font-size: 1.08rem; color: #222;">PortfoliOS (Diese Seite)</span>
+          <a href="https://github.com/warumkev/portfolio" target="_blank" title="GitHub Repo" style="margin-left: 0.5em; display: inline-flex; align-items: center; text-decoration: none;">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/>
+            </svg>
+          </a>
+        </div>
+        <div style="color: #555; font-size: 0.98rem; margin-bottom: 0.6rem;">Interaktives Portfolio im OS-Stil mit Next.js, TypeScript, Tailwind CSS.</div>
+        <div style="margin-top: 0.2rem;">
+          <a href="https://kevintamme.com" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a>
+        </div>
+      </div>
+      <div style="border: 1px solid #ececec; border-radius: 8px; background: #fafbfc; box-shadow: 0 1px 4px #0001; padding: 1.2rem 1.2rem 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-weight: 600; font-size: 1.08rem; color: #222;">Katalyst</span>
+          <a href="https://github.com/warumkev/katalyst" target="_blank" title="GitHub Repo" style="margin-left: 0.5em; display: inline-flex; align-items: center; text-decoration: none;">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.92 1.89 5.39 4.51 6.26.33.06.45-.14.45-.32v-1.13c-1.84.4-2.23-.89-2.23-.89-.3-.76-.74-.96-.74-.96-.6-.41.05-.4.05-.4.66.05 1.01.68 1.01.68.59 1.01 1.54.72 1.91.55.06-.43.23-.72.41-.89-1.47-.17-3.02-.74-3.02-3.29 0-.73.26-1.33.68-1.8-.07-.17-.29-.85.06-1.77 0 0 .55-.18 1.8.68a6.2 6.2 0 0 1 1.64-.22c.56 0 1.12.07 1.64.22 1.25-.86 1.8-.68 1.8-.68.35.92.13 1.6.06 1.77.42.47.68 1.07.68 1.8 0 2.56-1.55 3.12-3.03 3.29.24.21.45.62.45 1.25v1.85c0 .18.12.38.46.32A6.51 6.51 0 0 0 14.5 8c0-3.59-2.91-6.5-6.5-6.5z" fill="#222"/>
+            </svg>
+          </a>
+        </div>
+        <div style="color: #555; font-size: 0.98rem; margin-bottom: 0.6rem;">Showcase einer App zur KI-Generierung von Biografien, READMEs und "Über mich"-Texten.</div>
+        <div style="margin-top: 0.2rem;">
+          <a href="https://ketam-katalyst.vercel.app" target="_blank" style="display:inline-block;padding:0.38em 1.1em;background:#0070f3;color:#fff;font-weight:500;border-radius:6px;font-size:0.97rem;text-decoration:none;box-shadow:0 1px 4px #0001;transition:background 0.15s;">Zum Projekt</a>
+        </div>
+      </div>
+    </div>
+    <hr class="notion-divider" />
+    <h2>Blog &amp; Learnings</h2>
+    <ul>
+      <li>
+        <b>State Management in React 2024</b> <br>
+        <i>15. Juli 2024</i><br>
+        Die Landschaft des State Managements in React ist vielfältiger denn je. Von Redux über Zustand bis hin zu Jotai und den eingebauten Hooks wie <code>useContext</code> und <code>useReducer</code> – die Wahl des richtigen Tools hängt stark vom Projektumfang ab. Für kleine bis mittlere Projekte hat sich <code>Zustand</code> als leichtgewichtige und dennoch leistungsstarke Alternative etabliert...
+      </li>
+      <li>
+        <b>Learnings aus Projekt 'Phoenix'</b> <br>
+        <i>02. Juni 2024</i><br>
+        Die größte Herausforderung bei 'Phoenix' war die Skalierung der Datenbank-Abfragen unter hoher Last. Durch die Implementierung eines Caching-Layers mit Redis und die Optimierung von Indizes konnten wir die Latenz um 70% reduzieren. Ein wichtiges Learning: Performance-Tests sollten so früh wie möglich in den Entwicklungszyklus integriert werden.
+      </li>
+      <li>
+        <b>Warum TypeScript ein Game-Changer ist</b> <br>
+        <i>10. Mai 2024</i><br>
+        Die Einführung von TypeScript in unserem Team war anfangs mit Lernaufwand verbunden, hat sich aber schnell bezahlt gemacht. Die statische Typisierung fängt Fehler bereits während der Entwicklung ab, verbessert die Code-Qualität und macht die Zusammenarbeit durch selbstdokumentierenden Code deutlich effizienter. Es ist ein Investment, das sich langfristig auszahlt.
+      </li>
+    </ul>
+    <hr class="notion-divider" />
+    <h2>Systeminfo</h2>
+    <ul>
+      <li><b>Frontend:</b> TypeScript, React, Next.js</li>
+      <li><b>Styling:</b> Tailwind CSS, MagicUI</li>
+      <li><b>Design:</b> Figma, Adobe CC</li>
+      <li><b>Backend/DB:</b> PHP, SQL, APIs</li>
+      <li><b>Tooling:</b> Git, Vercel</li>
+      <li><b>Status:</b> Informatik-Student (B.Sc.)</li>
+    </ul>
+    <hr class="notion-divider" />
+    <h2>Kontakt</h2>
+    <ul>
+      <li>E-Mail: <a href="mailto:kevin@example.com">kevin@example.com</a></li>
+      <li>LinkedIn: <a href="https://linkedin.com/in/warumkev" target="_blank">linkedin.com/in/warumkev</a></li>
+      <li>GitHub: <a href="https://github.com/warumkev" target="_blank">github.com/warumkev</a></li>
+    </ul>
+    <div class="note">
+      Für das volle, interaktive Erlebnis:
+      <a href="/" style="display:inline-block;margin:0 0.2em;font-weight:500;">Zurück zur Hauptseite</a>.<br>
+      Copyright © 2025 Kevin Tamme. Alle Rechte vorbehalten.
+    </div>
+  </div>
+</body>
+</html>
