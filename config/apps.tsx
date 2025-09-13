@@ -1,5 +1,5 @@
-import { ReactNode, useState, useRef, FormEvent } from 'react';
-import { User, Briefcase, Mail, Rocket, Palette, NotebookText, CircuitBoard, Music, Play, Pause, Bot } from 'lucide-react';
+import { ReactNode, useState, useRef, FormEvent, ChangeEvent } from 'react';
+import { User, Briefcase, Mail, Rocket, Palette, NotebookText, CircuitBoard, Music, Play, Pause, Bot, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
 
 
@@ -157,8 +157,8 @@ const blogPosts: BlogPost[] = [
 
 const BlogContent = () => (
     <div className="p-4 font-sans">
-         <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-2">Notizen & Learnings</h2>
-         <div className="space-y-4">
+        <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-2">Notizen & Learnings</h2>
+        <div className="space-y-4">
             {blogPosts.map((post, index) => (
                 <div key={index} className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg">
                     <h3 className="font-semibold text-neutral-800 dark:text-neutral-100">{post.title}</h3>
@@ -166,7 +166,7 @@ const BlogContent = () => (
                     <p className="text-sm text-neutral-600 dark:text-neutral-300">{post.content}</p>
                 </div>
             ))}
-         </div>
+        </div>
     </div>
 );
 
@@ -175,11 +175,11 @@ const SysteminfoContent = () => (
     <div className="p-6 font-mono text-sm text-neutral-800 dark:text-neutral-200">
         <div className="w-full">
             <div className="flex items-center gap-4 mb-6">
-                 <CircuitBoard size={48} className="text-cyan-500" />
-                 <div>
+                <CircuitBoard size={48} className="text-cyan-500" />
+                <div>
                     <h2 className="text-2xl font-bold">PortfoliOS v1.0</h2>
                     <p className="text-neutral-500">© 2025 Kevin Tamme</p>
-                 </div>
+                </div>
             </div>
             <div className="space-y-2 border-t border-neutral-300 dark:border-neutral-700 pt-4">
                 <div className="flex justify-between">
@@ -202,7 +202,7 @@ const SysteminfoContent = () => (
                     <span className="text-neutral-500 dark:text-neutral-400">Tooling:</span>
                     <span className="font-semibold">Git, Vercel</span>
                 </div>
-                 <div className="flex justify-between">
+                <div className="flex justify-between">
                     <span className="text-neutral-500 dark:text-neutral-400">Status:</span>
                     <span className="font-semibold">Informatik-Student (B.Sc.)</span>
                 </div>
@@ -214,6 +214,7 @@ const SysteminfoContent = () => (
 // --- 6. Music Player App ---
 const MusicPlayerContent = () => {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [volume, setVolume] = useState(0.5);
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const togglePlayPause = () => {
@@ -226,11 +227,19 @@ const MusicPlayerContent = () => {
             setIsPlaying(!isPlaying);
         }
     };
-    
+
+    const handleVolumeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newVolume = parseFloat(event.target.value);
+        setVolume(newVolume);
+        if (audioRef.current) {
+            audioRef.current.volume = newVolume;
+        }
+    };
+
     return (
         <div className="p-6 h-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-50 dark:from-purple-900/50 to-indigo-100 dark:to-indigo-900/50">
             <div className="w-48 h-48 bg-neutral-300 dark:bg-neutral-700 rounded-lg shadow-lg mb-6 flex items-center justify-center">
-                 <Music size={64} className="text-neutral-500 dark:text-neutral-400" />
+                <Music size={64} className="text-neutral-500 dark:text-neutral-400" />
             </div>
             <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100">Lofi Chill</h3>
             <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6">by Lofi Girl</p>
@@ -240,11 +249,20 @@ const MusicPlayerContent = () => {
             >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
             </button>
-            {/* HINWEIS: Ersetzen Sie die `src` unten durch eine URL zu Ihrer lizenfreien Musikdatei.
-              Da ich keine externen Dateien einbetten kann, ist dies ein Platzhalter.
-              Ein Beispiel wäre eine Datei, die Sie im /public Ordner Ihres Projekts ablegen.
-            */}
-            <audio ref={audioRef} src="/lofi-music.mp3" loop onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}></audio>
+            <div className="w-full max-w-xs mt-6 flex items-center gap-3">
+                <VolumeX size={20} className="text-neutral-500 dark:text-neutral-400" />
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full"
+                />
+                <Volume2 size={20} className="text-neutral-500 dark:text-neutral-400" />
+            </div>
+            <audio ref={audioRef} src="https://play.ilovemusic.de/ilm_ilovechillhop" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}></audio>
         </div>
     );
 };
@@ -252,41 +270,40 @@ const MusicPlayerContent = () => {
 
 // --- App Configuration ---
 export const APP_CONFIG: Record<string, AppConfig> = {
-    'about': { 
-        title: 'Über Mich', 
-        icon: <User />, 
+    'about': {
+        title: 'Über Mich',
+        icon: <User />,
         content: <AboutContent />,
         defaultSize: { width: 680, height: 320 }
     },
-    'portfolio': { 
-        title: 'Portfolio', 
-        icon: <Briefcase />, 
+    'portfolio': {
+        title: 'Portfolio',
+        icon: <Briefcase />,
         content: <PortfolioContent />,
         defaultSize: { width: 500, height: 400 }
     },
-    'blog': { 
-        title: 'Notizen', 
-        icon: <NotebookText />, 
+    'blog': {
+        title: 'Notizen',
+        icon: <NotebookText />,
         content: <BlogContent />,
         defaultSize: { width: 550, height: 450 }
     },
-     'systeminfo': { 
-        title: 'Systeminfo', 
-        icon: <CircuitBoard />, 
+    'systeminfo': {
+        title: 'Systeminfo',
+        icon: <CircuitBoard />,
         content: <SysteminfoContent />,
         defaultSize: { width: 520, height: 380 }
     },
-     'musicplayer': { 
-        title: 'Musik', 
-        icon: <Music />, 
+    'musicplayer': {
+        title: 'Musik',
+        icon: <Music />,
         content: <MusicPlayerContent />,
         defaultSize: { width: 380, height: 480 }
     },
-    'contact': { 
-        title: 'Kontakt', 
-        icon: <Mail />, 
+    'contact': {
+        title: 'Kontakt',
+        icon: <Mail />,
         content: <ContactContent />,
         defaultSize: { width: 520, height: 580 }
     },
 };
-

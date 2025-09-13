@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { motion, PanInfo, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
 import { APP_CONFIG, AppConfig } from '@/config/apps';
 
@@ -22,13 +22,13 @@ interface WindowProps {
     winState: WindowState;
     onClose: (id: string) => void;
     onFocus: (id: string) => void;
-    onDrag: (id: string, newPosition: WindowPosition) => void;
     onDragEnd: (id: string, info: PanInfo) => void;
     onResize: (id: string, newSize: WindowSize) => void;
 }
 
-const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onDragEnd, onResize }) => {
+const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDragEnd, onResize }) => {
     const resizeRef = React.useRef<HTMLDivElement>(null);
+    const dragControls = useDragControls();
 
     const handleResize = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         event.stopPropagation();
@@ -55,25 +55,24 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onD
         <motion.div
             key={winState.id}
             drag
+            dragListener={false}
+            dragControls={dragControls}
             dragMomentum={false}
             onDragStart={() => onFocus(winState.id)}
-            onDrag={(e, info) => onDrag(winState.id, { x: info.point.x - info.delta.x, y: info.point.y - info.delta.y })}
             onDragEnd={(e, info) => onDragEnd(winState.id, info)}
-            initial={{ opacity: 0 }}
+            className="absolute bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-2xl flex flex-col overflow-hidden"
+            style={{ zIndex: winState.zIndex }}
             animate={{
-                opacity: 1,
                 x: winState.position.x,
                 y: winState.position.y,
                 width: winState.size.width,
                 height: winState.size.height,
             }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="absolute bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-2xl flex flex-col overflow-hidden"
-            style={{ zIndex: winState.zIndex }}
+            transition={{ duration: 0 }}
             onPointerDown={() => onFocus(winState.id)}
         >
             <div
+                onPointerDown={(e) => dragControls.start(e)}
                 className="flex items-center justify-between h-10 px-3 bg-neutral-200/70 dark:bg-neutral-800/70 rounded-t-lg border-b border-neutral-300 dark:border-neutral-700 cursor-grab flex-shrink-0"
             >
                 <div className="flex items-center gap-2 text-neutral-800 dark:text-neutral-200">
@@ -176,19 +175,12 @@ export default function DesktopView() {
         }
     };
 
-    const moveWindow = (id: string, newPosition: WindowPosition) => {
-        setWindows(prev => ({ ...prev, [id]: { ...prev[id], position: newPosition } }));
-    };
-
     const handleDragEnd = (id: string, info: PanInfo) => {
-        const snapThreshold = 50;
-        let newPos = { x: info.point.x, y: info.point.y };
-
-        if (info.point.x < snapThreshold) { newPos.x = 0; }
-        if (info.point.y < snapThreshold) { newPos.y = 0; }
-        if (window.innerWidth - info.point.x < snapThreshold) { newPos.x = window.innerWidth - windows[id].size.width; }
-        if (window.innerHeight - info.point.y < snapThreshold) { newPos.y = window.innerHeight - windows[id].size.height; }
-
+        const currentWindow = windows[id];
+        const newPos = {
+            x: currentWindow.position.x + info.offset.x,
+            y: currentWindow.position.y + info.offset.y
+        };
         setWindows(prev => ({ ...prev, [id]: { ...prev[id], position: newPos } }));
     }
 
@@ -198,24 +190,21 @@ export default function DesktopView() {
         <main className="h-[100dvh] w-screen overflow-hidden bg-neutral-100 dark:bg-neutral-950 text-black dark:text-white font-sans relative select-none">
             <div className="absolute inset-0 bg-transparent dark:bg-[radial-gradient(circle_at_center,_rgba(40,40,80,0.3)_0,_rgba(10,10,20,0)_50%)]"></div>
 
-            <AnimatePresence>
-                {Object.values(windows).map(winState => {
-                    if (winState.isOpen) {
-                        return (
-                            <Window
-                                key={winState.id}
-                                winState={winState}
-                                onClose={closeWindow}
-                                onFocus={focusWindow}
-                                onDrag={moveWindow}
-                                onDragEnd={handleDragEnd}
-                                onResize={resizeWindow}
-                            />
-                        )
-                    }
-                    return null;
-                })}
-            </AnimatePresence>
+            {Object.values(windows).map(winState => {
+                if (winState.isOpen) {
+                    return (
+                        <Window
+                            key={winState.id}
+                            winState={winState}
+                            onClose={closeWindow}
+                            onFocus={focusWindow}
+                            onDragEnd={handleDragEnd}
+                            onResize={resizeWindow}
+                        />
+                    )
+                }
+                return null;
+            })}
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
                 <motion.div
