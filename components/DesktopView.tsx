@@ -190,9 +190,19 @@ export default function DesktopView() {
     }, []);
 
     const openWindow = (id: string) => {
-        const newZIndex = highestZIndex + 1;
-        setHighestZIndex(newZIndex);
-        setWindows(prev => ({ ...prev, [id]: { ...prev[id], isOpen: true, zIndex: newZIndex } }));
+        setWindows(prev => {
+            const win = prev[id];
+            if (!win) return prev;
+            if (win.isOpen) {
+                // If already open, close it
+                return { ...prev, [id]: { ...win, isOpen: false } };
+            } else {
+                // If closed, open and bring to front
+                const newZIndex = highestZIndex + 1;
+                setHighestZIndex(newZIndex);
+                return { ...prev, [id]: { ...win, isOpen: true, zIndex: newZIndex } };
+            }
+        });
     };
 
     const closeWindow = (id: string) => setWindows(prev => ({ ...prev, [id]: { ...prev[id], isOpen: false } }));
@@ -238,8 +248,11 @@ export default function DesktopView() {
     });
 
     return (
-        <main ref={constraintsRef} className="h-[100dvh] w-screen overflow-hidden bg-neutral-100 dark:bg-neutral-950 text-black dark:text-white font-sans relative select-none">
-            <div className="absolute inset-0 bg-transparent dark:bg-[radial-gradient(circle_at_center,_rgba(40,40,80,0.3)_0,_rgba(10,10,20,0)_50%)]"></div>
+        <main
+            ref={constraintsRef}
+            className="h-[100dvh] w-screen overflow-hidden text-black dark:text-white font-sans relative select-none bg-cover bg-center"
+            style={{ backgroundImage: "url('/background.jpeg')" }}
+        >
 
             {Object.values(windows).map(winState => {
                 if (winState.isOpen) {
