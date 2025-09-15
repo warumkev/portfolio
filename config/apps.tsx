@@ -2,8 +2,9 @@ import { ReactNode, useState, useRef, useEffect, FormEvent, ChangeEvent } from '
 import ReactMarkdown from 'react-markdown';
 import { User, Briefcase, Mail, NotebookText, CircuitBoard, Music, Play, Pause, Bot, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
-// import { fetchLinkPreview, LinkPreview } from '../lib/linkPreview';
 
+// MagicUI
+import { TextAnimate } from "@/components/magicui/text-animate";
 
 // --- Type Definitions ---
 export interface Project {
@@ -31,32 +32,61 @@ export interface BlogPost {
 // --- Content Components ---
 
 // --- 1. About Me App ---
+import { motion } from 'framer-motion';
+const skillBadges = [
+    { label: 'TypeScript', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'React', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'UI/UX', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'Next.js', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'Figma', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'MagicUI', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'Tailwind', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+    { label: 'APIs', color: 'bg-neutral-300 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200' },
+];
+const vibeLevels = [
+    { label: 'Creativity', value: 90 },
+    { label: 'Tech', value: 85 },
+    { label: 'Design', value: 80 },
+    { label: 'Fun', value: 75 },
+];
 const AboutContent = () => (
-    <div className="p-6 text-neutral-800 dark:text-neutral-200 font-sans">
-        <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-shrink-0">
-                <Image
-                    src="/profile-image.PNG"
-                    alt="Profilbild von Kevin Tamme, Frontend Entwickler aus Frankfurt, spezialisiert auf React, Next.js und UI/UX Design"
-                    width={128}
-                    height={128}
-                    className="rounded-full shadow-lg border-4 border-neutral-200 dark:border-neutral-700"
-                />
-            </div>
-            <div className="text-center md:text-left">
-                <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Kevin Tamme</h2>
-                <p className="text-neutral-600 dark:text-neutral-300 mb-4">
-                    22-jähriger Frontend-Entwickler aus Frankfurt am Main, kurz vor dem Abschluss meines Informatik-Studiums. Meine Leidenschaft gilt dem Design und der Kreativität, spezialisiert auf immersive UI/UX, die im Kopf bleiben.
-                </p>
-                <h3 className="font-semibold text-lg text-neutral-900 dark:text-neutral-100 mb-2">Kernkompetenzen:</h3>
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-neutral-600 dark:text-neutral-400 text-sm">
-                    <li>- TypeScript & React</li>
-                    <li>- UI/UX Design (Figma, Adobe CC)</li>
-                    <li>- Next.js</li>
-                    <li>- Animationen (MagicUI)</li>
-                    <li>- Tailwind CSS</li>
-                    <li>- Git & APIs</li>
-                </ul>
+    <div className="relative p-6 font-sans min-h-[340px] flex flex-col items-center justify-center bg-neutral-50 dark:bg-neutral-900">
+        <div className="relative">
+            <Image
+                src="/profile-image.PNG"
+                alt="Kevin Tamme, Frontend Entwickler aus Frankfurt"
+                width={128}
+                height={128}
+                className="rounded-full shadow-lg border-4 border-neutral-200 dark:border-neutral-700"
+            />
+        </div>
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-1 tracking-tight text-center">
+            <TextAnimate animation="blurInUp" by="word" delay={0.25}>Kevin Tamme</TextAnimate>
+        </h2>
+        <div className="text-base font-medium text-neutral-500 dark:text-neutral-400 text-center mb-2">
+            <TextAnimate animation="blurInUp" by="word" delay={0.25 * 2}>Design. Code. Creativity.</TextAnimate>
+        </div>
+        <p className="text-neutral-700 dark:text-neutral-300 text-center max-w-xl mx-auto mb-2">
+            <TextAnimate animation="blurInUp" by="word" delay={0.25 * 3}>Ich bin 22 Jahre jung und ein Informatik-Student aus Frankfurt. Ich liebe es, mit <span className="font-bold text-neutral-800 dark:text-neutral-100">TypeScript</span>, <span className="font-bold text-neutral-800 dark:text-neutral-100">UI/UX</span> und <span className="font-bold text-neutral-800 dark:text-neutral-100">kreativen Ideen</span> digitale Erlebnisse zu schaffen, die einem im Kopf bleiben.</TextAnimate>
+        </p>
+        <div className="flex flex-wrap gap-2 justify-center mt-2 mb-4">
+            {skillBadges.map(badge => (
+                <span key={badge.label} className={`px-3 py-1 rounded-full text-xs font-semibold shadow ${badge.color}`}>{badge.label}</span>
+            ))}
+        </div>
+        <div className="w-full max-w-md mx-auto mt-2">
+            <h3 className="text-xs font-bold text-neutral-600 dark:text-neutral-300 mb-2 text-center">Vibe Meter</h3>
+            <div className="space-y-2">
+                {vibeLevels.map(vibe => (
+                    <div key={vibe.label} className="flex items-center gap-2">
+                        <span className="w-20 text-xs text-neutral-500 dark:text-neutral-400">{vibe.label}</span>
+                        <div className="flex-1 h-2 rounded bg-neutral-200 dark:bg-neutral-800 overflow-hidden">
+                            <motion.div initial={{ width: 0 }} animate={{ width: `${vibe.value}%` }} transition={{ delay: 0.6 }} className={`h-2 rounded bg-neutral-400 dark:bg-neutral-600`} style={{ width: `${vibe.value}%` }} />
+                            <motion.div />
+                        </div>
+                        <span className="text-xs font-bold text-neutral-700 dark:text-neutral-200">{vibe.value}%</span>
+                    </div>
+                ))}
             </div>
         </div>
     </div>
@@ -121,19 +151,24 @@ const PortfolioContent = () => {
         loadProjects();
     }, []);
     return (
-        <div className="p-1 h-full flex flex-col min-w-[220px] min-h-[400px]">
+        <div className="p-2 h-full flex flex-col min-w-[220px] min-h-[400px] w-full">
             <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-3">Projekte</h2>
             {loading && <div className="text-center text-neutral-400">Lade Projekte…</div>}
             {error && <div className="text-center text-red-500">Fehler beim Laden der Projekte.</div>}
-            <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch flex-1 min-h-0 grid-auto-rows-auto justify-center">
+            <ul className="flex flex-col gap-4 w-full">
                 {projects.map(p => (
-                    <div key={p.title} className="flex justify-center h-full">
-                        <div className="w-[260px] min-w-[220px] max-w-[260px] h-full min-h-[320px] max-h-[360px] flex flex-col">
-                            <ProjectScreenshotCard project={p} />
+                    <li key={p.title} className="w-full bg-white dark:bg-neutral-800 rounded-xl shadow border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col md:flex-row items-start md:items-center gap-4 transition hover:shadow-lg">
+                        <div className="flex-1">
+                            <h3 className="font-bold text-lg text-neutral-900 dark:text-white mb-1">{p.title}</h3>
+                            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{p.description}</p>
                         </div>
-                    </div>
+                        <div className="flex gap-2 flex-shrink-0">
+                            <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-cyan-500 text-white rounded font-medium text-sm hover:bg-cyan-600 transition">Live</a>
+                            <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-neutral-700 text-white rounded font-medium text-sm hover:bg-neutral-800 transition">GitHub</a>
+                        </div>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
     );
 }
@@ -435,37 +470,42 @@ export const APP_CONFIG: Record<string, AppConfig> = {
         title: 'Über Mich',
         icon: <User />,
         content: <AboutContent />,
-        defaultSize: { width: 680, height: 320 }
+        defaultSize: { width: 680, height: 320 },
+        minSize: { width: 500, height: 320 },
     },
     'portfolio': {
         title: 'Portfolio',
         icon: <Briefcase />,
         content: <PortfolioContent />,
-        defaultSize: { width: 700, height: 500 }, // larger default for better grid
-        minSize: { width: 260, height: 400 }, // enforce min size for list view usability
+        defaultSize: { width: 700, height: 500 },
+        minSize: { width: 500, height: 400 },
     },
     'blog': {
         title: 'Notizen',
         icon: <NotebookText />,
         content: <BlogContent />,
-        defaultSize: { width: 550, height: 450 }
+        defaultSize: { width: 550, height: 450 },
+        minSize: { width: 500, height: 400 },
     },
     'systeminfo': {
         title: 'Systeminfo',
         icon: <CircuitBoard />,
         content: <SysteminfoContent />,
-        defaultSize: { width: 520, height: 380 }
+        defaultSize: { width: 520, height: 380 },
+        minSize: { width: 500, height: 400 },
     },
     'musicplayer': {
         title: 'Musik',
         icon: <Music />,
         content: <MusicPlayerContent />,
-        defaultSize: { width: 380, height: 480 }
+        defaultSize: { width: 380, height: 480 },
+        minSize: { width: 500, height: 400 },
     },
     'contact': {
         title: 'Kontakt',
         icon: <Mail />,
+        minSize: { width: 500, height: 400 },
         content: <ContactContent />,
-        defaultSize: { width: 520, height: 580 }
+        defaultSize: { width: 500, height: 600 }
     },
 };

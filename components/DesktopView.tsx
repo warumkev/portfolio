@@ -103,11 +103,15 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
         event.stopPropagation();
         onFocus(winState.id);
         const resizeStart = { x: event.clientX, y: event.clientY, w: winState.size.width, h: winState.size.height };
+        const minSize = APP_CONFIG[winState.id]?.minSize || { width: 320, height: 240 };
 
         const onPointerMove = (moveEvent: PointerEvent) => {
             const dw = moveEvent.clientX - resizeStart.x;
             const dh = moveEvent.clientY - resizeStart.y;
-            onResize(winState.id, { width: Math.max(220, resizeStart.w + dw), height: Math.max(200, resizeStart.h + dh) });
+            onResize(winState.id, {
+                width: Math.max(minSize.width, resizeStart.w + dw),
+                height: Math.max(minSize.height, resizeStart.h + dh)
+            });
         };
         const onPointerUp = () => {
             document.removeEventListener('pointermove', onPointerMove);
@@ -301,13 +305,15 @@ export default function DesktopView() {
     const resizeWindow = (id: string, newSize: WindowSize) => setWindows(prev => {
         const win = prev[id];
         if (!win) return prev;
-        // Clamp size so window stays in viewport
+        const config = APP_CONFIG[id];
+        const minSize = config?.minSize || { width: 320, height: 240 };
+        // Clamp size so window stays in viewport and respects minSize
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
-        const maxWidth = Math.max(300, viewportWidth - win.position.x);
-        const maxHeight = Math.max(200, viewportHeight - win.position.y);
-        const clampedWidth = Math.min(newSize.width, maxWidth);
-        const clampedHeight = Math.min(newSize.height, maxHeight);
+        const maxWidth = Math.max(minSize.width, viewportWidth - win.position.x);
+        const maxHeight = Math.max(minSize.height, viewportHeight - win.position.y);
+        const clampedWidth = Math.max(minSize.width, Math.min(newSize.width, maxWidth));
+        const clampedHeight = Math.max(minSize.height, Math.min(newSize.height, maxHeight));
         return {
             ...prev,
             [id]: { ...win, size: { width: clampedWidth, height: clampedHeight } }
