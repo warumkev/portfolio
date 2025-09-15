@@ -37,7 +37,7 @@ const AboutContent = () => (
             <div className="flex-shrink-0">
                 <Image
                     src="/profile-image.PNG"
-                    alt="Professionelles Foto von Kevin Tamme"
+                    alt="Profilbild von Kevin Tamme, Frontend Entwickler aus Frankfurt, spezialisiert auf React, Next.js und UI/UX Design"
                     width={128}
                     height={128}
                     className="rounded-full shadow-lg border-4 border-neutral-200 dark:border-neutral-700"

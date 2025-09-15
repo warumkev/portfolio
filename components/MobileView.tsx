@@ -37,8 +37,8 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-black"
         >
             <div className="flex flex-col items-center gap-6 w-full text-center">
-                <span className="text-4xl font-extrabold tracking-tight select-none">portfoliOS</span>
-                <span className="text-base text-neutral-500 font-mono tracking-wide select-none">Welcome.<br />Swipe up to explore my work.</span>
+                <h1 className="text-4xl font-extrabold tracking-tight select-none">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
+                <span className="text-base text-neutral-500 font-mono tracking-wide select-none">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
             </div>
             <motion.div
                 drag="y"

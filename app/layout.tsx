@@ -16,11 +16,25 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.kevintamme.com"),
   title: {
-    default: "PortfoliOS | Kevin Tamme - Frontend-Entwickler",
-    template: "%s | Kevin Tamme",
+    default: "Portfolio | Kevin Tamme - Frontend Entwickler Frankfurt, React, UI/UX, TypeScript",
+    template: "%s | Kevin Tamme - Frontend Entwickler Frankfurt",
   },
-  description: "Interaktives Portfolio von Kevin Tamme, einem Frontend-Entwickler aus Frankfurt am Main. Entdecken Sie Projekte, Fähigkeiten und mehr in einer einzigartigen Betriebssystem-ähnlichen Oberfläche.",
-  keywords: ["Frontend-Entwickler", "React Entwickler", "Next.js", "TypeScript", "UI/UX Design", "Kevin Tamme", "Portfolio", "Frankfurt am Main"],
+  description: "Portfolio von Kevin Tamme, Frontend Entwickler aus Frankfurt am Main. Spezialisiert auf React, Next.js, TypeScript und UI/UX Design. Entdecken Sie Projekte, Blog, Learnings und Kontaktmöglichkeiten.",
+  keywords: [
+    "Frontend Entwickler Frankfurt",
+    "React Entwickler",
+    "Next.js Portfolio",
+    "TypeScript Projekte",
+    "UI/UX Design",
+    "Webentwicklung",
+    "Kevin Tamme",
+    "Portfolio",
+    "Blog",
+    "Projekte",
+    "Kontakt",
+    "Web Developer Germany",
+    "Modern Web Design"
+  ],
   authors: [{ name: "Kevin Tamme" }],
   creator: "Kevin Tamme",
   openGraph: {
