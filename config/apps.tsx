@@ -102,35 +102,41 @@ const ProjectScreenshotCard: React.FC<{ project: ProjectJson }> = ({ project }) 
 };
 
 const PortfolioContent = () => {
-    const [projects, setProjects] = useState<ProjectJson[] | null>(null);
+    const [projects, setProjects] = useState<ProjectJson[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     useEffect(() => {
-        fetch('/data/projects.json')
-            .then(r => r.json())
-            .then(setProjects)
-            .catch(() => setError(true))
-            .finally(() => setLoading(false));
+        async function loadProjects() {
+            try {
+                const res = await fetch('/api/projects');
+                if (!res.ok) throw new Error('Failed to load projects');
+                const data = await res.json();
+                setProjects(data);
+            } catch {
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadProjects();
     }, []);
     return (
         <div className="p-1 h-full flex flex-col min-w-[220px] min-h-[400px]">
             <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-3">Projekte</h2>
             {loading && <div className="text-center text-neutral-400">Lade Projekte…</div>}
             {error && <div className="text-center text-red-500">Fehler beim Laden der Projekte.</div>}
-            {projects && (
-                <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch flex-1 min-h-0 grid-auto-rows-auto justify-center">
-                    {projects.map(p => (
-                        <div key={p.title} className="flex justify-center h-full">
-                            <div className="w-[260px] min-w-[220px] max-w-[260px] h-full min-h-[320px] max-h-[360px] flex flex-col">
-                                <ProjectScreenshotCard project={p} />
-                            </div>
+            <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))] gap-6 items-stretch flex-1 min-h-0 grid-auto-rows-auto justify-center">
+                {projects.map(p => (
+                    <div key={p.title} className="flex justify-center h-full">
+                        <div className="w-[260px] min-w-[220px] max-w-[260px] h-full min-h-[320px] max-h-[360px] flex flex-col">
+                            <ProjectScreenshotCard project={p} />
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
+                ))}
+            </div>
         </div>
     );
-};
+}
 
 
 // --- 3. Contact App ---
