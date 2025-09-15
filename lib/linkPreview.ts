@@ -1,6 +1,3 @@
-// Fetch Open Graph preview data for a given URL using a public API (Microlink)
-// You may want to use your own API key or proxy for production use
-
 export interface LinkPreview {
     url: string;
     title?: string;

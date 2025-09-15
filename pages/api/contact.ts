@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 <span style="font-weight:600;color:#f472b6;">Nachricht:</span>
                                 <div style="margin:0.5rem 0 0 0.5rem;padding:1rem;background:#18181b;border-radius:0.75rem;color:#fafafa;white-space:pre-line;">${message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                             </div>
-                            <div style="margin-top:2rem;font-size:0.95rem;color:#a1a1aa;">Portfolio Kontaktformular – kevintamme.com</div>
+                            <div style="margin-top:2rem;font-size:0.95rem;color:#a1a1aa;">Portfolio Kontaktformular 13 kevintamme.com</div>
                         </div>
                     </div>
                 `;

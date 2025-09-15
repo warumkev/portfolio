@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const NOTES_DIR = path.join(process.cwd(), 'content/notes');
+const NOTES_DIR = path.join(process.cwd(), 'features/notes/content');
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     try {

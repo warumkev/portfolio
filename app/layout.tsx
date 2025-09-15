@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.kevintamme.com"),
   title: {
     default: "PortfoliOS | Kevin Tamme - Frontend-Entwickler",
     template: "%s | Kevin Tamme",
