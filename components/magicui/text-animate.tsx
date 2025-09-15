@@ -378,47 +378,47 @@ const TextAnimateBase = ({
 
   const finalVariants = variants
     ? {
+      container: {
+        hidden: { opacity: 0 },
+        show: {
+          opacity: 1,
+          transition: {
+            opacity: { duration: 0.01, delay },
+            delayChildren: delay,
+            staggerChildren: duration / textLength,
+          },
+        },
+        exit: {
+          opacity: 0,
+          transition: {
+            staggerChildren: duration / textLength,
+            staggerDirection: -1,
+          },
+        },
+      },
+      item: variants,
+    }
+    : animation
+      ? {
         container: {
-          hidden: { opacity: 0 },
+          hidden: defaultItemAnimationVariants[animation].container.hidden ?? { opacity: 0 },
           show: {
-            opacity: 1,
+            ...defaultItemAnimationVariants[animation].container.show,
             transition: {
-              opacity: { duration: 0.01, delay },
               delayChildren: delay,
               staggerChildren: duration / textLength,
             },
           },
           exit: {
-            opacity: 0,
+            ...defaultItemAnimationVariants[animation].container.exit,
             transition: {
               staggerChildren: duration / textLength,
               staggerDirection: -1,
             },
           },
         },
-        item: variants,
+        item: defaultItemAnimationVariants[animation].item,
       }
-    : animation
-      ? {
-          container: {
-            hidden: defaultItemAnimationVariants[animation].container.hidden ?? { opacity: 0 },
-            show: {
-              ...defaultItemAnimationVariants[animation].container.show,
-              transition: {
-                delayChildren: delay,
-                staggerChildren: duration / textLength,
-              },
-            },
-            exit: {
-              ...defaultItemAnimationVariants[animation].container.exit,
-              transition: {
-                staggerChildren: duration / textLength,
-                staggerDirection: -1,
-              },
-            },
-          },
-          item: defaultItemAnimationVariants[animation].item,
-        }
       : { container: defaultContainerVariants, item: defaultItemVariants };
 
   return (
