@@ -263,33 +263,59 @@ const ContactContent = () => {
 
 // --- 4. Blog App ---
 type BlogJson = { title: string; date: string; content: string };
+type Note = {
+    slug: string;
+    title: string;
+    date: string;
+    content: string;
+};
 const BlogContent = () => {
-    const [posts, setPosts] = useState<BlogJson[] | null>(null);
+    const [notes, setNotes] = useState<Note[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [selectedNote, setSelectedNote] = useState<number | null>(null);
     useEffect(() => {
-        fetch('/data/blog.json')
+        fetch('/api/notes')
             .then(r => r.json())
-            .then(setPosts)
+            .then(data => {
+                setNotes(data);
+            })
             .catch(() => setError(true))
             .finally(() => setLoading(false));
     }, []);
     return (
         <div className="p-4 font-sans">
             <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 px-2">Notizen & Learnings</h2>
-            {loading && <div className="text-center text-neutral-400">Lade Blogposts…</div>}
-            {error && <div className="text-center text-red-500">Fehler beim Laden der Blogposts.</div>}
-            {posts && (
+            {loading && <div className="text-center text-neutral-400">Lade Notizen…</div>}
+            {error && <div className="text-center text-red-500">Fehler beim Laden der Notizen.</div>}
+            {notes && selectedNote === null && (
                 <div className="space-y-4">
-                    {posts.map((post, index) => (
-                        <div key={index} className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg">
-                            <h3 className="font-semibold text-neutral-800 dark:text-neutral-100">{post.title}</h3>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{post.date}</p>
-                            <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-neutral-600 dark:text-neutral-300">
-                                <ReactMarkdown>{post.content}</ReactMarkdown>
+                    {notes.map((note, index) => (
+                        <div key={note.slug} className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors" onClick={() => setSelectedNote(index)}>
+                            <h3 className="font-semibold text-neutral-800 dark:text-neutral-100 mb-1">{note.title}</h3>
+                            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{note.date}</p>
+                            <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-neutral-600 dark:text-neutral-300 line-clamp-3 overflow-hidden">
+                                <ReactMarkdown>{note.content}</ReactMarkdown>
                             </div>
                         </div>
                     ))}
+                </div>
+            )}
+            {notes && selectedNote !== null && notes[selectedNote] && (
+                <div className="space-y-4">
+                    <button
+                        className="mb-4 px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-100 rounded hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors"
+                        onClick={() => setSelectedNote(null)}
+                    >
+                        ← Zurück zur Übersicht
+                    </button>
+                    <div className="p-4 bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+                        <h3 className="font-semibold text-neutral-800 dark:text-neutral-100 text-lg mb-1">{notes[selectedNote].title}</h3>
+                        <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{notes[selectedNote].date}</p>
+                        <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-neutral-600 dark:text-neutral-300">
+                            <ReactMarkdown>{notes[selectedNote].content}</ReactMarkdown>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
