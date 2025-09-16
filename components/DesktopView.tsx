@@ -4,9 +4,11 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { AnimatePresence, motion, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
 import { APP_CONFIG, AppConfig } from '@/config/apps';
+import { DotPattern } from '@/components/magicui/dot-pattern';
 
 // Splash/Login Screen
 import { ChevronUp } from 'lucide-react';
+
 
 const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
     return (
@@ -15,7 +17,7 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -800, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-white text-black"
+            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background text-foreground"
         >
             <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -35,7 +37,7 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 >
                     <button
                         onClick={onLogin}
-                        className="px-8 py-3 rounded-lg bg-neutral-900 hover:bg-neutral-700 text-white font-semibold text-lg shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-neutral-400 flex items-center gap-2"
+                        className="px-8 py-3 rounded-lg bg-primary hover:bg-primary/80 text-white font-semibold text-lg shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-neutral-400 flex items-center gap-2"
                     >
                         <motion.span
                             animate={{ y: [0, -8, 0] }}
@@ -222,7 +224,7 @@ const DockIcon: React.FC<{ id: string; config: AppConfig; onClick: (id: string) 
             </motion.button>
             <motion.div
                 animate={{ scale: isActive ? 1 : 0 }}
-                className="w-1.5 h-1.5 rounded-full bg-cyan-400"
+                className="w-1.5 h-1.5 rounded-full bg-primary"
                 aria-hidden="true"
             />
         </div>
@@ -332,6 +334,11 @@ export default function DesktopView() {
                     ref={constraintsRef}
                     className="h-[100dvh] w-screen overflow-hidden text-black dark:text-white font-sans relative select-none"
                 >
+                    {/* Dot pattern background */}
+                    <div className="absolute inset-0 pointer-events-none z-0">
+                        <DotPattern />
+                    </div>
+                    {/* Windows */}
                     {Object.values(windows).map(winState => {
                         if (winState.isOpen) {
                             return (
@@ -348,6 +355,7 @@ export default function DesktopView() {
                         }
                         return null;
                     })}
+                    {/* Dock */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
                         <motion.div
                             initial={{ y: 100, opacity: 0 }}

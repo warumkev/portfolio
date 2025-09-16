@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { DotPattern } from '@/components/magicui/dot-pattern';
 import { APP_CONFIG, AppConfig } from '../config/apps';
 // Removed Wifi, Signal import
 
@@ -34,7 +35,7 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -1000, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-black"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-foreground"
         >
             <div className="flex flex-col items-center gap-6 w-full text-center">
                 <h1 className="text-4xl font-extrabold tracking-tight select-none">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
@@ -53,7 +54,7 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 className="absolute bottom-16 left-0 right-0 flex flex-col items-center"
             >
                 <motion.div
-                    className="w-24 h-2 bg-neutral-300 rounded-full mb-2"
+                    className="w-24 h-2 bg-primary rounded-full mb-2"
                     animate={{ scale: [1, 1.15, 1] }}
                     transition={{ repeat: Infinity, duration: 1.2 }}
                 />
@@ -110,7 +111,12 @@ export default function MobileView() {
     const activeAppConfig = openApp ? APP_CONFIG[openApp] : null;
 
     return (
-        <div className="min-h-[100dvh] w-full bg-white dark:bg-neutral-900 flex flex-col items-center justify-center p-4">
+        <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 relative">
+            {(!openApp && loggedIn) && (
+                <div className="absolute inset-0 pointer-events-none z-0">
+                    <DotPattern />
+                </div>
+            )}
             <AnimatePresence>
                 {!loggedIn && (
                     <MobileLoginSplash key="mobile-login" onLogin={() => setLoggedIn(true)} />

@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, MotionProps, Variants } from "motion/react";
+import React from "react";
 import { ElementType, memo, ReactNode, isValidElement } from "react";
 
 type AnimationType = "text" | "word" | "character" | "line";
@@ -329,10 +330,11 @@ function renderAnimatedSegments(
   if (isValidElement(node)) {
     // Recursively process children of elements
     const props = node.props as { children?: ReactNode };
+    const elementKey = `${keyPrefix}${by}-el-${Math.random().toString(36).slice(2)}`;
     return (
       node.type === "span"
-        ? <span {...props}>{renderAnimatedSegments(props.children, by, finalVariants, segmentClassName, accessible, staggerBase, keyPrefix)}</span>
-        : node
+        ? <span {...props} key={elementKey}>{renderAnimatedSegments(props.children, by, finalVariants, segmentClassName, accessible, staggerBase, keyPrefix)}</span>
+        : React.cloneElement(node, { key: elementKey })
     );
   }
   return node;
@@ -345,7 +347,7 @@ const TextAnimateBase = ({
   variants,
   className,
   segmentClassName,
-  as: Component = "p",
+  as: Component = "span",
   startOnView = true,
   once = false,
   by = "word",

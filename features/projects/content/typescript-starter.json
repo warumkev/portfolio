@@ -1,6 +1,6 @@
 {
-  "title": "TypeScript Starter",
-  "description": "Starter-Template für TypeScript-Projekte mit Best Practices und automatisierten Tests.",
-  "liveUrl": "https://ts-starter.example.com",
-  "githubUrl": "https://github.com/warumkev/ts-starter"
+  "title": "Katalyst",
+  "description": "A frontend for the Katalyst AI tool, built with Next.js, TypeScript, and Tailwind CSS.",
+  "liveUrl": "https://ketam-katalyst.vercel.app",
+  "githubUrl": "https://github.com/warumkev/katalyst"
 }

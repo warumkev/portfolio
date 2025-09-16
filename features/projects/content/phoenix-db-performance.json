@@ -1,6 +1,0 @@
-{
-  "title": "Phoenix DB Performance",
-  "description": "Optimierung von Datenbankabfragen und Caching mit Redis. Skalierbare Architektur für hohe Lasten.",
-  "liveUrl": "https://phoenix-demo.example.com",
-  "githubUrl": "https://github.com/warumkev/phoenix-db"
-}
