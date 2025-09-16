@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DotPattern } from '@/components/magicui/dot-pattern';
+import React, { Suspense } from 'react';
+const DotPattern = React.lazy(() => import('@/components/magicui/dot-pattern').then(mod => ({ default: mod.DotPattern })));
 import { APP_CONFIG, AppConfig } from '../config/apps';
 // Removed Wifi, Signal import
 
@@ -112,10 +113,13 @@ export default function MobileView() {
 
     return (
         <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 relative">
+            {/* Lazy-load DotPattern for better FCP/LCP */}
             {(!openApp && loggedIn) && (
-                <div className="absolute inset-0 pointer-events-none z-0">
-                    <DotPattern />
-                </div>
+                <Suspense fallback={null}>
+                    <div className="absolute inset-0 pointer-events-none z-0">
+                        <DotPattern />
+                    </div>
+                </Suspense>
             )}
             <AnimatePresence>
                 {!loggedIn && (
