@@ -113,19 +113,19 @@ export default function MobileView() {
 
     return (
         <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 relative">
-            {/* Lazy-load DotPattern for better FCP/LCP */}
-            {(!openApp && loggedIn) && (
-                <Suspense fallback={null}>
-                    <div className="absolute inset-0 pointer-events-none z-0">
-                        <DotPattern />
-                    </div>
-                </Suspense>
-            )}
             <AnimatePresence>
                 {!loggedIn && (
                     <MobileLoginSplash key="mobile-login" onLogin={() => setLoggedIn(true)} />
                 )}
             </AnimatePresence>
+            {/* Only load DotPattern after splash screen is gone */}
+            {loggedIn && !openApp && (
+                <Suspense fallback={<div className="absolute inset-0 pointer-events-none z-0" />}>
+                    <div className="absolute inset-0 pointer-events-none z-0">
+                        <DotPattern />
+                    </div>
+                </Suspense>
+            )}
             {loggedIn && (
                 <>
                     {/* Large Centered Time Widget */}
