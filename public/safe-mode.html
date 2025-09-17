@@ -36,7 +36,7 @@
 <body>
   <div class="container notion-card">
     <div class="profile-block">
-      <img src="/profile-image.PNG" alt="Kevin Tamme profile" class="profile-img" />
+  <img src="/profile-image.png" alt="Kevin Tamme profile" class="profile-img" />
       <h1>Kevin Tamme</h1>
       <div class="subtitle">22-jähriger Frontend-Entwickler aus Frankfurt am Main</div>
       <div class="safe-mode-desc">Dies ist der Safe-Mode: Alle Infos als schnelle, minimalistische Übersicht.</div>
@@ -87,32 +87,9 @@
         </div>
       </div>
     </noscript>
-    <hr class="notion-divider" />
-    <h2>Blog &amp; Learnings</h2>
-    <ul id="blog-list-js"></ul>
-    <noscript>
-      <ul>
-        <li>
-          <b>State Management in React 2024</b> <br>
-          <i>15. Juli 2024</i><br>
-          Die Landschaft des State Managements in React ist vielfältiger denn je. Von Redux über Zustand bis hin zu Jotai und den eingebauten Hooks wie <code>useContext</code> und <code>useReducer</code> – die Wahl des richtigen Tools hängt stark vom Projektumfang ab. Für kleine bis mittlere Projekte hat sich <code>Zustand</code> als leichtgewichtige und dennoch leistungsstarke Alternative etabliert...
-        </li>
-        <li>
-          <b>Learnings aus Projekt 'Phoenix'</b> <br>
-          <i>02. Juni 2024</i><br>
-          Die größte Herausforderung bei 'Phoenix' war die Skalierung der Datenbank-Abfragen unter hoher Last. Durch die Implementierung eines Caching-Layers mit Redis und die Optimierung von Indizes konnten wir die Latenz um 70% reduzieren. Ein wichtiges Learning: Performance-Tests sollten so früh wie möglich in den Entwicklungszyklus integriert werden.
-        </li>
-        <li>
-          <b>Warum TypeScript ein Game-Changer ist</b> <br>
-          <i>10. Mai 2024</i><br>
-          Die Einführung von TypeScript in unserem Team war anfangs mit Lernaufwand verbunden, hat sich aber schnell bezahlt gemacht. Die statische Typisierung fängt Fehler bereits während der Entwicklung ab, verbessert die Code-Qualität und macht die Zusammenarbeit durch selbstdokumentierenden Code deutlich effizienter. Es ist ein Investment, das sich langfristig auszahlt.
-        </li>
-      </ul>
-    </noscript>
-</div>
 <script>
 // Dynamisches Laden der Projekte
-fetch('/data/projects.json').then(r => r.json()).then(projects => {
+fetch('/api/projects').then(r => r.json()).then(projects => {
   const list = document.getElementById('projects-list-js');
   if (!list) return;
   list.innerHTML = '';
@@ -133,21 +110,6 @@ fetch('/data/projects.json').then(r => r.json()).then(projects => {
   });
 });
 
-// Dynamisches Laden der Blogposts
-fetch('/data/blog.json').then(r => r.json()).then(posts => {
-  const list = document.getElementById('blog-list-js');
-  if (!list) return;
-  list.innerHTML = '';
-  posts.forEach(post => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <b>${post.title}</b> <br>
-      <i>${post.date}</i><br>
-      ${post.content.replace(/`([^`]+)`/g, '<code>$1</code>')}
-    `;
-    list.appendChild(li);
-  });
-});
 </script>
     <hr class="notion-divider" />
     <h2>Systeminfo</h2>
@@ -171,6 +133,7 @@ fetch('/data/blog.json').then(r => r.json()).then(posts => {
       <a href="/" style="display:inline-block;margin:0 0.2em;font-weight:500;">Zurück zur Hauptseite</a>.<br>
       Copyright © 2025 Kevin Tamme. Alle Rechte vorbehalten.
     </div>
+  </div>
   </div>
 </body>
 </html>
