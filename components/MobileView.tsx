@@ -39,8 +39,8 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-foreground"
         >
             <div className="flex flex-col items-center gap-6 w-full text-center">
-                <h1 className="text-4xl font-extrabold tracking-tight select-none">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
-                <span className="text-base text-neutral-500 font-mono tracking-wide select-none">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
+                <h1 className="text-4xl font-extrabold tracking-tight select-none text-black dark:text-white">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
+                <span className="text-base font-mono tracking-wide select-none text-black dark:text-white/90">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
             </div>
             <motion.div
                 drag="y"
@@ -52,30 +52,30 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                         onLogin();
                     }
                 }}
-                className="absolute bottom-16 left-0 right-0 flex flex-col items-center"
+                className="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-3"
             >
                 <motion.div
                     className="w-24 h-2 bg-primary rounded-full mb-2"
                     animate={{ scale: [1, 1.15, 1] }}
                     transition={{ repeat: Infinity, duration: 1.2 }}
                 />
-                <span className="text-sm text-neutral-500 font-medium text-center">Swipe up to enter</span>
-                <span className="text-xs text-neutral-400 mt-1 text-center">Just like on your phone</span>
+                <span className="text-sm font-medium text-center text-black dark:text-white/80 mt-2">Swipe up to enter</span>
+                <span className="text-xs mt-2 text-center text-black dark:text-white/70">Just like on your phone</span>
             </motion.div>
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.7 }}
                 transition={{ delay: 1.2 }}
-                className="absolute bottom-6 left-0 w-full flex flex-col items-center gap-2 text-center"
+                className="absolute bottom-6 left-0 w-full flex flex-col items-center gap-3 text-center"
             >
                 <a
                     href="/safe-mode.html"
-                    className="text-xs text-neutral-500 underline hover:text-neutral-800 transition-colors"
+                    className="text-xs underline hover:text-primary transition-colors text-black dark:text-white/80"
                     tabIndex={0}
                 >
                     Safe Mode: Simple HTML version
                 </a>
-                <span className="text-xs text-neutral-400 font-mono block mt-1">
+                <span className="text-xs font-mono block mt-2 text-black dark:text-white/70">
                     © {new Date().getFullYear()} Kevin Tamme – portfoliOS
                 </span>
             </motion.div>

@@ -26,8 +26,8 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 className="flex flex-col items-center gap-6"
             >
                 <div className="flex flex-col items-center gap-2 text-center">
-                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight select-none">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
-                    <span className="text-base md:text-lg text-neutral-500 font-mono tracking-wide select-none">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
+                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight select-none text-black dark:text-white">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
+                    <span className="text-base md:text-lg font-mono tracking-wide select-none text-black dark:text-white/90">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
                 </div>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -48,8 +48,8 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                         </motion.span>
                         <span>Unlock</span>
                     </button>
-                    <span className="text-sm text-neutral-500 font-medium mt-2 text-center">Click to begin</span>
-                    <span className="text-xs text-neutral-400 mt-1 text-center">A creative portfolio by Kevin Tamme</span>
+                    <span className="text-sm font-medium mt-2 text-center text-black dark:text-white/80">Click to begin</span>
+                    <span className="text-xs mt-1 text-center text-black dark:text-white/70">A creative portfolio by Kevin Tamme</span>
                 </motion.div>
             </motion.div>
             <motion.div
@@ -60,12 +60,12 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             >
                 <a
                     href="/safe-mode.html"
-                    className="text-xs text-neutral-500 underline hover:text-neutral-800 transition-colors"
+                    className="text-xs text-primary underline hover:text-primary/80 transition-colors"
                     tabIndex={0}
                 >
                     Safe Mode: Simple HTML version
                 </a>
-                <span className="text-xs text-neutral-400 font-mono block mt-1">
+                <span className="text-xs text-neutral-800 font-mono block mt-1">
                     © {new Date().getFullYear()} Kevin Tamme – portfoliOS
                 </span>
             </motion.div>
