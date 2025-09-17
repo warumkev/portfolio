@@ -40,13 +40,13 @@ const SysteminfoContent = () => {
                     <CircuitBoard size={40} className="text-primary-foreground" />
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold text-primary">PortfoliOS v1.0</h2>
+                    <h2 className="text-xl font-bold text-primary">PortfoliOS v2.0</h2>
                     <p className="text-xs text-muted-foreground">© 2025 Kevin Tamme</p>
                 </div>
             </div>
             <div className="flex gap-3 items-center mb-4">
                 <span className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2 py-1 rounded">Online</span>
-                <span className="text-xs text-muted-foreground">Letztes Update: 16.09.2025</span>
+                <span className="text-xs text-muted-foreground">Letztes Update: 17.09.2025</span>
             </div>
             <div className="mb-4 flex items-center gap-3 justify-center">
                 <span className="text-muted-foreground">Theme:</span>

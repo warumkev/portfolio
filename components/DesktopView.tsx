@@ -26,7 +26,7 @@ const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 className="flex flex-col items-center gap-6"
             >
                 <div className="flex flex-col items-center gap-2 text-center">
-                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight select-none text-black dark:text-white">Portfolio von Kevin Tamme – Frontend Entwickler Frankfurt</h1>
+                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight select-none text-black dark:text-white">Portfolio von Kevin Tamme – Frontend Entwickler</h1>
                     <span className="text-base md:text-lg font-mono tracking-wide select-none text-black dark:text-white/90">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
                 </div>
                 <motion.div

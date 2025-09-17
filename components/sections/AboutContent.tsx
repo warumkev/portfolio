@@ -21,9 +21,10 @@ const skillBadges = [
 // Used to visually represent personal strengths
 const vibeLevels = [
     { label: 'Creativity', value: 90 },
-    { label: 'Tech', value: 85 },
-    { label: 'Design', value: 80 },
-    { label: 'Fun', value: 75 },
+    { label: 'Tech', value: 80 },
+    { label: 'Design', value: 95 },
+    { label: 'Fun', value: 100 },
+    { label: 'Problems', value: 5 }
 ];
 
 /**
@@ -89,16 +90,16 @@ const AboutContent = () => (
             <h3 className="text-xs font-bold text-muted-foreground mb-2 text-center">Timeline</h3>
             <ul className="timeline list-none p-0 m-0">
                 <li className="mb-2">
-                    <span className="font-semibold text-primary">2025</span> – B.Sc. Informatik Abschluss, Frankfurt
+                    <span className="font-semibold text-primary">2026</span> – B.Sc. Informatik Abschluss, Frankfurt
                 </li>
                 <li className="mb-2">
-                    <span className="font-semibold text-primary">2024</span> – Launch Portfolio & Katalyst
+                    <span className="font-semibold text-primary">2024</span> – Launch Portfolio v1.0
                 </li>
                 <li className="mb-2">
-                    <span className="font-semibold text-primary">2022-2023</span> – Praktika & Freelance Webentwicklung
+                    <span className="font-semibold text-primary">2022-2025</span> – Softwareentwickler & Freelance Webentwicklung
                 </li>
                 <li className="mb-2">
-                    <span className="font-semibold text-primary">2021</span> – Beginn Informatik-Studium
+                    <span className="font-semibold text-primary">2022</span> – Beginn Informatik-Studium
                 </li>
             </ul>
         </div>
