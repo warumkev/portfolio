@@ -5,11 +5,8 @@
 // ...existing code...
 
 
-import { ReactNode, useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { User, Briefcase, Mail, NotebookText, CircuitBoard, Music, Play, Pause, Moon, Sun, Volume2, VolumeX, Clock, Maximize2, Globe2, Monitor } from 'lucide-react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
+import { User, Briefcase, Mail, NotebookText, CircuitBoard, Music } from 'lucide-react';
 
 
 // Modular section components

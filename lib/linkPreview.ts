@@ -22,7 +22,7 @@ export async function fetchLinkPreview(url: string): Promise<LinkPreview> {
         } else {
             return { url, error: 'No preview available' };
         }
-    } catch (e) {
+    } catch {
         return { url, error: 'Failed to fetch preview' };
     }
 }

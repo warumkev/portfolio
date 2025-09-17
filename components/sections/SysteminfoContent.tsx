@@ -7,7 +7,6 @@ import { CircuitBoard, Moon, Sun, Clock, Maximize2, Globe2, Monitor } from 'luci
 const SysteminfoContent = () => {
     const [date, setDate] = useState<string>("");
     const [windowSize, setWindowSize] = useState<{ w: number, h: number }>({ w: 0, h: 0 });
-    const [cpu, setCpu] = useState<number>(Math.random() * 60 + 20);
     const [dark, setDark] = useState<boolean>(() => {
         if (typeof window !== "undefined") {
             const stored = window.localStorage.getItem("systeminfo-darkmode");
@@ -19,7 +18,6 @@ const SysteminfoContent = () => {
         const update = () => {
             setDate(new Date().toLocaleString());
             setWindowSize({ w: window.innerWidth, h: window.innerHeight });
-            setCpu(Math.random() * 60 + 20);
         };
         update();
         window.addEventListener("resize", update);

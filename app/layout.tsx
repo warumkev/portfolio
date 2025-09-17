@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { DotPattern } from "@/components/magicui/dot-pattern";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 

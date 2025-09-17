@@ -1,6 +1,6 @@
 
 'use client';
-import React, { useCallback, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { AnimatePresence, motion, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
 import { APP_CONFIG, AppConfig } from '@/config/apps';
@@ -96,16 +96,16 @@ interface WindowProps {
 }
 
 const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onResize, constraintsRef }) => {
+    const config = APP_CONFIG[winState.id];
     const resizeRef = React.useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
     const windowRef = useRef<HTMLDivElement>(null);
-
 
     const handleResize = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         event.stopPropagation();
         onFocus(winState.id);
         const resizeStart = { x: event.clientX, y: event.clientY, w: winState.size.width, h: winState.size.height };
-        const minSize = APP_CONFIG[winState.id]?.minSize || { width: 320, height: 240 };
+        const minSize = config?.minSize || { width: 320, height: 240 };
 
         const onPointerMove = (moveEvent: PointerEvent) => {
             const dw = moveEvent.clientX - resizeStart.x;
@@ -121,10 +121,7 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
         };
         document.addEventListener('pointermove', onPointerMove);
         document.addEventListener('pointerup', onPointerUp);
-    }, [winState.id, winState.size, onFocus, onResize]);
-
-    const config = APP_CONFIG[winState.id];
-    if (!config) return null;
+    }, [winState.id, winState.size, onFocus, onResize, config]);
 
     // Accessibility: Focus management for dialog
     useEffect(() => {
@@ -132,6 +129,8 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
             windowRef.current.focus();
         }
     }, [winState.isOpen]);
+
+    if (!config) return null;
 
     return (
         <motion.div
@@ -194,6 +193,7 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
                 onPointerDown={handleResize}
                 role="slider"
                 aria-label="Fenstergröße ändern"
+                aria-valuenow={winState.size.width}
                 tabIndex={0}
             >
                 <CornerDownRight size={16} />

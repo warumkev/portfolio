@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             replyTo: email,
         });
         return res.status(200).json({ message: 'Nachricht gesendet!' });
-    } catch (error) {
+    } catch {
         return res.status(500).json({ message: 'Fehler beim Senden der Nachricht.' });
     }
 }

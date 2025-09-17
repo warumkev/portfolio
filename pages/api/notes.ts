@@ -22,7 +22,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         // Sort by date descending
         notes.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         res.status(200).json(notes);
-    } catch (e) {
+    } catch {
         res.status(500).json({ error: 'Failed to load notes.' });
     }
 }
