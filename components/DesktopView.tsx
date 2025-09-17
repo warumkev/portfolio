@@ -126,6 +126,13 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
     const config = APP_CONFIG[winState.id];
     if (!config) return null;
 
+    // Accessibility: Focus management for dialog
+    useEffect(() => {
+        if (winState.isOpen && windowRef.current) {
+            windowRef.current.focus();
+        }
+    }, [winState.isOpen]);
+
     return (
         <motion.div
             ref={windowRef}
@@ -157,6 +164,9 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
             }}
             onPointerDown={() => onFocus(winState.id)}
             aria-labelledby={`window-title-${winState.id}`}
+            role="dialog"
+            aria-modal="true"
+            tabIndex={-1}
         >
             <div
                 onPointerDown={(e) => dragControls.start(e)}
@@ -182,8 +192,9 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
                 ref={resizeRef}
                 className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-neutral-400 dark:text-neutral-600 z-10"
                 onPointerDown={handleResize}
-                role="separator"
+                role="slider"
                 aria-label="Fenstergröße ändern"
+                tabIndex={0}
             >
                 <CornerDownRight size={16} />
             </div>

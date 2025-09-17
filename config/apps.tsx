@@ -151,7 +151,14 @@ const PortfolioContent = () => {
             {error && <div className="text-center text-destructive">Fehler beim Laden der Projekte.</div>}
             <ul className="flex flex-col gap-4 w-full">
                 {projects.map(p => (
-                    <li key={p.title} className="w-full bg-card rounded-xl shadow border border-border p-4 flex flex-col md:flex-row items-start md:items-center gap-4 transition hover:shadow-lg">
+                    <li
+                        key={p.title}
+                        className="w-full bg-card rounded-xl shadow border border-border p-4 flex flex-col md:flex-row items-start md:items-center gap-4 transition hover:shadow-lg"
+                        role="button"
+                        aria-label={`Projekt öffnen: ${p.title}`}
+                        tabIndex={0}
+                        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && window.open(p.liveUrl, '_blank')}
+                    >
                         <div className="flex-1">
                             <h3 className="font-bold text-lg text-primary mb-1">{p.title}</h3>
                             <p className="text-sm text-muted-foreground mb-2">{p.description}</p>
@@ -323,7 +330,15 @@ const BlogContent = () => {
             {notes && selectedNote === null && (
                 <div className="space-y-4">
                     {notes.map((note, index) => (
-                        <div key={note.slug} className="p-4 bg-card border border-border rounded-lg cursor-pointer hover:bg-secondary transition-colors" onClick={() => setSelectedNote(index)}>
+                        <div
+                            key={note.slug}
+                            className="p-4 bg-card border border-border rounded-lg cursor-pointer hover:bg-secondary transition-colors"
+                            onClick={() => setSelectedNote(index)}
+                            role="button"
+                            aria-label={`Notiz öffnen: ${note.title}`}
+                            tabIndex={0}
+                            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setSelectedNote(index)}
+                        >
                             <h3 className="font-semibold text-primary mb-1">{note.title}</h3>
                             <p className="text-xs text-muted-foreground mb-2">{note.date}</p>
                             <div className="prose prose-neutral dark:prose-invert max-w-none text-sm text-muted-foreground line-clamp-3 overflow-hidden">

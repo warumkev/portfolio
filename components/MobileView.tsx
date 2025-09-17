@@ -154,6 +154,10 @@ export default function MobileView() {
                                 exit={{ borderRadius: '1.5rem', scale: 0.5, opacity: 0 }}
                                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 className="fixed inset-0 bg-neutral-100 dark:bg-neutral-900 z-30 flex flex-col"
+                                role="dialog"
+                                aria-modal="true"
+                                tabIndex={-1}
+                                aria-label={activeAppConfig.title}
                             >
                                 <div className="flex-grow pt-10 pb-14 overflow-y-auto">
                                     {activeAppConfig.content}
@@ -175,6 +179,7 @@ export default function MobileView() {
                                         onClick={() => setOpenApp(null)}
                                         className="w-32 h-1.5 bg-neutral-400 dark:bg-neutral-500 rounded-full"
                                         aria-label="Zum Home-Bildschirm zurückkehren"
+                                        tabIndex={0}
                                     ></button>
                                 </motion.div>
                             </motion.div>
