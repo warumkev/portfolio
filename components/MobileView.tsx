@@ -18,10 +18,10 @@ const AppIcon: React.FC<{ id: string; config: AppConfig; onClick: (id: string) =
         tabIndex={0}
         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick(id)}
     >
-        <div className="w-16 h-16 bg-neutral-200/60 dark:bg-neutral-800/60 backdrop-blur-md rounded-2xl flex items-center justify-center text-black dark:text-white">
+    <div className="w-16 h-16 backdrop-blur-md rounded-2xl flex items-center justify-center text-white">
             {config.icon}
         </div>
-        <span className="text-xs text-black dark:text-white font-medium" aria-hidden="true">{config.title}</span>
+    <span className="text-xs text-white font-medium" aria-hidden="true">{config.title}</span>
     </motion.div>
 );
 
@@ -39,8 +39,8 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-foreground"
         >
             <div className="flex flex-col items-center gap-6 w-full text-center">
-                <h1 className="text-4xl font-extrabold tracking-tight select-none text-black dark:text-white">Portfolio von Kevin Tamme – Frontend Entwickler</h1>
-                <span className="text-base font-mono tracking-wide select-none text-black dark:text-white/90">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
+                <h1 className="text-4xl font-extrabold tracking-tight select-none text-white">Portfolio von Kevin Tamme – Frontend Entwickler</h1>
+                <span className="text-base font-mono tracking-wide select-none text-white">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
             </div>
             <motion.div
                 drag="y"
@@ -59,8 +59,8 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                     animate={{ scale: [1, 1.15, 1] }}
                     transition={{ repeat: Infinity, duration: 1.2 }}
                 />
-                <span className="text-sm font-medium text-center text-black dark:text-white/80 mt-2">Swipe up to enter</span>
-                <span className="text-xs mt-2 text-center text-black dark:text-white/70">Just like on your phone</span>
+                <span className="text-sm font-medium text-center text-white mt-2">Swipe up to enter</span>
+                <span className="text-xs mt-2 text-center text-white">Just like on your phone</span>
             </motion.div>
             <motion.div
                 initial={{ opacity: 0 }}
@@ -70,12 +70,12 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             >
                 <a
                     href="/safe-mode.html"
-                    className="text-xs underline hover:text-primary transition-colors text-black dark:text-white/80"
+                    className="text-xs underline hover:text-primary transition-colors text-white"
                     tabIndex={0}
                 >
                     Safe Mode: Simple HTML version
                 </a>
-                <span className="text-xs font-mono block mt-2 text-black dark:text-white/70">
+                <span className="text-xs font-mono block mt-2 text-white">
                     © {new Date().getFullYear()} Kevin Tamme – portfoliOS
                 </span>
             </motion.div>
@@ -119,20 +119,12 @@ export default function MobileView() {
                 )}
             </AnimatePresence>
             {/* Only load DotPattern after splash screen is gone */}
-            {loggedIn && !openApp && (
-                <Suspense fallback={<div className="absolute inset-0 pointer-events-none z-0" />}>
-                    <div className="absolute inset-0 pointer-events-none z-0">
-                        <DotPattern />
-                    </div>
-                </Suspense>
-            )}
-            {loggedIn && (
                 <>
                     {/* Large Centered Time Widget */}
                     {!openApp && (
                         <>
                             <div className="w-full flex flex-col items-center mb-8 mt-8">
-                                <span className="text-5xl font-extrabold text-black dark:text-white tracking-tight drop-shadow-sm">{time}</span>
+                                <span className="text-5xl font-extrabold text-white tracking-tight drop-shadow-sm">{time}</span>
                             </div>
                             <div className="flex-grow flex items-center justify-center p-8 z-10 w-full">
                                 <div className="grid grid-cols-3 gap-8 w-full max-w-xl mx-auto">
@@ -153,7 +145,7 @@ export default function MobileView() {
                                 animate={{ borderRadius: 0, scale: 1, opacity: 1 }}
                                 exit={{ borderRadius: '1.5rem', scale: 0.5, opacity: 0 }}
                                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                                className="fixed inset-0 bg-neutral-100 dark:bg-neutral-900 z-30 flex flex-col"
+                                className="fixed inset-0 z-30 flex flex-col bg-black/20 backdrop-blur-xl rounded-xl shadow-2xl"
                                 role="dialog"
                                 aria-modal="true"
                                 tabIndex={-1}
@@ -177,7 +169,7 @@ export default function MobileView() {
                                 >
                                     <button
                                         onClick={() => setOpenApp(null)}
-                                        className="w-32 h-1.5 bg-neutral-400 dark:bg-neutral-500 rounded-full"
+                                        className="w-32 h-1.5 bg-neutral-400 rounded-full"
                                         aria-label="Zum Home-Bildschirm zurückkehren"
                                         tabIndex={0}
                                     ></button>
@@ -186,7 +178,6 @@ export default function MobileView() {
                         )}
                     </AnimatePresence>
                 </>
-            )}
         </div>
     );
 }

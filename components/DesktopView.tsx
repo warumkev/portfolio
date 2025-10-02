@@ -4,74 +4,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { AnimatePresence, motion, useDragControls } from 'framer-motion';
 import { X, CornerDownRight } from 'lucide-react';
 import { APP_CONFIG, AppConfig } from '@/config/apps';
-import { DotPattern } from '@/components/magicui/dot-pattern';
 
-// Splash/Login Screen
-import { ChevronUp } from 'lucide-react';
-
-
-const SplashScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
-    return (
-        <motion.div
-            initial={{ y: 0, opacity: 1 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -800, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background text-foreground"
-        >
-            <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 120, damping: 12, delay: 0.2 }}
-                className="flex flex-col items-center gap-6"
-            >
-                <div className="flex flex-col items-center gap-2 text-center">
-                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight select-none text-black dark:text-white">Portfolio von Kevin Tamme – Frontend Entwickler</h1>
-                    <span className="text-base md:text-lg font-mono tracking-wide select-none text-black dark:text-white/90">Willkommen! Entdecken Sie React, Next.js, TypeScript und UI/UX Projekte.</span>
-                </div>
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="w-full flex flex-col items-center"
-                >
-                    <button
-                        onClick={onLogin}
-                        className="px-8 py-3 rounded-lg bg-primary hover:bg-primary/80 text-white font-semibold text-lg shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-neutral-400 flex items-center gap-2"
-                    >
-                        <motion.span
-                            animate={{ y: [0, -8, 0] }}
-                            transition={{ repeat: Infinity, duration: 1.2 }}
-                            className="inline-flex"
-                        >
-                            <ChevronUp size={22} />
-                        </motion.span>
-                        <span>Unlock</span>
-                    </button>
-                    <span className="text-sm font-medium mt-2 text-center text-black dark:text-white/80">Click to begin</span>
-                    <span className="text-xs mt-1 text-center text-black dark:text-white/70">A creative portfolio by Kevin Tamme</span>
-                </motion.div>
-            </motion.div>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.7 }}
-                transition={{ delay: 1.2 }}
-                className="absolute bottom-6 left-0 w-full flex flex-col items-center gap-2 text-center"
-            >
-                <a
-                    href="/safe-mode.html"
-                    className="text-xs text-primary underline hover:text-primary/80 transition-colors"
-                    tabIndex={0}
-                >
-                    Safe Mode: Simple HTML version
-                </a>
-                <span className="text-xs text-neutral-800 font-mono block mt-1">
-                    © {new Date().getFullYear()} Kevin Tamme – portfoliOS
-                </span>
-            </motion.div>
-        </motion.div>
-    );
-};
+// (Splash/login removed) The desktop loads immediately.
 
 // --- Type Definitions ---
 interface WindowPosition { x: number; y: number; }
@@ -83,6 +17,7 @@ interface WindowState {
     position: WindowPosition;
     size: WindowSize;
     zIndex: number;
+    // Removed maximize functionality
 }
 
 // --- Window Component ---
@@ -136,7 +71,7 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
         <motion.div
             ref={windowRef}
             key={winState.id}
-            drag
+            drag={true}
             dragListener={false}
             dragControls={dragControls}
             dragMomentum={false}
@@ -153,7 +88,7 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
                 y = Math.max(0, Math.min(y, viewportHeight - height));
                 onDrag(winState.id, { x, y });
             }}
-            className="absolute bg-neutral-100/80 dark:bg-neutral-900/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-2xl flex flex-col overflow-hidden"
+            className="absolute bg-black/20 backdrop-blur-xl border border-neutral-300 rounded-lg shadow-2xl flex flex-col overflow-hidden"
             style={{
                 x: winState.position.x,
                 y: winState.position.y,
@@ -169,27 +104,29 @@ const Window: React.FC<WindowProps> = ({ winState, onClose, onFocus, onDrag, onR
         >
             <div
                 onPointerDown={(e) => dragControls.start(e)}
-                className="flex items-center justify-between h-10 px-3 bg-neutral-200/70 dark:bg-neutral-800/70 rounded-t-lg border-b border-neutral-300 dark:border-neutral-700 cursor-grab flex-shrink-0"
+                className="flex items-center justify-between h-10 px-3 rounded-t-lg border-b border-neutral-300 cursor-grab flex-shrink-0"
             >
-                <div className="flex items-center gap-2 text-neutral-800 dark:text-neutral-200">
-                    <span className="text-neutral-500 dark:text-neutral-400">{config.icon}</span>
+                <div className="flex items-center gap-2 text-white">
+                    <span className="text-neutral-300">{config.icon}</span>
                     <span id={`window-title-${winState.id}`} className="text-sm font-medium">{config.title}</span>
                 </div>
-                <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={(e) => { e.stopPropagation(); onClose(winState.id); }}
-                    className="p-1 rounded-full hover:bg-red-500/80 text-neutral-500 dark:text-neutral-400 hover:text-white transition-colors duration-150"
-                    aria-label={`Fenster "${config.title}" schließen`}
-                >
-                    <X size={16} />
-                </motion.button>
+                <div className="flex items-center gap-2">
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => { e.stopPropagation(); onClose(winState.id); }}
+                        className="p-1 rounded-full hover:bg-red-500/80 text-neutral-300 hover:text-white transition-colors duration-150"
+                        aria-label={`Fenster "${config.title}" schließen`}
+                    >
+                        <X size={16} />
+                    </motion.button>
+                </div>
             </div>
             <div className="flex-grow overflow-y-auto min-h-0">
                 {config.content}
             </div>
             <div
                 ref={resizeRef}
-                className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-neutral-400 dark:text-neutral-600 z-10"
+                className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-neutral-200 z-10"
                 onPointerDown={handleResize}
                 role="slider"
                 aria-label="Fenstergröße ändern"
@@ -228,10 +165,10 @@ const DockIcon: React.FC<{ id: string; config: AppConfig; onClick: (id: string) 
                 whileHover={{ scale: 1.1, y: -8 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => onClick(id)}
-                className="bg-neutral-200/50 dark:bg-black/20 backdrop-blur-lg p-3 rounded-xl border border-neutral-300 dark:border-neutral-700 transition-colors"
+                className="backdrop-blur-lg p-3 rounded-xl border border-neutral-300 transition-colors"
                 aria-label={`Öffne ${config.title}`}
             >
-                <span className="text-neutral-800 dark:text-neutral-200">{config.icon}</span>
+                <span className="text-white">{config.icon}</span>
             </motion.button>
             <motion.div
                 animate={{ scale: isActive ? 1 : 0 }}
@@ -250,7 +187,7 @@ const generateInitialWindows = (): Record<string, WindowState> => {
             isOpen: id === 'about',
             position: { x: 150 + index * 50, y: 100 + index * 40 },
             zIndex: id === 'about' ? 11 : 10,
-            size: config.defaultSize,
+            size: config.defaultSize
         };
     });
     return initialWindows;
@@ -259,7 +196,7 @@ const generateInitialWindows = (): Record<string, WindowState> => {
 
 // --- Main Desktop Component ---
 export default function DesktopView() {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(true);
     const [windows, setWindows] = useState<Record<string, WindowState>>(generateInitialWindows);
     const [highestZIndex, setHighestZIndex] = useState(11);
     const constraintsRef = useRef<HTMLDivElement>(null);
@@ -333,55 +270,44 @@ export default function DesktopView() {
         };
     });
 
+    // Removed maximize functionality
+
     return (
-        <>
-            <AnimatePresence>
-                {!loggedIn && (
-                    <SplashScreen key="splash" onLogin={() => setLoggedIn(true)} />
-                )}
-            </AnimatePresence>
-            {loggedIn && (
-                <main
-                    ref={constraintsRef}
-                    className="h-[100dvh] w-screen overflow-hidden text-black dark:text-white font-sans relative select-none"
+        <main
+            ref={constraintsRef}
+            className="h-[100dvh] w-screen overflow-hidden text-white font-sans relative select-none"
+        >
+            {/* Windows */}
+            {Object.values(windows).map(winState => {
+                if (winState.isOpen) {
+                    return (
+                        <Window
+                            key={winState.id}
+                            winState={winState}
+                            onClose={closeWindow}
+                            onFocus={focusWindow}
+                            onDrag={handleDrag}
+                            onResize={resizeWindow}
+                            constraintsRef={constraintsRef}
+                        />
+                    )
+                }
+                return null;
+            })}
+            {/* Dock */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
+                <motion.div
+                    initial={{ y: 100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.5 }}
+                    className="flex items-end gap-3 p-3 backdrop-blur-lg border border-neutral-300 rounded-2xl"
                 >
-                    {/* Dot pattern background */}
-                    <div className="absolute inset-0 pointer-events-none z-0">
-                        <DotPattern />
-                    </div>
-                    {/* Windows */}
-                    {Object.values(windows).map(winState => {
-                        if (winState.isOpen) {
-                            return (
-                                <Window
-                                    key={winState.id}
-                                    winState={winState}
-                                    onClose={closeWindow}
-                                    onFocus={focusWindow}
-                                    onDrag={handleDrag}
-                                    onResize={resizeWindow}
-                                    constraintsRef={constraintsRef}
-                                />
-                            )
-                        }
-                        return null;
-                    })}
-                    {/* Dock */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50">
-                        <motion.div
-                            initial={{ y: 100, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.5 }}
-                            className="flex items-end gap-3 p-3 bg-neutral-200/50 dark:bg-black/20 backdrop-blur-lg border border-neutral-300 dark:border-neutral-700 rounded-2xl"
-                        >
-                            {Object.entries(APP_CONFIG).map(([id, config]) => (
-                                <DockIcon key={id} id={id} config={config} onClick={openWindow} isActive={windows[id]?.isOpen ?? false} />
-                            ))}
-                        </motion.div>
-                    </div>
-                </main>
-            )}
-        </>
+                    {Object.entries(APP_CONFIG).map(([id, config]) => (
+                        <DockIcon key={id} id={id} config={config} onClick={openWindow} isActive={windows[id]?.isOpen ?? false} />
+                    ))}
+                </motion.div>
+            </div>
+        </main>
     );
 }
 
