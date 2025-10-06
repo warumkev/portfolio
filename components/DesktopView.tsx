@@ -210,31 +210,6 @@ const DockIcon: React.FC<{
   );
 };
 
-// --- Desktop Icon Component ---
-const DesktopIcon: React.FC<{
-  id: string;
-  label: string;
-  onClick: (id: string) => void;
-}> = ({ id, label, onClick }) => {
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => onClick(id)}
-      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onClick(id)}
-      className="flex flex-col items-center gap-2 cursor-pointer select-none"
-      aria-label={label}
-    >
-      <img
-        src="/folder.svg"
-        alt={`${label} folder`}
-        className="w-12 h-12 object-contain"
-      />
-      <span className="text-xs text-white">{label}</span>
-    </div>
-  );
-};
-
 const generateInitialWindows = (): Record<string, WindowState> => {
   const initialWindows: Record<string, WindowState> = {};
   Object.entries(APP_CONFIG).forEach(([id, config], index) => {
@@ -354,12 +329,6 @@ export default function DesktopView() {
       ref={constraintsRef}
       className="h-[100dvh] w-screen overflow-hidden text-white font-sans relative select-none"
     >
-      {/* Desktop icons (e.g., Projects folder) */}
-      <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-auto">
-        <div className="transform -translate-x-9 translate-y-4">
-          <DesktopIcon id="portfolio" label="Projekte" onClick={openWindow} />
-        </div>
-      </div>
       {/* Windows */}
       {Object.values(windows).map((winState) => {
         if (winState.isOpen) {
