@@ -46,7 +46,16 @@ const PortfolioContent = () => {
                         </div>
                         <div className="flex gap-2 flex-shrink-0">
                             <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-blue-700 text-white rounded font-medium text-sm hover:bg-blue-800 transition">Live</a>
-                            <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-white text-blue-700 rounded font-medium text-sm hover:bg-blue-200 transition">GitHub</a>
+                            {p.githubUrl && (
+                                <a
+                                    href={p.githubUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-3 py-1 bg-white text-blue-700 rounded font-medium text-sm hover:bg-blue-200 transition"
+                                >
+                                    GitHub
+                                </a>
+                            )}
                         </div>
                     </li>
                 ))}
