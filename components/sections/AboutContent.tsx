@@ -55,17 +55,17 @@ const AboutContent = () => (
     <h2 className="text-2xl font-bold text-blue-700 mb-1 tracking-tight text-center">
             Kevin Tamme
         </h2>
-    <div className="text-base font-medium text-neutral-200 text-center mb-2">
+    <div className="text-base font-medium text-neutral-400 text-center mb-2">
             Design. Code. Creativity.
         </div>
-    <p className="text-white text-left max-w-xl mx-auto mb-2">
+    <p className="text-nwhite text-left max-w-xl mx-auto mb-2">
             Was du hier siehst, ist mehr als nur ein Portfolio – es ist meine Art zu denken, zu strukturieren und kreative Ideen in funktionierende digitale Erlebnisse zu übersetzen.<br />
             Mein Name ist Kevin Tamme, und ich baue die Systeme, in denen sich Nutzer und Marken zuhause fühlen.
         </p>
         {/* Skill badges */}
         <div className="flex flex-wrap gap-2 justify-center mt-2 mb-4">
             {skillBadges.map(badge => (
-                <span key={badge.label} className={`px-3 py-1 rounded-full text-xs font-semibold shadow text-blue-200 border border-blue-200`}>{badge.label}</span>
+                <span key={badge.label} className={`px-3 py-1 rounded-full text-xs font-semibold shadow bg-blue-700 text-white border border-blue-700`}>{badge.label}</span>
             ))}
         </div>
         {/* Skill matrix removed */}
@@ -92,7 +92,7 @@ const AboutContent = () => (
             <a
                 href="/cv-kevin-tamme.pdf"
                 download
-                className="inline-flex items-center px-4 py-2 bg-blue-700 text-white font-semibold rounded shadow hover:bg-blue-800 transition"
+                className="inline-flex items-center px-4 py-2 bg-blue-700 text-white font-semibold rounded shadow hover:bg-white hover:text-blue-700 transition"
                 aria-label="Lebenslauf herunterladen"
             >
                 <svg className="mr-2" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14m0 0l-6-6m6 6l6-6" /></svg>

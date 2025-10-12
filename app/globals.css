@@ -115,13 +115,11 @@
 }
 
 body {
-  background-image: var(--wallpaper-light);
-  background-size: cover;
-  background-position: center;
+  background-color: #000;
 }
 
 .dark body {
-  background-image: var(--wallpaper-dark);
+  background-color: #000;
 }
 
 @layer base {

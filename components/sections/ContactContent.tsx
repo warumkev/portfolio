@@ -86,21 +86,21 @@ const ContactContent = () => {
             <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-4 mx-auto">
                 <div>
                     <label htmlFor="name" className="text-sm font-medium text-blue-200">Name</label>
-                    <input type="text" id="name" name="name" required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700" />
+                    <input type="text" id="name" name="name" required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm bg-black focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 focus:bg-transparent" />
                 </div>
                 <div>
                     <label htmlFor="email" className="text-sm font-medium text-blue-200">E-Mail</label>
-                    <input type="email" id="email" name="email" required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700" />
+                    <input type="email" id="email" name="email" required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm bg-black focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 focus:bg-transparent" />
                 </div>
                 <div>
                     <label htmlFor="message" className="text-sm font-medium text-blue-200">Nachricht</label>
-                    <textarea id="message" name="message" rows={4} required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700"></textarea>
+                    <textarea id="message" name="message" rows={4} required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm bg-black focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 focus:bg-transparent"></textarea>
                 </div>
                 <div>
                     <button
                         type="submit"
                         disabled={status === 'sending'}
-                        className="w-full px-6 py-2.5 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 transition-all disabled:bg-neutral-200 disabled:cursor-not-allowed"
+                        className="w-full px-6 py-2.5 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-white hover:text-blue-700 transition-all disabled:bg-neutral-200 disabled:cursor-not-allowed"
                     >
                         {status === 'sending' ? 'Sende...' : 'Nachricht senden'}
                     </button>

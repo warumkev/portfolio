@@ -34,7 +34,7 @@ const PortfolioContent = () => {
                 {projects.map(p => (
                     <li
                         key={p.title}
-                        className="w-full rounded-xl shadow border border-neutral-200 p-4 flex flex-col md:flex-row items-start md:items-center gap-4 transition hover:shadow-lg"
+                        className="w-full rounded-xl shadow border border-neutral-200 p-4 flex flex-col md:flex-row items-start md:items-center gap-4 transition bg-black hover:bg-transparent"
                         role="button"
                         aria-label={`Projekt öffnen: ${p.title}`}
                         tabIndex={0}
@@ -45,13 +45,13 @@ const PortfolioContent = () => {
                             <p className="text-sm text-neutral-400 mb-2">{p.description}</p>
                         </div>
                         <div className="flex gap-2 flex-shrink-0">
-                            <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-blue-700 text-white rounded font-medium text-sm hover:bg-blue-800 transition">Live</a>
+                            <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-blue-700 text-white rounded font-medium text-sm hover:bg-neutral-200 hover:text-blue-700 transition">Live</a>
                             {p.githubUrl && (
                                 <a
                                     href={p.githubUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-3 py-1 bg-white text-blue-700 rounded font-medium text-sm hover:bg-blue-200 transition"
+                                    className="px-3 py-1 bg-white text-blue-700 rounded font-medium text-sm hover:bg-neutral-400 hover:text-white transition"
                                 >
                                     GitHub
                                 </a>

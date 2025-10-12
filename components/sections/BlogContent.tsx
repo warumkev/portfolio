@@ -36,7 +36,7 @@ const BlogContent = () => {
                     {notes.map((note, index) => (
                         <div
                             key={note.slug}
-                            className="p-4 border border-neutral-200 rounded-lg cursor-pointer hover:bg-black transition-colors"
+                            className="p-4 border border-neutral-200 rounded-lg cursor-pointer bg-black hover:bg-transparent transition-colors"
                             onClick={() => setSelectedNote(index)}
                             role="button"
                             aria-label={`Notiz öffnen: ${note.title}`}
@@ -55,15 +55,15 @@ const BlogContent = () => {
             {notes && selectedNote !== null && notes[selectedNote] && (
                 <div className="space-y-4">
                     <button
-                        className="mb-4 px-4 py-2 bg-blue-100 text-blue-200 rounded hover:bg-blue-200 transition-colors"
+                        className="mb-4 px-4 py-2 bg-blue-700 text-white rounded hover:bg-white hover:text-blue-700 transition-colors"
                         onClick={() => setSelectedNote(null)}
                     >
                         ← Zurück zur Übersicht
                     </button>
-                    <div className="p-4 border border-neutral-200 rounded-lg">
-                        <h3 className="font-semibold text-blue-200 text-lg mb-1">{notes[selectedNote].title}</h3>
+                    <div className="p-4 border border-neutral-200 bg-black rounded-lg">
+                        <h3 className="font-semibold text-blue-700 text-lg mb-1">{notes[selectedNote].title}</h3>
                         <p className="text-xs text-neutral-200 mb-2">{notes[selectedNote].date}</p>
-                        <div className="prose prose-neutral max-w-none text-sm text-neutral-600">
+                        <div className="prose prose-neutral max-w-none text-sm text-white">
                             <ReactMarkdown>{notes[selectedNote].content}</ReactMarkdown>
                         </div>
                     </div>

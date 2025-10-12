@@ -28,31 +28,31 @@ const SysteminfoContent = () => {
                 </div>
                 <div>
                     <h2 className="text-xl font-bold text-blue-700">PortfoliOS v2.0</h2>
-                    <p className="text-xs text-neutral-200">© 2025 Kevin Tamme</p>
+                    <p className="text-xs text-neutral-400">© 2025 Kevin Tamme</p>
                 </div>
             </div>
             <div className="flex gap-3 items-center mb-4">
                 <span className="text-xs bg-green-900 text-neutral-200 px-2 py-1 rounded">Online</span>
-                <span className="text-xs text-neutral-200">Letztes Update: 03.10.2025</span>
+                <span className="text-xs text-neutral-400">Letztes Update: 12.10.2025</span>
             </div>
             {/* Theme toggle removed. */}
             <div className="mt-4 w-full space-y-3">
-                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 shadow-sm">
+                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 bg-black hover:bg-transparent">
                     <span className=""><Clock size={20} className="text-blue-700" /></span>
                     <span className="text-neutral-200">Uhrzeit:</span>
                     <span className="ml-auto font-semibold text-neutral-400">{date}</span>
                 </div>
-                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 shadow-sm">
+                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 bg-black hover:bg-transparent">
                     <span className="text-blue-700"><Maximize2 size={20} /></span>
                     <span className="text-neutral-200">Fenstergröße:</span>
                     <span className="ml-auto font-semibold text-neutral-400">{windowSize.w} x {windowSize.h}</span>
                 </div>
-                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 shadow-sm">
+                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 bg-black hover:bg-transparent">
                     <span className="text-blue-700"><Globe2 size={20} /></span>
                     <span className="text-neutral-200">Browser:</span>
                     <span className="ml-auto font-semibold text-neutral-400">{typeof navigator !== "undefined" ? navigator.userAgent : "-"}</span>
                 </div>
-                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 shadow-sm">
+                <div className="flex items-center gap-3 border border-neutral-400 rounded-lg px-4 py-3 bg-black hover:bg-transparent">
                     <span className="text-blue-700"><Monitor size={20} /></span>
                     <span className="text-neutral-200">OS:</span>
                     <span className="ml-auto font-semibold text-neutral-400">{typeof navigator !== "undefined" ? navigator.platform : "-"}</span>

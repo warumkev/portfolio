@@ -34,10 +34,10 @@ const MusicPlayerContent = () => {
                 <Music size={64} className="text-blue-700" />
             </div>
             <h3 className="text-lg font-bold text-blue-700">Lofi Chill</h3>
-            <p className="text-sm text-neutral-400 mb-6">by Lofi Girl</p>
+            <p className="text-sm text-neutral-400 mb-6">by ilovemusic</p>
             <button
                 onClick={togglePlayPause}
-                className="w-16 h-16 bg-neutral-400 rounded-full shadow-lg flex items-center justify-center text-blue-700 hover:scale-105 transition-transform"
+                className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-700 transition"
                 aria-label={isPlaying ? "Musik anhalten" : "Musik abspielen"}
             >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
@@ -51,7 +51,7 @@ const MusicPlayerContent = () => {
                     step="0.01"
                     value={volume}
                     onChange={handleVolumeChange}
-                    className="w-full h-2 bg-neutral-400 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-blue-700 [&::-webkit-slider-thumb]:rounded-full"
+                    className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-blue-700 [&::-webkit-slider-thumb]:rounded-full"
                     aria-label="Lautstärkeregler"
                     style={{ touchAction: 'pan-y' }}
                 />
