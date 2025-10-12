@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import React from 'react';
 
 // --- AboutContent.tsx ---
@@ -23,16 +22,6 @@ const skillBadges = [
     { label: 'HTML'},
     { label: 'CSS'},
     { label: 'Git'},
-];
-
-// Vibe meter levels for About section
-// Used to visually represent personal strengths
-const vibeLevels = [
-    { label: 'Creativity', value: 90 },
-    { label: 'Tech', value: 80 },
-    { label: 'Design', value: 95 },
-    { label: 'Fun', value: 100 },
-    { label: 'Problems', value: 5 }
 ];
 
 /**

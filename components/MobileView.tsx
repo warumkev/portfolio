@@ -2,12 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { Suspense } from "react";
-const DotPattern = React.lazy(() =>
-  import("@/components/magicui/dot-pattern").then((mod) => ({
-    default: mod.DotPattern,
-  }))
-);
+import React from "react";
+
 import { APP_CONFIG, AppConfig } from "../config/apps";
 // Removed Wifi, Signal import
 

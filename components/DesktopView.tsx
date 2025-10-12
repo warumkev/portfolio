@@ -226,7 +226,6 @@ const generateInitialWindows = (): Record<string, WindowState> => {
 
 // --- Main Desktop Component ---
 export default function DesktopView() {
-  const [loggedIn, setLoggedIn] = useState(true);
   const [windows, setWindows] = useState<Record<string, WindowState>>(
     generateInitialWindows
   );

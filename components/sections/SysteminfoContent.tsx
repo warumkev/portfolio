@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CircuitBoard, Moon, Sun, Clock, Maximize2, Globe2, Monitor } from 'lucide-react';
+import { CircuitBoard, Clock, Maximize2, Globe2, Monitor } from 'lucide-react';
 
 /**
  * SysteminfoContent displays system and environment info, theme toggle, and some fun stats.
