@@ -76,8 +76,7 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ repeat: Infinity, duration: 1.2 }}
         />
-      </motion.div>
-            <motion.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.7 }}
         transition={{ delay: 1.2 }}
@@ -87,8 +86,8 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
           © {new Date().getFullYear()} Kevin Tamme – portfoliOS
         </span>
       </motion.div>
+      </motion.div>
     </motion.div>
-    
   );
 };
 
