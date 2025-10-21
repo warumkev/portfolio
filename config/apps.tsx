@@ -64,13 +64,13 @@ export const APP_CONFIG: Record<string, AppConfig> = {
         defaultSize: { width: 420, height: 600 },
         minSize: { width: 320, height: 400 },
     },
-    blog: {
+    /*blog: {
         title: 'Notizen',
         icon: <NotebookText size={20} />,
         content: <BlogContent />,
         defaultSize: { width: 520, height: 600 },
         minSize: { width: 320, height: 400 },
-    },
+    },*/
     systeminfo: {
         title: 'Systeminfo',
         icon: <CircuitBoard size={20} />,

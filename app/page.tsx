@@ -35,7 +35,7 @@ export default function Home() {
   }, [isMobile]);
 
   if (isMobile === null) {
-  return <div className="h-screen w-screen text-white dark:bg-neutral-950" />;
+  return <div className="h-screen w-screen text-white" />;
   }
 
   return isMobile ? <MobileView /> : <DesktopView />;

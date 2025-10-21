@@ -108,7 +108,7 @@ const Window: React.FC<WindowProps> = ({
         y = Math.max(0, Math.min(y, viewportHeight - height));
         onDrag(winState.id, { x, y });
       }}
-      className="absolute bg-black/20 backdrop-blur-xl border border-neutral-300 rounded-lg shadow-2xl flex flex-col overflow-hidden"
+      className="absolute backdrop-blur-xl border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden"
       style={{
         x: winState.position.x,
         y: winState.position.y,
@@ -124,13 +124,13 @@ const Window: React.FC<WindowProps> = ({
     >
       <div
         onPointerDown={(e) => dragControls.start(e)}
-        className="flex items-center justify-between h-10 px-3 rounded-t-lg border-b border-neutral-300 cursor-grab flex-shrink-0"
+        className="flex items-center justify-between h-10 px-3 rounded-t-lg border-border cursor-grab flex-shrink-0"
       >
-        <div className="flex items-center gap-2 text-white">
-          <span className="text-neutral-300">{config.icon}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-primary">{config.icon}</span>
           <span
             id={`window-title-${winState.id}`}
-            className="text-sm font-medium"
+            className="text-sm text-primary font-medium"
           >
             {config.title}
           </span>
@@ -142,7 +142,7 @@ const Window: React.FC<WindowProps> = ({
               e.stopPropagation();
               onClose(winState.id);
             }}
-            className="p-1 rounded-full hover:bg-red-500/80 text-neutral-300 hover:text-white transition-colors duration-150"
+            className="p-1 rounded-full hover:bg-destructive text-primary hover:text-secondary transition-colors duration-150"
             aria-label={`Fenster "${config.title}" schließen`}
           >
             <X size={16} />
@@ -152,7 +152,7 @@ const Window: React.FC<WindowProps> = ({
       <div className="flex-grow overflow-y-auto min-h-0">{config.content}</div>
       <div
         ref={resizeRef}
-        className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-neutral-200 z-10"
+        className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-muted z-10"
         onPointerDown={handleResize}
         role="slider"
         aria-label="Fenstergröße ändern"
@@ -186,7 +186,7 @@ const DockIcon: React.FC<{
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute -top-10 px-2 py-1 text-xs bg-neutral-800 text-white rounded-md pointer-events-none whitespace-nowrap"
+            className="absolute -top-10 px-2 py-1 text-xs bg-background text-primary rounded-md pointer-events-none whitespace-nowrap"
           >
             {config.title}
           </motion.span>
@@ -196,10 +196,10 @@ const DockIcon: React.FC<{
         whileHover={{ scale: 1.1, y: -8 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => onClick(id)}
-        className="backdrop-blur-lg p-3 rounded-xl border border-neutral-300 transition-colors"
+        className="backdrop-blur-lg p-3 rounded-xl border border-border transition-colors"
         aria-label={`Öffne ${config.title}`}
       >
-        <span className="text-white">{config.icon}</span>
+        <span className="text-primary">{config.icon}</span>
       </motion.button>
       <motion.div
         animate={{ scale: isActive ? 1 : 0 }}
@@ -275,7 +275,6 @@ export default function DesktopView() {
     setWindows((prev) => {
       const win = prev[id];
       if (!win) return prev;
-      // Clamp position to viewport
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       const clampedX = Math.max(
@@ -321,12 +320,10 @@ export default function DesktopView() {
       };
     });
 
-  // Removed maximize functionality
-
   return (
     <main
       ref={constraintsRef}
-      className="h-[100dvh] w-screen overflow-hidden text-white font-sans relative select-none"
+      className="h-[100dvh] w-screen overflow-hidden text-primary font-sans relative select-none"
     >
       {/* Windows */}
       {Object.values(windows).map((winState) => {
@@ -356,7 +353,7 @@ export default function DesktopView() {
             damping: 30,
             delay: 0.5,
           }}
-          className="flex items-end gap-3 p-3 backdrop-blur-lg border border-neutral-300 rounded-2xl"
+          className="flex items-end gap-3 p-3 backdrop-blur-lg border border-border rounded-2xl"
         >
           {Object.entries(APP_CONFIG).map(([id, config]) => (
             <DockIcon

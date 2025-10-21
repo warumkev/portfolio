@@ -29,7 +29,7 @@ const skillBadges = [
  * Modularized for maintainability. All static data is defined above for clarity.
  */
 const AboutContent = () => (
-    <div className="p-6 md:p-8 flex flex-col min-w-[220px] min-h-[400px] w-full text-white">
+    <div className="p-6 md:p-8 flex flex-col min-w-[220px] min-h-[400px] w-full text-primary">
         {/* Profile image */}
         <div className="justify-center flex mb-4">
             <Image
@@ -37,42 +37,42 @@ const AboutContent = () => (
                 alt="Kevin Tamme, Frontend Entwickler aus Frankfurt"
                 width={128}
                 height={128}
-                className="rounded-full shadow-lg border-4 border-blue-700"
+                className="rounded-full shadow-lg border-4 border-foreground"
             />
         </div>
         {/* Name and tagline */}
-    <h2 className="text-2xl font-bold text-blue-700 mb-1 tracking-tight text-center">
+    <h2 className="text-2xl font-bold text-text-1 mb-1 tracking-tight text-center">
             Kevin Tamme
         </h2>
-    <div className="text-base font-medium text-neutral-400 text-center mb-2">
+    <div className="text-base font-medium text-center mb-2">
             Design. Code. Creativity.
         </div>
-    <p className="text-nwhite text-left max-w-xl mx-auto mb-2">
+    <p className=" text-left max-w-xl mx-auto mb-2">
             Was du hier siehst, ist mehr als nur ein Portfolio – es ist meine Art zu denken, zu strukturieren und kreative Ideen in funktionierende digitale Erlebnisse zu übersetzen.<br />
             Mein Name ist Kevin Tamme, und ich baue die Systeme, in denen sich Nutzer und Marken zuhause fühlen.
         </p>
         {/* Skill badges */}
         <div className="flex flex-wrap gap-2 justify-center mt-2 mb-4">
             {skillBadges.map(badge => (
-                <span key={badge.label} className={`px-3 py-1 rounded-full text-xs font-semibold shadow bg-blue-700 text-white border border-blue-700`}>{badge.label}</span>
+                <span key={badge.label} className={`px-3 py-1 rounded-full text-xs font-semibold shadow bg-primary text-secondary`}>{badge.label}</span>
             ))}
         </div>
         {/* Skill matrix removed */}
         {/* Timeline Section: education and career milestones */}
         <div className="w-full max-w-md mx-auto mt-2 mb-4">
-            <h3 className="text-xs font-bold text-blue-700 mb-2 text-center">Timeline</h3>
+            <h3 className="text-xs font-bold mb-2 text-center">Timeline</h3>
             <ul className="timeline list-none p-0 m-0">
                 <li className="mb-2">
-                    <span className="font-semibold text-blue-700">2026</span> – B.Sc. Informatik Abschluss, Frankfurt
+                    <span className="font-semibold">2026</span> – B.Sc. Informatik Abschluss, Frankfurt
                 </li>
                 <li className="mb-2">
-                    <span className="font-semibold text-blue-700">2024</span> – Launch Portfolio v1.0
+                    <span className="font-semibold">2024</span> – Launch Portfolio v1.0
                 </li>
                 <li className="mb-2">
-                    <span className="font-semibold text-blue-700">2022-2025</span> – Softwareentwickler & Freelance Webentwicklung
+                    <span className="font-semibold">2022-2025</span> – Softwareentwickler & Freelance Webentwicklung
                 </li>
                 <li className="mb-2">
-                    <span className="font-semibold text-blue-700">2022</span> – Beginn Informatik-Studium
+                    <span className="font-semibold">2022</span> – Beginn Informatik-Studium
                 </li>
             </ul>
         </div>
@@ -81,7 +81,7 @@ const AboutContent = () => (
             <a
                 href="/cv-kevin-tamme.pdf"
                 download
-                className="inline-flex items-center px-4 py-2 bg-blue-700 text-white font-semibold rounded shadow hover:bg-white hover:text-blue-700 transition"
+                className="inline-flex items-center px-4 py-2 bg-primary text-secondary font-semibold rounded shadow hover:bg-secondary hover:text-primary transition"
                 aria-label="Lebenslauf herunterladen"
             >
                 <svg className="mr-2" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14m0 0l-6-6m6 6l6-6" /></svg>

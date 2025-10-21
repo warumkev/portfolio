@@ -27,16 +27,16 @@ const BlogContent = () => {
             .finally(() => setLoading(false));
     }, []);
     return (
-    <div className="p-6 md:p-8 font-sans text-white">
-            <h2 className="text-xl font-bold text-white mb-4 px-2">Notizen & Learnings</h2>
-            {loading && <div className="text-center text-neutral-200">Lade Notizen…</div>}
-            {error && <div className="text-center text-red-600">Fehler beim Laden der Notizen.</div>}
+    <div className="p-6 md:p-8 font-sans text-primary">
+            <h2 className="text-xl font-bold text-primary mb-4 px-2">Notizen & Learnings</h2>
+            {loading && <div className="text-center text-primary">Lade Notizen…</div>}
+            {error && <div className="text-center text-destructive">Fehler beim Laden der Notizen.</div>}
             {notes && selectedNote === null && (
                 <div className="space-y-4">
                     {notes.map((note, index) => (
                         <div
                             key={note.slug}
-                            className="p-4 border border-neutral-200 rounded-lg cursor-pointer bg-black hover:bg-transparent transition-colors"
+                            className="p-4 border border-border rounded-lg cursor-pointer hover:bg-background/25 transition-colors"
                             onClick={() => setSelectedNote(index)}
                             role="button"
                             aria-label={`Notiz öffnen: ${note.title}`}

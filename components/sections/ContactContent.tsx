@@ -9,7 +9,7 @@ const Toast = ({ show, type, message, onClose }: { show: boolean; type: 'success
                 ${show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}
                 right-4 bottom-4 sm:right-4 sm:bottom-4 sm:translate-y-0
                 w-[90vw] max-w-xs sm:w-auto sm:max-w-sm rounded-xl shadow-lg px-5 py-4 font-medium text-base
-                ${type === 'success' ? 'bg-green-600 text-white dark:bg-green-500' : 'bg-red-600 text-white dark:bg-red-500'} dark:shadow-black/40
+                ${type === 'success' ? 'bg-green-600 text-white' : 'bg-destructive text-primary'}
                 sm:bottom-4 sm:right-4 bottom-auto top-4 left-1/2 -translate-x-1/2 sm:left-auto sm:top-auto sm:translate-x-0
                 ${show ? '' : 'sm:opacity-0 sm:pointer-events-none'}
             `}
@@ -19,7 +19,7 @@ const Toast = ({ show, type, message, onClose }: { show: boolean; type: 'success
             <span>{message}</span>
             <button
                 onClick={onClose}
-                className="ml-4 text-white/80 hover:text-white focus:outline-none"
+                className="ml-4 text-primary hover:text-secondary focus:outline-none"
                 aria-label="Schließen"
             >
                 ×
@@ -78,29 +78,29 @@ const ContactContent = () => {
     };
 
     return (
-    <div className="p-6 md:p-8 font-sans text-white">
-            <h2 className="text-2xl font-bold text-blue-700 mb-4 text-center">Noch Fragen?</h2>
-            <p className="text-neutral-200 mb-6 text-center max-w-md mx-auto">
+    <div className="p-6 md:p-8 font-sans text-primary">
+            <h2 className="text-2xl font-bold mb-4 text-center">Noch Fragen?</h2>
+            <p className="text-muted mb-6 text-center max-w-md mx-auto">
                 Haben Sie ein Projekt im Sinn oder möchten sich vernetzen? Ich freue mich auf Ihre Nachricht.
             </p>
             <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-4 mx-auto">
                 <div>
-                    <label htmlFor="name" className="text-sm font-medium text-blue-200">Name</label>
-                    <input type="text" id="name" name="name" required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm bg-black focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 focus:bg-transparent" />
+                    <label htmlFor="name" className="text-sm font-medium">Name</label>
+                    <input type="text" id="name" name="name" required className="mt-1 block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:bg-background/25" />
                 </div>
                 <div>
-                    <label htmlFor="email" className="text-sm font-medium text-blue-200">E-Mail</label>
-                    <input type="email" id="email" name="email" required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm bg-black focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 focus:bg-transparent" />
+                    <label htmlFor="email" className="text-sm font-medium ">E-Mail</label>
+                    <input type="email" id="email" name="email" required className="mt-1 block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:bg-background/25" />
                 </div>
                 <div>
-                    <label htmlFor="message" className="text-sm font-medium text-blue-200">Nachricht</label>
-                    <textarea id="message" name="message" rows={4} required className="mt-1 block w-full px-3 py-2 border border-neutral-200 rounded-md shadow-sm bg-black focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 focus:bg-transparent"></textarea>
+                    <label htmlFor="message" className="text-sm font-medium ">Nachricht</label>
+                    <textarea id="message" name="message" rows={4} required className="mt-1 block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:bg-background/25"></textarea>
                 </div>
                 <div>
                     <button
                         type="submit"
                         disabled={status === 'sending'}
-                        className="w-full px-6 py-2.5 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-white hover:text-blue-700 transition-all disabled:bg-neutral-200 disabled:cursor-not-allowed"
+                        className="w-full px-6 py-2.5 bg-primary text-secondary font-semibold rounded-lg shadow-md hover:bg-secondary hover:text-primary transition-all disabled:bg-neutral-200 disabled:cursor-not-allowed"
                     >
                         {status === 'sending' ? 'Sende...' : 'Nachricht senden'}
                     </button>
