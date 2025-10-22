@@ -27,24 +27,24 @@ const SysteminfoContent = () => {
                     <CircuitBoard size={40} className="text-secondary" />
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold text-primary">PortfoliOS v2.0</h2>
+                    <h2 className="text-xl font-bold text-primary">PortfoliOS 2510.22</h2>
                     <p className="text-xs text-muted">© 2025 Kevin Tamme</p>
                 </div>
             </div>
             <div className="flex gap-3 items-center mb-4">
                 <span className="text-xs bg-success text-secondary px-2 py-1 rounded">Online</span>
-                <span className="text-xs text-muted">Letztes Update: 22.10.2025</span>
+                <span className="text-xs text-muted">Last Update: 22.10.2025</span>
             </div>
             {/* Theme toggle removed. */}
             <div className="mt-4 w-full space-y-3">
                 <div className="flex items-center gap-3 border border-border rounded-lg px-4 py-3 bg-background hover:bg-background/25">
                     <span className=""><Clock size={20} className="text-primary" /></span>
-                    <span className="text-primary">Uhrzeit:</span>
+                    <span className="text-primary">Time:</span>
                     <span className="ml-auto font-semibold text-muted">{date}</span>
                 </div>
                 <div className="flex items-center gap-3 border border-border rounded-lg px-4 py-3 bg-background hover:bg-background/25">
                     <span className="text-primary"><Maximize2 size={20} /></span>
-                    <span className="text-primary">Fenstergröße:</span>
+                    <span className="text-primary">Window size:</span>
                     <span className="ml-auto font-semibold text-muted">{windowSize.w} x {windowSize.h}</span>
                 </div>
                 <div className="flex items-center gap-3 border border-border rounded-lg px-4 py-3 bg-background hover:bg-background/25">

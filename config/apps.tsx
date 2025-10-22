@@ -44,7 +44,7 @@ export interface BlogPost {
 // App configuration for all window sections
 export const APP_CONFIG: Record<string, AppConfig> = {
     about: {
-        title: 'Über mich',
+        title: 'README.md',
         icon: <User size={20} />, // adjust icon as needed
         content: <AboutContent />,
         defaultSize: { width: 420, height: 600 },
@@ -58,7 +58,7 @@ export const APP_CONFIG: Record<string, AppConfig> = {
         minSize: { width: 320, height: 400 },
     },
     contact: {
-        title: 'Kontakt',
+        title: 'Mail',
         icon: <Mail size={20} />,
         content: <ContactContent />,
         defaultSize: { width: 420, height: 600 },
@@ -72,14 +72,14 @@ export const APP_CONFIG: Record<string, AppConfig> = {
         minSize: { width: 320, height: 400 },
     },*/
     systeminfo: {
-        title: 'Systeminfo',
+        title: 'Settings',
         icon: <CircuitBoard size={20} />,
         content: <SysteminfoContent />,
         defaultSize: { width: 420, height: 600 },
         minSize: { width: 320, height: 400 },
     },
     music: {
-        title: 'Musik',
+        title: 'Music',
         icon: <Music size={20} />,
         content: <MusicPlayerContent />,
         defaultSize: { width: 420, height: 600 },

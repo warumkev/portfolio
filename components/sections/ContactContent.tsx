@@ -17,13 +17,6 @@ const Toast = ({ show, type, message, onClose }: { show: boolean; type: 'success
             aria-live="polite"
         >
             <span>{message}</span>
-            <button
-                onClick={onClose}
-                className="ml-4 text-primary hover:text-secondary focus:outline-none"
-                aria-label="Schließen"
-            >
-                ×
-            </button>
         </div>
     );
 };
@@ -79,9 +72,9 @@ const ContactContent = () => {
 
     return (
     <div className="p-6 md:p-8 font-sans text-primary">
-            <h2 className="text-2xl font-bold mb-4 text-center">Noch Fragen?</h2>
-            <p className="text-muted mb-6 text-center max-w-md mx-auto">
-                Haben Sie ein Projekt im Sinn oder möchten sich vernetzen? Ich freue mich auf Ihre Nachricht.
+            <h2 className="text-2xl font-bold mb-4 text-center">Any questions?</h2>
+            <p className="text-sm text-muted mb-6 px-3">
+                Have a project in mind or just want to say hello? Fill out the form below and I'll get back to you as soon as possible.
             </p>
             <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-4 mx-auto">
                 <div>
@@ -93,7 +86,7 @@ const ContactContent = () => {
                     <input type="email" id="email" name="email" required className="mt-1 block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:bg-background/25" />
                 </div>
                 <div>
-                    <label htmlFor="message" className="text-sm font-medium ">Nachricht</label>
+                    <label htmlFor="message" className="text-sm font-medium ">Message</label>
                     <textarea id="message" name="message" rows={4} required className="mt-1 block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:bg-background/25"></textarea>
                 </div>
                 <div>
@@ -102,14 +95,14 @@ const ContactContent = () => {
                         disabled={status === 'sending'}
                         className="w-full px-6 py-2.5 bg-primary text-secondary font-semibold rounded-lg shadow-md hover:bg-secondary hover:text-primary transition-all disabled:bg-neutral-200 disabled:cursor-not-allowed"
                     >
-                        {status === 'sending' ? 'Sende...' : 'Nachricht senden'}
+                        {status === 'sending' ? 'Send...' : 'Send Message'}
                     </button>
                 </div>
             </form>
             <Toast
                 show={showToast}
                 type={status === 'success' ? 'success' : 'error'}
-                message={status === 'success' ? 'Vielen Dank! Ihre Nachricht wurde gesendet.' : 'Fehler. Bitte versuchen Sie es später erneut.'}
+                message={status === 'success' ? 'Thank you. Your message has been sent.' : 'Error sending message. Please try again later.'}
                 onClose={() => setShowToast(false)}
             />
         </div>

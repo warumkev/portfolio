@@ -1,6 +1,6 @@
 {
   "title": "Portfolio Website",
-  "description": "Interaktives Portfolio mit Next.js, React und Tailwind CSS. Responsive, modern und SEO-optimiert.",
+  "description": "An interactive, OS-themed portfolio built with Next.js, TypeScript, and Framer Motion, featuring responsive desktop and mobile interfaces.",
   "liveUrl": "https://www.kevintamme.com",
   "githubUrl": "https://github.com/warumkev/portfolio"
 }

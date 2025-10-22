@@ -38,7 +38,7 @@ const MusicPlayerContent = () => {
             <button
                 onClick={togglePlayPause}
                 className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white hover:bg-background hover:text-primary transition"
-                aria-label={isPlaying ? "Musik anhalten" : "Musik abspielen"}
+                aria-label={isPlaying ? "Pause" : "Play"}
             >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
             </button>

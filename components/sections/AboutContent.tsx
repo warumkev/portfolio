@@ -1,27 +1,27 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 
 // --- AboutContent.tsx ---
 // This component renders the About section of the portfolio, including profile, skills, timeline, CV download, and vibe meter.
 
 // Skill badges for About section
 const skillBadges = [
-    { label: 'Design'},
-    { label: 'User Experience'},
-    { label: 'SwiftUI'},
-    { label: 'Figma'},
-    { label: 'Sketch'},
-    { label: 'Vercel'},
-    { label: 'React'},
-    { label: 'TailwindCSS'},
-    { label: 'MagicUI'},
-    { label: 'APIs'},
-    { label: 'TypeScript'},
-    { label: 'Next.js'},
-    { label: 'JavaScript'},
-    { label: 'HTML'},
-    { label: 'CSS'},
-    { label: 'Git'},
+  { label: "Design" },
+  { label: "User Experience" },
+  { label: "SwiftUI" },
+  { label: "Figma" },
+  { label: "Sketch" },
+  { label: "Vercel" },
+  { label: "React" },
+  { label: "TailwindCSS" },
+  { label: "MagicUI" },
+  { label: "APIs" },
+  { label: "TypeScript" },
+  { label: "Next.js" },
+  { label: "JavaScript" },
+  { label: "HTML" },
+  { label: "CSS" },
+  { label: "Git" },
 ];
 
 /**
@@ -29,67 +29,57 @@ const skillBadges = [
  * Modularized for maintainability. All static data is defined above for clarity.
  */
 const AboutContent = () => (
-    <div className="p-6 md:p-8 flex flex-col min-w-[220px] min-h-[400px] w-full text-primary">
-        {/* Profile image */}
-        <div className="justify-center flex mb-4">
-            <Image
-                src="/profile-image.png"
-                alt="Kevin Tamme, Frontend Entwickler aus Frankfurt"
-                width={128}
-                height={128}
-                className="rounded-full shadow-lg border-4 border-foreground"
-            />
-        </div>
-        {/* Name and tagline */}
-    <h2 className="text-2xl font-bold text-text-1 mb-1 tracking-tight text-center">
-            Kevin Tamme
-        </h2>
-    <div className="text-base font-medium text-center mb-2">
-            Design. Code. Creativity.
-        </div>
-    <p className=" text-left max-w-xl mx-auto mb-2">
-            Was du hier siehst, ist mehr als nur ein Portfolio – es ist meine Art zu denken, zu strukturieren und kreative Ideen in funktionierende digitale Erlebnisse zu übersetzen.<br />
-            Mein Name ist Kevin Tamme, und ich baue die Systeme, in denen sich Nutzer und Marken zuhause fühlen.
+  <div className="p-6 md:p-8 w-full min-w-[220px] min-h-[420px] text-primary">
+    <div className="flex flex-col items-center md:items-start gap-6 mb-6">
+      <div className="w-32 h-32 relative rounded-full overflow-hidden shadow-lg">
+        <Image
+          src="/profile-image.png"
+          alt="Profilbild von Kevin Tamme"
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="flex-1 text-center md:text-left">
+        <h3 className="text-lg font-semibold mb-1">Kevin Tamme</h3>
+        <p className="text-sm text-muted">
+          Hey. I'm Kevin, a 22-year-old developer.
+          <br />
+          <br />
+          My biggest motivation is pretty simple: I get annoyed by enterprise
+          bloatware, subscription models for basic features, and apps that seem
+          to want my data more than anything else.
+          <br />
+          <br />
+          So, I just build my own.
+          <br />
+          <br />
+          I'm just a guy who sees a problem, thinks "I can do that myself," and
+          then builds a solution—usually because I need it.
+          <br />
+          <br />
+          I'm documenting the whole journey and sharing the tools for free. My
+          philosophy is that powerful tech shouldn't be expensive, and it
+          definitely shouldn't be built to sell you out.
+          <br />
+          <br />
+          Welcome to portfoliOS.
         </p>
-        {/* Skill badges */}
-        <div className="flex flex-wrap gap-2 justify-center mt-2 mb-4">
-            {skillBadges.map(badge => (
-                <span key={badge.label} className={`px-3 py-1 rounded-full text-xs font-semibold shadow bg-primary text-secondary`}>{badge.label}</span>
-            ))}
-        </div>
-        {/* Skill matrix removed */}
-        {/* Timeline Section: education and career milestones */}
-        <div className="w-full max-w-md mx-auto mt-2 mb-4">
-            <h3 className="text-xs font-bold mb-2 text-center">Timeline</h3>
-            <ul className="timeline list-none p-0 m-0">
-                <li className="mb-2">
-                    <span className="font-semibold">2026</span> – B.Sc. Informatik Abschluss, Frankfurt
-                </li>
-                <li className="mb-2">
-                    <span className="font-semibold">2024</span> – Launch Portfolio v1.0
-                </li>
-                <li className="mb-2">
-                    <span className="font-semibold">2022-2025</span> – Softwareentwickler & Freelance Webentwicklung
-                </li>
-                <li className="mb-2">
-                    <span className="font-semibold">2022</span> – Beginn Informatik-Studium
-                </li>
-            </ul>
-        </div>
-        {/* Downloadable CV Button: PDF download */}
-        <div className="w-full max-w-md mx-auto mb-2 flex justify-center">
-            <a
-                href="/cv-kevin-tamme.pdf"
-                download
-                className="inline-flex items-center px-4 py-2 bg-primary text-secondary font-semibold rounded shadow hover:bg-secondary hover:text-primary transition"
-                aria-label="Lebenslauf herunterladen"
-            >
-                <svg className="mr-2" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 5v14m0 0l-6-6m6 6l6-6" /></svg>
-                Lebenslauf herunterladen
-            </a>
-        </div>
-        {/* Vibe meter removed */}
+      </div>
     </div>
+    <div className="mb-6">
+      <h4 className="font-semibold mb-2">Toolset</h4>
+      <div className="flex flex-wrap gap-2">
+        {skillBadges.map((skill) => (
+          <span
+            key={skill.label}
+            className="bg-secondary text-primary px-3 py-1 rounded-full text-sm font-medium"
+          >
+            {skill.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
 );
 
 export default AboutContent;
