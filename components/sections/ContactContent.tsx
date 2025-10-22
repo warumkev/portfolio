@@ -9,7 +9,7 @@ const Toast = ({ show, type, message, onClose }: { show: boolean; type: 'success
                 ${show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'}
                 right-4 bottom-4 sm:right-4 sm:bottom-4 sm:translate-y-0
                 w-[90vw] max-w-xs sm:w-auto sm:max-w-sm rounded-xl shadow-lg px-5 py-4 font-medium text-base
-                ${type === 'success' ? 'bg-green-600 text-white' : 'bg-destructive text-primary'}
+                ${type === 'success' ? 'bg-success text-primary' : 'bg-destructive text-primary'}
                 sm:bottom-4 sm:right-4 bottom-auto top-4 left-1/2 -translate-x-1/2 sm:left-auto sm:top-auto sm:translate-x-0
                 ${show ? '' : 'sm:opacity-0 sm:pointer-events-none'}
             `}

@@ -9,6 +9,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -22,6 +23,7 @@
   --muted: hsl(0, 0%, 50%);
   --accent: hsl(216, 71%, 61%);
   --destructive: hsl(340, 82%, 52%);
+  --success: hsl(141, 53%, 53%);
   --border: hsl(0, 0%, 75%);
   --input: hsl(220, 14%, 85%);
   --ring: hsl(216, 70%, 24%);

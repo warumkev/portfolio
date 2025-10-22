@@ -30,20 +30,20 @@ const MusicPlayerContent = () => {
 
     return (
     <div className="p-6 md:p-8 h-full flex flex-col items-center justify-center text-white">
-            <div className="w-48 h-48 rounded-lg shadow-lg mb-6 flex items-center justify-center">
-                <Music size={64} className="text-blue-700" />
+            <div className="w-48 h-48 rounded-xl bg-background hover:bg-background/25 shadow-lg mb-6 flex items-center justify-center">
+                <Music size={64} className="text-primary" />
             </div>
-            <h3 className="text-lg font-bold text-blue-700">Lofi Chill</h3>
-            <p className="text-sm text-neutral-400 mb-6">by ilovemusic</p>
+            <h3 className="text-lg font-bold text-primary">Lofi Chill</h3>
+            <p className="text-sm text-muted mb-6">by ilovemusic</p>
             <button
                 onClick={togglePlayPause}
-                className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-700 transition"
+                className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white hover:bg-background hover:text-primary transition"
                 aria-label={isPlaying ? "Musik anhalten" : "Musik abspielen"}
             >
                 {isPlaying ? <Pause size={32} /> : <Play size={32} />}
             </button>
             <div className="w-full max-w-xs mt-6 flex items-center gap-3 hidden md:flex">
-                <VolumeX size={20} className="text-neutral-200" aria-hidden="true" />
+                <VolumeX size={20} className="text-muted" aria-hidden="true" />
                 <input
                     type="range"
                     min="0"
@@ -51,11 +51,11 @@ const MusicPlayerContent = () => {
                     step="0.01"
                     value={volume}
                     onChange={handleVolumeChange}
-                    className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-blue-700 [&::-webkit-slider-thumb]:rounded-full"
+                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full"
                     aria-label="Lautstärkeregler"
                     style={{ touchAction: 'pan-y' }}
                 />
-                <Volume2 size={20} className="text-neutral-200" aria-hidden="true" />
+                <Volume2 size={20} className="text-muted" aria-hidden="true" />
             </div>
             <audio ref={audioRef} src="https://play.ilovemusic.de/ilm_ilovechillhop" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}></audio>
         </div>
