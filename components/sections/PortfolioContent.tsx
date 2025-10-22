@@ -67,7 +67,7 @@ const PortfolioContent = () => {
           Error when loading projects.
         </div>
       )}
-  <ul className="flex flex-col gap-4 w-full pb-8">
+      <ul className="flex flex-col gap-4 w-full pb-8">
         {projects.map((p) => (
           <li
             key={p.title}
@@ -107,7 +107,6 @@ const PortfolioContent = () => {
           </li>
         ))}
       </ul>
-
     </div>
   );
 };
