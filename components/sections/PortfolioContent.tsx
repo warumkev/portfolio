@@ -34,7 +34,7 @@ const PortfolioContent = () => {
     <div className="p-6 md:p-8 h-full flex flex-col min-w-[220px] min-h-[400px] w-full text-white">
       <h2 className="text-xl font-bold text-primary mb-4 px-3">Portfolio</h2>
       <p className="text-sm text-muted mb-6 px-3">
-        This isn't a "portfolio" in the traditional sense. I'm not trying to get
+        This isn&apos;t a &quot;portfolio&quot; in the traditional sense. I&apos;m not trying to get
         a corporate job building the next data-harvesting machine.
         <br />
         <br />
