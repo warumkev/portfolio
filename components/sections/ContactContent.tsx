@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, FormEvent } from 'react';
 
 // Toast component for feedback messages
-const Toast = ({ show, type, message }: { show: boolean; type: 'success' | 'error'; message: string; }) => {
+const Toast = ({ show, type, message }: { show: boolean; type: 'success' | 'error'; message: string; onClose: () => void; }) => {
     return (
         <div
             className={`
