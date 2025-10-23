@@ -195,18 +195,23 @@ const Window: React.FC<WindowProps> = ({
           </motion.button>
         </div>
       </div>
-      <div className="flex-grow overflow-y-auto min-h-0">{config.content}</div>
-      <div
-        ref={resizeRef}
-        className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize text-muted z-10"
-        onPointerDown={handleResize}
-        style={{ display: winState.isMaximized ? "none" : undefined }}
-        role="slider"
-        aria-label="Fenstergröße ändern"
-        aria-valuenow={winState.size.width}
-        tabIndex={0}
-      >
-        <CornerDownRight size={16} />
+      {/* Inner padded content so every window has spacing on all sides */}
+      <div className="flex-1 flex flex-col min-h-0 overflow-hidden p-4 md:p-6">
+        <div className="flex-grow overflow-y-auto min-h-0">
+          {config.content}
+        </div>
+        <div
+          ref={resizeRef}
+          className="absolute bottom-4 right-4 w-4 h-4 cursor-se-resize text-muted z-10"
+          onPointerDown={handleResize}
+          style={{ display: winState.isMaximized ? "none" : undefined }}
+          role="slider"
+          aria-label="Fenstergröße ändern"
+          aria-valuenow={winState.size.width}
+          tabIndex={0}
+        >
+          <CornerDownRight size={16} />
+        </div>
       </div>
     </motion.div>
   );

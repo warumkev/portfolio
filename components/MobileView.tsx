@@ -22,10 +22,10 @@ const AppIcon: React.FC<{
     tabIndex={0}
     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onClick(id)}
   >
-    <div className="w-16 h-16 backdrop-blur-md rounded-2xl flex items-center justify-center text-black bg-white">
+    <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-primary bg-background">
       {config.icon}
     </div>
-    <span className="text-xs text-white font-medium" aria-hidden="true">
+    <span className="text-xs text-primary font-medium" aria-hidden="true">
       {config.title}
     </span>
   </motion.div>
@@ -41,18 +41,18 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -1000, opacity: 0 }}
       transition={{ type: "spring", stiffness: 120, damping: 18 }}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-white"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-primary"
     >
       <div className="flex flex-col items-center gap-6 w-full text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight select-none text-white">
+        <h1 className="text-4xl font-extrabold tracking-tight select-none">
           portfoliOS
         </h1>
-        <span className="text-base font-mono tracking-wide select-none text-white">
+        <span className="text-base font-mono tracking-wide select-none">
           a web portfolio by Kevin Tamme
         </span>
         <a
           href="/safe-mode.html"
-          className="text-xs underline hover:text-primary transition-colors text-white"
+          className="text-xs underline hover:text-primary transition-colors"
           tabIndex={0}
         >
           Safe Mode: Simple HTML version
@@ -72,7 +72,7 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         className="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-3"
       >
         <motion.div
-          className="w-24 h-2 bg-white rounded-full"
+          className="w-24 h-2 bg-foreground rounded-full"
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ repeat: Infinity, duration: 1.2 }}
         />
@@ -82,7 +82,7 @@ const MobileLoginSplash: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         transition={{ delay: 1.2 }}
         className="absolute bottom-6 left-0 w-full flex flex-col items-center gap-3 text-center"
       >
-        <span className="text-xs font-mono block mt-2 text-white">
+        <span className="text-xs font-mono block mt-2">
           © {new Date().getFullYear()} Kevin Tamme – portfoliOS
         </span>
       </motion.div>
@@ -141,7 +141,7 @@ export default function MobileView() {
         {!openApp && (
           <>
             <div className="w-full flex flex-col items-center mb-8 mt-8">
-              <span className="text-5xl font-extrabold text-white tracking-tight drop-shadow-sm">
+              <span className="text-5xl font-extrabold text-primary tracking-tight drop-shadow-sm">
                 {time}
               </span>
             </div>
@@ -169,7 +169,7 @@ export default function MobileView() {
               animate={{ borderRadius: 0, scale: 1, opacity: 1 }}
               exit={{ borderRadius: "1.5rem", scale: 0.5, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed inset-0 z-30 flex flex-col bg-black/20 backdrop-blur-xl rounded-xl shadow-2xl"
+              className="fixed inset-0 z-30 flex flex-col bg-background/25 backdrop-blur-xl rounded-xl shadow-2xl py-12"
               role="dialog"
               aria-modal="true"
               tabIndex={-1}
@@ -194,7 +194,7 @@ export default function MobileView() {
               >
                 <button
                   onClick={() => setOpenApp(null)}
-                  className="w-32 h-1.5 bg-white  rounded-full"
+                  className="w-32 h-1.5 bg-foreground rounded-full"
                   aria-label="Zum Home-Bildschirm zurückkehren"
                   tabIndex={0}
                 ></button>
