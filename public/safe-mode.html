@@ -1,114 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kevin Tamme – Safe Mode Portfolio</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      margin: 16px;
-      line-height: 1.6;
-      color: #333;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      margin-bottom: 8px;
-    }
-    hr {
-      margin: 24px 0;
-    }
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    #projects-list-js > div {
-      border: 1px solid #ccc;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-    }
-    #projects-list-js span {
-      font-weight: bold;
-      font-size: 1.1em;
-    }
-  </style>
-</head>
-<body>
-  <img src="/profile-image.png" alt="Kevin Tamme" width="120" height="120" style="border-radius: 50%; display: block; margin: 24px auto;" />
-  <h1>Kevin Tamme</h1>
-    <div style="text-align: center; color: #8b8b8b;">Dies ist der Safe-Mode: Alle Infos als schnelle, minimalistische Übersicht.</div><br />
-  <div>22-jähriger Frontend-Entwickler aus Frankfurt am Main, mit einer Vorliebe für immersives Design, das auch nach dem Besuch im Kopf bleibt.</div>
-  <hr />
-  <h2>Über Mich</h2>
-  <ul>
-    <li>- Frontend-Entwickler &amp; UI/UX-Designer</li>
-    <li>- Informatik-Student (B.Sc.), Abschluss 2025</li>
-    <li>- Leidenschaft für Design, Animation &amp; moderne Webtechnologien</li>
-    <li>- Standort: Frankfurt am Main, Deutschland</li>
-  </ul>
-  <hr />
-  <h2>Kernkompetenzen</h2>
-  <ul>
-    <li>- TypeScript &amp; React</li>
-    <li>- Next.js</li>
-    <li>- UI/UX Design (Figma, Adobe CC)</li>
-    <li>- Animationen (MagicUI)</li>
-    <li>- Tailwind CSS</li>
-    <li>- Git &amp; APIs</li>
-  </ul>
-  <hr />
-  <h2>Projekte</h2>
-  <div id="projects-list-js"></div>
-  <script>
-  fetch('/api/projects').then(r => r.json()).then(projects => {
-    const list = document.getElementById('projects-list-js');
-    if (!list) return;
-    list.innerHTML = '';
-    projects.forEach(p => {
-      const card = document.createElement('div');
-      card.innerHTML = `
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kevin Tamme – Safe Mode Portfolio</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        margin: 16px;
+        line-height: 1.6;
+        color: #333;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      hr {
+        margin: 24px 0;
+      }
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #projects-list-js > div {
+        border: 1px solid #ccc;
+        padding: 12px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+      }
+      #projects-list-js span {
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      src="/profile-image.png"
+      alt="Kevin Tamme"
+      width="120"
+      height="120"
+      style="border-radius: 50%; display: block; margin: 24px auto"
+    />
+    <h1>Kevin Tamme</h1>
+    <div style="text-align: center; color: #8b8b8b">
+      This is Safe Mode: a quick, minimal overview of all information.
+    </div>
+    <br />
+    <div>
+      Hey. I&apos;m Kevin, a 22-year-old developer.
+      <br />
+      <br />
+      My biggest motivation is pretty simple: I get annoyed by enterprise
+      bloatware, subscription models for basic features, and apps that seem to
+      want my data more than anything else.
+      <br />
+      <br />
+      So, I just build my own.
+      <br />
+      <br />
+      I&apos;m just a guy who sees a problem, thinks &quot;I can do that
+      myself,&quot; and then builds a solution—usually because I need it.
+      <br />
+      <br />
+      I&apos;m documenting the whole journey and sharing the tools for free. My
+      philosophy is that powerful tech shouldn&apos;t be expensive, and it
+      definitely shouldn&apos;t be built to sell you out.
+      <br />
+      <br />
+      Welcome to portfoliOS.
+    </div>
+    <hr />
+    <h2>Skillset</h2>
+    <ul>
+      <li>- User Research</li>
+      <li>- TypeScript &amp; React</li>
+      <li>- Next.js &amp; Vue.js</li>
+      <li>- Interface Design (Figma, Adobe CC)</li>
+      <li>- HTML5, CSS3, PHP</li>
+      <li>- TailwindCSS</li>
+      <li>- Git &amp; APIs</li>
+    </ul>
+    <hr />
+    <h2>Projects</h2>
+    <div id="projects-list-js"></div>
+    <script>
+      fetch("/api/projects")
+        .then((r) => r.json())
+        .then((projects) => {
+          const list = document.getElementById("projects-list-js");
+          if (!list) return;
+          list.innerHTML = "";
+          projects.forEach((p) => {
+            const card = document.createElement("div");
+            card.innerHTML = `
         <div>
           <span>${p.title}</span>
         </div>
         <div>${p.description}</div>
-        <a href="${p.liveUrl}" target="_blank">Zum Projekt</a>
-        <a href="${p.githubUrl}" target="_blank">GitHub Repo</a>
+        <a href="${p.liveUrl}" target="_blank">Live</a>
+        <br />
+        <a href="${p.githubUrl}" target="_blank">Repository</a>
       `;
-      list.appendChild(card);
-    });
-  });
-  </script>
-  <hr />
-  <h2>Mein aktueller Stack</h2>
-  <ul>
-    <li><b>Frontend:</b> TypeScript, React, Next.js, Swift</li>
-    <li><b>Styling:</b> Tailwind CSS, MagicUI, SwiftUI</li>
-    <li><b>Design:</b> Figma, Adobe CC, Sketch</li>
-    <li><b>Backend/DB:</b> PHP, SQL, APIs, CloudKit, SwiftData</li>
-    <li><b>Tooling:</b> Git, Vercel, Xcode, VSCode</li>
-    <li><b>Status:</b> Informatik-Student (B.Sc.)</li>
-  </ul>
-  <hr />
-  <h2>Kontakt</h2>
-  <ul>
-    <li>E-Mail: <a href="mailto:kevintamme@icloud.com">kevin@example.com</a></li>
-    <li>LinkedIn: <a href="https://linkedin.com/in/kevin-tamme" target="_blank">linkedin.com/in/kevin-tamme</a></li>
-    <li>GitHub: <a href="https://github.com/warumkev" target="_blank">github.com/warumkev</a></li>
-  </ul>
-  <div>
-    Für das volle, interaktive Erlebnis:
-    <a href="/">Zurück zur Hauptseite</a>.<br><br>
-    Copyright © 2025 Kevin Tamme. Alle Rechte vorbehalten.
-  </div>
-</body>
+            list.appendChild(card);
+          });
+        });
+    </script>
+    <hr />
+    <h2>Contact</h2>
+    <ul>
+      <li>
+        E-Mail: <a href="mailto:kevintamme@icloud.com">kevintamme@icloud.com</a>
+      </li>
+      <li>
+        LinkedIn:
+        <a href="https://linkedin.com/in/kevin-tamme" target="_blank"
+          >linkedin.com/in/kevin-tamme</a
+        >
+      </li>
+      <li>
+        GitHub:
+        <a href="https://github.com/warumkev" target="_blank"
+          >github.com/warumkev</a
+        >
+      </li>
+    </ul>
+    <div>
+      For the full, interactive experience:
+      <a href="/">Back to the main page</a>.<br /><br />
+      Copyright © 2025 Kevin Tamme. All Rights Reserved.
+    </div>
+  </body>
 </html>
