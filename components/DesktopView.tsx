@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
-import { X, CornerDownRight } from "lucide-react";
+import { X, CornerDownRight, Pen, Trash2, Circle } from "lucide-react";
 import { APP_CONFIG, AppConfig } from "@/config/apps";
 
 // (Splash/login removed) The desktop loads immediately.
@@ -283,6 +283,23 @@ export default function DesktopView() {
   );
   const [highestZIndex, setHighestZIndex] = useState(11);
   const constraintsRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const drawingState = useRef<{
+    drawing: boolean;
+    lastX: number;
+    lastY: number;
+    pointerId: number | null;
+  }>({
+    drawing: false,
+    lastX: 0,
+    lastY: 0,
+    pointerId: null,
+  });
+  // pen settings (refs used inside canvas handlers for latest values)
+  const penColorRef = useRef<string>("#000000");
+  const penSizeRef = useRef<number>(2);
+  const [penColor, setPenColor] = useState<string>("#000000");
+  const [penSize, setPenSize] = useState<number>(2);
 
   useEffect(() => {
     // Prevent scrolling on desktop view
@@ -290,6 +307,123 @@ export default function DesktopView() {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
+  // Setup background scribble canvas (black pen on white)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      const w = Math.max(1, Math.floor(rect.width));
+      const h = Math.max(1, Math.floor(rect.height));
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.resetTransform?.();
+      ctx.scale(dpr, dpr);
+      // fill white background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, w, h);
+      // set default drawing style (will be overridden by current pen settings on draw)
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.lineWidth = penSizeRef.current;
+      ctx.strokeStyle = penColorRef.current;
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const getPos = (ev: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      return { x: ev.clientX - rect.left, y: ev.clientY - rect.top };
+    };
+
+    const onPointerDown = (ev: PointerEvent) => {
+      // Only left/mouse or touch/pen
+      if (ev.button && ev.button !== 0) return;
+      canvas.setPointerCapture?.(ev.pointerId);
+      drawingState.current.drawing = true;
+      drawingState.current.pointerId = ev.pointerId;
+      const pos = getPos(ev);
+      drawingState.current.lastX = pos.x;
+      drawingState.current.lastY = pos.y;
+      // apply current pen settings
+      ctx.lineWidth = penSizeRef.current;
+      ctx.strokeStyle = penColorRef.current;
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      // initialize previous point for smoothing
+      // store last drawn point in case move events are sparse
+      drawingState.current.lastX = pos.x;
+      drawingState.current.lastY = pos.y;
+      ev.preventDefault();
+    };
+
+    const onPointerMove = (ev: PointerEvent) => {
+      if (
+        !drawingState.current.drawing ||
+        drawingState.current.pointerId !== ev.pointerId
+      )
+        return;
+      const pos = getPos(ev);
+      // ensure current pen settings in case they changed mid-draw
+      ctx.lineWidth = penSizeRef.current;
+      ctx.strokeStyle = penColorRef.current;
+      // midpoint smoothing using quadratic curve
+      const lastX = drawingState.current.lastX;
+      const lastY = drawingState.current.lastY;
+      const midX = (lastX + pos.x) / 2;
+      const midY = (lastY + pos.y) / 2;
+      ctx.quadraticCurveTo(lastX, lastY, midX, midY);
+      ctx.stroke();
+      // update last point to current for next segment
+      drawingState.current.lastX = pos.x;
+      drawingState.current.lastY = pos.y;
+      ev.preventDefault();
+    };
+
+    const endDrawing = (ev: PointerEvent) => {
+      if (
+        !drawingState.current.drawing ||
+        drawingState.current.pointerId !== ev.pointerId
+      )
+        return;
+      drawingState.current.drawing = false;
+      drawingState.current.pointerId = null;
+      // finalize path
+      try {
+        ctx.stroke();
+        ctx.closePath();
+      } catch (e) {
+        /* ignore */
+      }
+      try {
+        canvas.releasePointerCapture?.(ev.pointerId);
+      } catch (e) {
+        /* ignore */
+      }
+      ev.preventDefault();
+    };
+
+    canvas.addEventListener("pointerdown", onPointerDown);
+    canvas.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", endDrawing);
+    window.addEventListener("pointercancel", endDrawing);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", endDrawing);
+      window.removeEventListener("pointercancel", endDrawing);
     };
   }, []);
 
@@ -421,6 +555,87 @@ export default function DesktopView() {
       ref={constraintsRef}
       className="h-[100dvh] w-screen overflow-hidden text-primary font-sans relative select-none"
     >
+      {/* Background scribble canvas (below windows) */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full z-0 touch-none"
+        aria-hidden="true"
+      />
+      {/* Floating pen toolbar (draggable, single row, less transparent) */}
+      <motion.div
+        drag
+        dragConstraints={constraintsRef}
+        dragElastic={0.12}
+        dragMomentum={false}
+        whileDrag={{ scale: 0.995 }}
+        className="absolute right-4 top-8 z-40"
+      >
+        <div className="flex items-center gap-2 p-2 bg-background/50 backdrop-blur-sm border border-border rounded-lg shadow-md">
+          {/* Color swatch button */}
+          <button
+            className="w-9 h-9 rounded-md flex items-center justify-center border border-border relative overflow-hidden"
+            aria-label="Pick pen color"
+            title="Pen color"
+            style={{ backgroundColor: penColor }}
+            onPointerDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <Pen size={14} className="text-secondary" />
+            <input
+              type="color"
+              value={penColor}
+              onChange={(e) => {
+                setPenColor(e.target.value);
+                penColorRef.current = e.target.value;
+              }}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              aria-label="Pen color"
+            />
+          </button>
+
+          {/* Size button: cycles through presets */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const presets = [2, 4, 8, 12, 20];
+              const idx = presets.indexOf(penSizeRef.current);
+              const next = presets[(idx + 1) % presets.length];
+              setPenSize(next);
+              penSizeRef.current = next;
+            }}
+            className="w-9 h-9 rounded-md flex items-center justify-center border border-border"
+            aria-label="Cycle pen size"
+            title={`Pen size: ${penSize}px`}
+          >
+            <Circle
+              size={12}
+              style={{ width: penSize, height: penSize, color: penColor }}
+            />
+          </button>
+
+          {/* Clear button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const canvas = canvasRef.current;
+              if (!canvas) return;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return;
+              const rect = canvas.getBoundingClientRect();
+              ctx.resetTransform?.();
+              const dpr = window.devicePixelRatio || 1;
+              ctx.scale(dpr, dpr);
+              ctx.fillStyle = "#ffffff";
+              ctx.fillRect(0, 0, rect.width, rect.height);
+            }}
+            className="w-9 h-9 rounded-md flex items-center justify-center border border-border bg-destructive/50 text-primary"
+            aria-label="Clear canvas"
+            title="Clear canvas"
+          >
+            <Trash2 size={14} />
+          </button>
+        </div>
+      </motion.div>
       {/* Windows */}
       {Object.values(windows).map((winState) => {
         if (winState.isOpen) {
