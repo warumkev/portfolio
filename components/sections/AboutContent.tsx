@@ -29,7 +29,7 @@ const skillBadges = [
  * Modularized for maintainability. All static data is defined above for clarity.
  */
 const AboutContent = () => (
-  <div className="p-6 md:p-8 w-full min-w-[220px] min-h-[420px] text-primary">
+  <div className="p-6 md:p-8 w-full min-w-[220px] min-h-0 h-full text-primary">
     <div className="flex flex-col items-center md:items-start gap-6 mb-6">
       <div className="w-32 h-32 relative rounded-full overflow-hidden shadow-lg">
         <Image
@@ -53,13 +53,13 @@ const AboutContent = () => (
           So, I just build my own.
           <br />
           <br />
-          I&apos;m just a guy who sees a problem, thinks &quot;I can do that myself,&quot; and
-          then builds a solution—usually because I need it.
+          I&apos;m just a guy who sees a problem, thinks &quot;I can do that
+          myself,&quot; and then builds a solution—usually because I need it.
           <br />
           <br />
-          I&apos;m documenting the whole journey and sharing the tools for free. My
-          philosophy is that powerful tech shouldn&apos;t be expensive, and it
-          definitely shouldn&apos;t be built to sell you out.
+          I&apos;m documenting the whole journey and sharing the tools for free.
+          My philosophy is that powerful tech shouldn&apos;t be expensive, and
+          it definitely shouldn&apos;t be built to sell you out.
           <br />
           <br />
           Welcome to portfoliOS.

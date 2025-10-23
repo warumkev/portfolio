@@ -31,11 +31,12 @@ const PortfolioContent = () => {
     loadProjects();
   }, []);
   return (
-    <div className="p-6 md:p-8 h-full flex flex-col min-w-[220px] min-h-[400px] w-full text-white">
+    <div className="p-6 md:p-8 h-full flex flex-col min-w-[220px] min-h-0 w-full text-white">
       <h2 className="text-xl font-bold text-primary mb-4 px-3">Portfolio</h2>
       <p className="text-sm text-muted mb-6 px-3">
-        This isn&apos;t a &quot;portfolio&quot; in the traditional sense. I&apos;m not trying to get
-        a corporate job building the next data-harvesting machine.
+        This isn&apos;t a &quot;portfolio&quot; in the traditional sense.
+        I&apos;m not trying to get a corporate job building the next
+        data-harvesting machine.
         <br />
         <br />
         This is an arsenal.
