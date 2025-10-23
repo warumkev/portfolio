@@ -42,7 +42,7 @@ const AboutContent = () => (
       <div className="flex-1 text-center md:text-left">
         <h3 className="text-lg font-semibold mb-1">Kevin Tamme</h3>
         <p className="text-sm text-muted">
-          Hey. I'm Kevin, a 22-year-old developer.
+          Hey. I&apos;m Kevin, a 22-year-old developer.
           <br />
           <br />
           My biggest motivation is pretty simple: I get annoyed by enterprise
@@ -53,13 +53,13 @@ const AboutContent = () => (
           So, I just build my own.
           <br />
           <br />
-          I'm just a guy who sees a problem, thinks "I can do that myself," and
+          I&apos;m just a guy who sees a problem, thinks &quot;I can do that myself,&quot; and
           then builds a solution—usually because I need it.
           <br />
           <br />
-          I'm documenting the whole journey and sharing the tools for free. My
-          philosophy is that powerful tech shouldn't be expensive, and it
-          definitely shouldn't be built to sell you out.
+          I&apos;m documenting the whole journey and sharing the tools for free. My
+          philosophy is that powerful tech shouldn&apos;t be expensive, and it
+          definitely shouldn&apos;t be built to sell you out.
           <br />
           <br />
           Welcome to portfoliOS.
