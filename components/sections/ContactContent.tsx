@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, FormEvent } from 'react';
 
 // Toast component for feedback messages
-const Toast = ({ show, type, message, onClose }: { show: boolean; type: 'success' | 'error'; message: string; onClose: () => void }) => {
+const Toast = ({ show, type, message }: { show: boolean; type: 'success' | 'error'; message: string; }) => {
     return (
         <div
             className={`
@@ -74,7 +74,7 @@ const ContactContent = () => {
     <div className="p-6 md:p-8 font-sans text-primary">
             <h2 className="text-2xl font-bold mb-4 text-center">Any questions?</h2>
             <p className="text-sm text-muted mb-6 px-3">
-                Have a project in mind or just want to say hello? Fill out the form below and I'll get back to you as soon as possible.
+                Have a project in mind or just want to say hello? Fill out the form below and I&apos;ll get back to you as soon as possible.
             </p>
             <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-4 mx-auto">
                 <div>
