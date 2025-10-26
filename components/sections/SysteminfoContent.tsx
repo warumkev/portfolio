@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CircuitBoard, Clock, Maximize2, Globe2, Monitor } from "lucide-react";
+import { CircuitBoard, Clock, Globe2, Monitor } from "lucide-react";
 
 /**
  * SysteminfoContent displays system and environment info, theme toggle, and some fun stats.
@@ -48,15 +48,6 @@ const SysteminfoContent = () => {
           </span>
           <span className="text-primary">Time:</span>
           <span className="ml-auto font-semibold text-muted">{date}</span>
-        </div>
-        <div className="flex items-center gap-3 border border-border rounded-lg px-4 py-3 bg-background hover:bg-background/25">
-          <span className="text-primary">
-            <Maximize2 size={20} />
-          </span>
-          <span className="text-primary">Window size:</span>
-          <span className="ml-auto font-semibold text-muted">
-            {windowSize.w} x {windowSize.h}
-          </span>
         </div>
         <div className="flex items-center gap-3 border border-border rounded-lg px-4 py-3 bg-background hover:bg-background/25">
           <span className="text-primary">

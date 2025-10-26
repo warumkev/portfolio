@@ -22,11 +22,6 @@ interface WindowState {
   position: WindowPosition;
   size: WindowSize;
   zIndex: number;
-  isMaximized?: boolean;
-  // store previous size/position so we can restore after un-maximizing
-  prevPosition?: WindowPosition;
-  prevSize?: WindowSize;
-  // Removed maximize functionality
 }
 
 // --- Window Component ---
@@ -56,7 +51,6 @@ const Window: React.FC<WindowProps> = ({
     (event: React.PointerEvent<HTMLDivElement>) => {
       event.stopPropagation();
       onFocus(winState.id);
-      if (winState.isMaximized) return; // don't resize when maximized
       const resizeStart = {
         x: event.clientX,
         y: event.clientY,
@@ -96,7 +90,7 @@ const Window: React.FC<WindowProps> = ({
     <motion.div
       ref={windowRef}
       key={winState.id}
-      drag={!winState.isMaximized}
+      drag
       dragListener={false}
       dragControls={dragControls}
       dragMomentum={false}
@@ -129,11 +123,9 @@ const Window: React.FC<WindowProps> = ({
     >
       <div
         onPointerDown={(e) => {
-          if (!winState.isMaximized) dragControls.start(e);
+          dragControls.start(e);
         }}
-        className={`flex items-center justify-between h-10 px-3 rounded-t-lg border-border ${
-          winState.isMaximized ? "cursor-default" : "cursor-grab"
-        } flex-shrink-0`}
+        className={`flex items-center justify-between h-10 px-3 rounded-t-lg border-border cursor-grab flex-shrink-0`}
       >
         <div className="flex items-center gap-2">
           <span className="text-primary">{config.icon}</span>
@@ -145,43 +137,7 @@ const Window: React.FC<WindowProps> = ({
           </span>
         </div>
         <div className="flex items-center gap-2">
-          {/* Maximize / Restore button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              // toggle maximize via custom event on the DOM element so parent handler is used
-              const ev = new CustomEvent("toggle-maximize", {
-                detail: winState.id,
-              });
-              window.dispatchEvent(ev);
-            }}
-            className="p-1 rounded-md hover:bg-muted text-primary transition-colors duration-150"
-            aria-label={
-              winState.isMaximized
-                ? `Wiederherstellen ${config.title}`
-                : `Maximieren ${config.title}`
-            }
-          >
-            {/* simple square icon using CornerDownRight rotated for a maximize glyph? keep lucide-react iconset small */}
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <rect
-                x="4"
-                y="4"
-                width="16"
-                height="16"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </motion.button>
+          {/* Close button */}
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={(e) => {
@@ -204,7 +160,7 @@ const Window: React.FC<WindowProps> = ({
           ref={resizeRef}
           className="absolute bottom-4 right-4 w-4 h-4 cursor-se-resize text-muted z-10"
           onPointerDown={handleResize}
-          style={{ display: winState.isMaximized ? "none" : undefined }}
+          style={{ display: "block" }}
           role="slider"
           aria-label="Fenstergröße ändern"
           aria-valuenow={winState.size.width}
@@ -457,54 +413,10 @@ export default function DesktopView() {
     }
   };
 
-  // Toggle maximize: expand to viewport and save/restore previous size/position
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const id = (e as CustomEvent<string>).detail;
-      setWindows((prev) => {
-        const win = prev[id];
-        if (!win) return prev;
-        if (win.isMaximized) {
-          // restore
-          const restored = {
-            ...win,
-            isMaximized: false,
-            position: win.prevPosition || win.position,
-            size: win.prevSize || win.size,
-            prevPosition: undefined,
-            prevSize: undefined,
-          };
-          return { ...prev, [id]: restored };
-        } else {
-          // maximize: save current and set to cover viewport
-          const viewportWidth = window.innerWidth;
-          const viewportHeight = window.innerHeight;
-          const savedPosition = { ...win.position };
-          const savedSize = { ...win.size };
-          const maximized = {
-            ...win,
-            isMaximized: true,
-            prevPosition: savedPosition,
-            prevSize: savedSize,
-            position: { x: 0, y: 0 },
-            size: { width: viewportWidth, height: viewportHeight },
-            zIndex: highestZIndex + 1,
-          };
-          setHighestZIndex((z) => z + 1);
-          return { ...prev, [id]: maximized };
-        }
-      });
-    };
-    window.addEventListener("toggle-maximize", handler as EventListener);
-    return () =>
-      window.removeEventListener("toggle-maximize", handler as EventListener);
-  }, [highestZIndex]);
-
   const handleDrag = (id: string, newPosition: WindowPosition) => {
     setWindows((prev) => {
       const win = prev[id];
       if (!win) return prev;
-      if (win.isMaximized) return prev; // don't drag when maximized
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       const clampedX = Math.max(
